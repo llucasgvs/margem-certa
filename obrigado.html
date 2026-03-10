@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obrigado — Margem Certa</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3VLXHCCFBS');
+  // Evento de conversão
+  gtag('event', 'conversion_lead', { event_category: 'conversao', event_label: 'obrigado' });
+</script>
+
+<style>
+  :root {
+    --green: #00C853;
+    --dark: #0A0F0D;
+    --card: #141A14;
+    --border: rgba(0,200,83,0.15);
+    --text: #E8F0E9;
+    --muted: #6B7C6D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,200,83,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo {
+    position: fixed;
+    top: 24px; left: 40px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #00C853;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--text); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 56px 48px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .check-circle {
+    width: 72px; height: 72px;
+    background: rgba(0,200,83,0.12);
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 32px;
+    animation: pop 0.5s 0.3s ease both;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--green); }
+
+  p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .next-steps {
+    text-align: left;
+    margin-bottom: 32px;
+  }
+
+  .next-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .step-icon {
+    width: 32px; height: 32px;
+    background: rgba(0,200,83,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .step-text { font-size: 13px; color: var(--muted); line-height: 1.5; padding-top: 6px; }
+  .step-text strong { color: var(--text); font-weight: 500; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green);
+    color: var(--dark);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn:hover {
+    background: #00E060;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,200,83,0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<a href="/" class="logo">Margem<span>Certa</span></a>
+
+<div class="card">
+  <div class="check-circle">✓</div>
+  <h1>Você está<br><span>na lista!</span></h1>
+  <p>Assim que o Margem Certa abrir o acesso, você será um dos primeiros a saber. Fique de olho no seu email.</p>
+
+  <hr class="divider">
+
+  <div class="next-steps">
+    <div class="next-label">Enquanto isso</div>
+    <div class="step">
+      <div class="step-icon">🧮</div>
+      <div class="step-text"><strong>Use a calculadora grátis agora</strong> — já está disponível na página principal sem precisar de conta.</div>
+    </div>
+    <div class="step">
+      <div class="step-icon">💡</div>
+      <div class="step-text"><strong>Calcule a margem dos seus produtos</strong> — descubra se algum está te dando prejuízo hoje mesmo.</div>
+    </div>
+  </div>
+
+  <a href="/" class="btn">
+    Usar a calculadora agora
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+</body>
+</html>
