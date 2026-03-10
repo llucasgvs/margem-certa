@@ -1476,6 +1476,38 @@
 </div>
 
 <script>
+
+  // GA4 Custom Events
+
+  // Clique nos CTAs de navegacao
+  document.querySelectorAll('a[href="#calculator"], a[href="#pricing"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      gtag('event', 'cta_click', { event_category: 'engajamento', event_label: btn.textContent.trim() });
+    });
+  });
+
+  // Clique no botao calcular
+  var calcBtnEl = document.querySelector('.calc-btn');
+  if (calcBtnEl) {
+    calcBtnEl.addEventListener('click', function() {
+      gtag('event', 'calculadora_usada', { event_category: 'calculadora' });
+    });
+  }
+
+  // Scroll ate pricing
+  var pricingSection = document.getElementById('pricing');
+  if (pricingSection) {
+    var pricingObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          gtag('event', 'viu_pricing', { event_category: 'engajamento' });
+          pricingObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    pricingObserver.observe(pricingSection);
+  }
+
   // Scroll animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -1530,6 +1562,7 @@
   // Modal
   function openModal() {
     document.getElementById('modal').classList.add('open');
+    gtag('event', 'modal_aberto', { event_category: 'conversao' });
   }
 
   function closeModal() {
