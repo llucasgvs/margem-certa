@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>Como Calcular o Lucro Real no Mercado Livre em 2026 — Guia Completo</title>
+<meta name="description" content="Aprenda a calcular o lucro real no Mercado Livre considerando comissão, frete Full e imposto. Exemplos práticos e calculadora gratuita.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://margem-certa.vercel.app/blog/como-calcular-lucro-real-mercado-livre">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Como Calcular o Lucro Real no Mercado Livre em 2026 — Guia Completo">
+<meta property="og:description" content="Comissão, frete Full e imposto: aprenda a calcular o lucro real de cada venda no ML com exemplos práticos.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://margem-certa.vercel.app/blog/como-calcular-lucro-real-mercado-livre">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Como Calcular o Lucro Real no Mercado Livre em 2026 — Guia Completo",
+  "description": "Aprenda a calcular o lucro real no Mercado Livre considerando comissão, frete Full e imposto.",
+  "author": { "@type": "Organization", "name": "Margem Certa" },
+  "publisher": { "@type": "Organization", "name": "Margem Certa", "url": "https://margem-certa.vercel.app" },
+  "datePublished": "2026-03-01",
+  "dateModified": "2026-03-01"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3VLXHCCFBS');</script>
+
+<style>
+:root {
+  --green:#00C853; --green-light:#E8FAF0; --green-mid:#00A846;
+  --bg:#FAFAF9; --surface:#FFFFFF; --dark:#0F1410;
+  --text:#1A1F1B; --muted:#6B7A6D; --border:#E4E9E5;
+  --red:#E53E3E; --red-light:#FFF5F5;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;}
+
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:100;}
+nav .inner{max-width:740px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:800;font-size:17px;color:var(--text);text-decoration:none;letter-spacing:-.4px;}
+.logo em{color:var(--green);font-style:normal;}
+.nav-cta{background:var(--green);color:#fff;font-weight:700;font-size:12px;padding:8px 16px;border-radius:100px;text-decoration:none;white-space:nowrap;}
+
+.page{max-width:740px;margin:0 auto;padding:0 20px;}
+
+.breadcrumb{padding:20px 0 0;font-size:12px;color:var(--muted);}
+.breadcrumb a{color:var(--muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--text);}
+.breadcrumb span{margin:0 6px;}
+
+.article-header{padding:28px 0 0;}
+.article-tag{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px;}
+.article-header h1{font-size:clamp(26px,5vw,38px);font-weight:800;line-height:1.15;letter-spacing:-1.2px;margin-bottom:16px;}
+.article-header h1 em{color:var(--green);font-style:normal;}
+.article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);padding-bottom:28px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.article-meta strong{color:var(--text);}
+
+/* SUMÁRIO */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin:32px 0;}
+.toc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px;}
+.toc ol{padding-left:18px;}
+.toc li{font-size:14px;margin-bottom:6px;}
+.toc a{color:var(--green-mid);text-decoration:none;font-weight:600;}
+.toc a:hover{text-decoration:underline;}
+
+article{padding:32px 0;}
+article h2{font-size:clamp(20px,4vw,26px);font-weight:800;letter-spacing:-.8px;line-height:1.2;margin:44px 0 14px;scroll-margin-top:80px;}
+article h2:first-child{margin-top:0;}
+article h3{font-size:18px;font-weight:700;letter-spacing:-.4px;margin:28px 0 10px;}
+article p{font-size:15px;color:#2D3530;line-height:1.8;margin-bottom:18px;}
+article strong{font-weight:700;color:var(--text);}
+article ul,article ol{padding-left:20px;margin-bottom:18px;}
+article li{font-size:15px;color:#2D3530;line-height:1.8;margin-bottom:6px;}
+
+.callout{border-radius:12px;padding:18px 20px;margin:24px 0;font-size:14px;line-height:1.7;}
+.callout.info{background:var(--green-light);border-left:3px solid var(--green);color:#0A3D1F;}
+.callout.warn{background:#FFF8E6;border-left:3px solid #F5A623;color:#5C3D00;}
+.callout.danger{background:var(--red-light);border-left:3px solid var(--red);color:#7A1010;}
+.callout strong{font-weight:700;}
+
+/* PASSO A PASSO */
+.steps-list{display:flex;flex-direction:column;gap:2px;margin:24px 0;}
+.step-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;gap:16px;align-items:flex-start;}
+.step-num{width:36px;height:36px;background:var(--dark);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;letter-spacing:-.5px;}
+.step-body h4{font-size:15px;font-weight:700;margin-bottom:4px;letter-spacing:-.3px;}
+.step-body p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.step-body code{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 7px;font-size:13px;font-family:monospace;color:var(--text);}
+
+/* CALC EXAMPLE */
+.calc-example{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin:24px 0;}
+.calc-example-header{background:var(--dark);padding:14px 20px;display:flex;align-items:center;gap:8px;}
+.calc-example-header span{color:rgba(255,255,255,.5);font-size:12px;}
+.calc-example-header strong{color:#fff;font-size:14px;font-weight:700;}
+.calc-example-body{padding:20px;}
+.calc-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.calc-row:last-child{border-bottom:none;}
+.calc-row .k{color:var(--muted);}
+.calc-row .v{font-weight:700;}
+.calc-row .v.neg{color:var(--red);}
+.calc-row .v.pos{color:var(--green-mid);}
+.calc-total-row{background:var(--green-light);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;margin-top:12px;}
+.calc-total-row .k{font-weight:600;color:var(--green-mid);font-size:14px;}
+.calc-total-row .v{font-weight:800;color:var(--green-mid);font-size:20px;letter-spacing:-.5px;}
+.calc-total-row.loss{background:var(--red-light);}
+.calc-total-row.loss .k,.calc-total-row.loss .v{color:var(--red);}
+
+/* COMPARATIVO */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0;}
+.compare-card{border-radius:12px;padding:18px;border:1.5px solid var(--border);}
+.compare-card.wrong{border-color:#fcd5d5;background:#fffafa;}
+.compare-card.right{border-color:#b3f0cc;background:#f0fff6;}
+.compare-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.compare-card.wrong .compare-label{color:var(--red);}
+.compare-card.right .compare-label{color:var(--green-mid);}
+.compare-item{font-size:13px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5;}
+.compare-item:last-child{border-bottom:none;}
+.compare-item strong{color:var(--text);}
+
+/* CTA */
+.cta-inline{background:var(--dark);border-radius:16px;padding:28px 24px;margin:40px 0;text-align:center;}
+.cta-inline h3{color:#fff;font-size:20px;font-weight:800;letter-spacing:-.6px;margin-bottom:8px;}
+.cta-inline p{color:rgba(255,255,255,.55);font-size:14px;margin-bottom:20px;line-height:1.6;}
+.cta-inline p strong{color:rgba(255,255,255,.85);}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:800;font-family:var(--font);transition:background .2s,transform .15s;letter-spacing:-.3px;}
+.cta-btn:active{transform:scale(.98);}
+.cta-small{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;}
+
+/* IMPOSTO TABLE */
+.table-wrap{overflow-x:auto;margin:24px 0;border-radius:12px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+thead tr{background:var(--dark);}
+thead th{color:#fff;font-weight:700;padding:13px 16px;text-align:left;font-size:13px;letter-spacing:.3px;white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--green-light);}
+tbody td{padding:12px 16px;color:var(--text);font-size:14px;}
+.td-bold{font-weight:700;}
+.td-green{color:var(--green-mid);font-weight:700;}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{width:100%;background:none;border:none;color:var(--text);text-align:left;padding:16px 0;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;letter-spacing:-.3px;}
+.faq-icon{width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:var(--muted);transition:all .25s;}
+.faq-item.open .faq-icon{background:var(--green);color:#fff;border-color:var(--green);transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;font-size:14px;color:var(--muted);line-height:1.7;padding:0;}
+.faq-a.open{max-height:200px;padding-bottom:16px;}
+
+.related{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin:40px 0;}
+.related h4{font-size:11px;font-weight:700;margin-bottom:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.related a{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);font-size:14px;font-weight:600;transition:color .2s;}
+.related a:last-child{border-bottom:none;}
+.related a:hover{color:var(--green-mid);}
+.related-arrow{color:var(--green);font-size:16px;flex-shrink:0;}
+
+footer{border-top:1px solid var(--border);padding:24px 20px;}
+footer .inner{max-width:740px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);}
+
+@media(min-width:800px){
+  nav{padding:14px 0;}
+  nav .inner{padding:0;}
+  .page{padding:0;}
+  .article-header h1{font-size:40px;}
+  .compare-grid{gap:16px;}
+  footer{padding:24px 0;}
+  footer .inner{padding:0;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <a href="/#calculator" class="nav-cta">Calcular grátis →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="/">Início</a><span>›</span>
+    <a href="/blog">Blog</a><span>›</span>
+    Como calcular lucro real no ML
+  </div>
+
+  <header class="article-header">
+    <div class="article-tag">Guia completo</div>
+    <h1>Como Calcular o <em>Lucro Real</em> no Mercado Livre em 2026</h1>
+    <div class="article-meta">
+      <span>Por <strong>Margem Certa</strong></span>
+      <span>·</span>
+      <span>Atualizado em março de 2026</span>
+      <span>·</span>
+      <span>10 min de leitura</span>
+    </div>
+  </header>
+
+  <article>
+
+    <p>Você sabe quanto dinheiro <strong>realmente sobra</strong> depois de cada venda no Mercado Livre? Não o faturamento — o lucro líquido de verdade, depois de pagar comissão, frete, imposto e o custo do produto?</p>
+
+    <p>A maioria dos vendedores não sabe. Calculam o preço olhando para o concorrente, estimam uma margem por cima e torcem para sobrar algo no fim do mês. Quando somam tudo com calma, a surpresa quase sempre é desagradável.</p>
+
+    <p>Neste guia você vai aprender a calcular o lucro real de qualquer produto no ML, passo a passo, com exemplos práticos para diferentes categorias e regimes tributários.</p>
+
+    <!-- SUMÁRIO -->
+    <div class="toc">
+      <div class="toc-title">Neste artigo</div>
+      <ol>
+        <li><a href="#quais-descontos">Quais descontos o ML aplica em cada venda</a></li>
+        <li><a href="#formula">A fórmula do lucro real</a></li>
+        <li><a href="#passo-a-passo">Passo a passo para calcular</a></li>
+        <li><a href="#exemplos">Exemplos práticos por categoria</a></li>
+        <li><a href="#imposto">Como o regime tributário afeta sua margem</a></li>
+        <li><a href="#erros">Os 3 erros mais comuns de precificação</a></li>
+        <li><a href="#faq">Perguntas frequentes</a></li>
+      </ol>
+    </div>
+
+    <h2 id="quais-descontos">1. Quais descontos o ML aplica em cada venda</h2>
+
+    <p>Antes de calcular, você precisa saber o que vai ser descontado. São quatro itens que o ML — ou o governo — retém antes do dinheiro chegar no seu bolso:</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Comissão do ML por categoria</h4>
+          <p>A mais conhecida. Varia de <strong>11% a 18%</strong> dependendo da categoria do produto. Eletrônicos pagam 11%, beleza paga 16%, produtos sem categoria definida pagam 18%.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Tarifa de envio Full</h4>
+          <p>Se você usa o Mercado Envios Full (estoque no galpão do ML), paga uma tarifa por unidade enviada: <strong>R$12</strong> (pacote pequeno), <strong>R$18</strong> (médio) ou <strong>R$28</strong> (grande). Se faz envio próprio, essa taxa é zero.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Imposto sobre a venda</h4>
+          <p>Depende do seu regime tributário. MEI recolhe <strong>6%</strong>, Simples Nacional em média <strong>8,5%</strong>, Lucro Presumido cerca de <strong>11,4%</strong>. Muitos vendedores esquecem de incluir isso no cálculo.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Custo do produto (CMV)</h4>
+          <p>O quanto você pagou para ter o produto — compra, frete de entrada, embalagem. Não é desconto do ML, mas sai do seu bolso antes de qualquer receita.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>Por que tantos vendedores erram:</strong> A maioria calcula só a comissão do ML e o custo do produto. Esquecem o frete Full e, principalmente, o imposto. Esses dois itens juntos podem representar mais de 20% do preço de venda.
+    </div>
+
+    <h2 id="formula">2. A fórmula do lucro real</h2>
+
+    <p>Com os quatro componentes em mãos, a fórmula é simples:</p>
+
+    <div class="callout info">
+      <strong>Lucro líquido = Preço de venda − Comissão ML − Frete Full − Imposto − Custo do produto</strong><br><br>
+      <strong>Margem (%) = Lucro líquido ÷ Preço de venda × 100</strong>
+    </div>
+
+    <p>A margem percentual é o número mais importante. Ele te diz quanto sobra para cada R$1 vendido — e é o que você deve usar para comparar produtos entre si e definir se vale a pena vender determinado item.</p>
+
+    <h2 id="passo-a-passo">3. Passo a passo para calcular</h2>
+
+    <p>Vamos montar o cálculo de um produto real, do zero:</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Anote o preço de venda</h4>
+          <p>O valor que o comprador paga no anúncio. Exemplo: <code>R$120,00</code></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Calcule a comissão do ML</h4>
+          <p>Descubra a categoria do produto e aplique a taxa. Exemplo: categoria Casa e Decoração (14%) → <code>R$120 × 0,14 = R$16,80</code></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Some a tarifa de envio</h4>
+          <p>Consulte o tamanho do pacote no painel Full. Exemplo: pacote médio → <code>R$18,00</code></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Calcule o imposto</h4>
+          <p>Aplique a alíquota do seu regime sobre o preço de venda. Exemplo: Simples Nacional (8,5%) → <code>R$120 × 0,085 = R$10,20</code></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Subtraia o custo do produto</h4>
+          <p>O que você pagou pelo produto, incluindo frete de entrada. Exemplo: <code>R$45,00</code></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Calcule o lucro</h4>
+          <p><code>R$120 − R$16,80 − R$18 − R$10,20 − R$45 = R$30,00</code> → margem de 25%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA 1 -->
+    <div class="cta-inline">
+      <h3>Prefere calcular sem fazer conta?</h3>
+      <p>A calculadora do Margem Certa faz tudo isso em <strong>30 segundos</strong>. Você só digita o preço e o custo — ela cuida do resto.</p>
+      <a href="/#calculator" class="cta-btn">Calcular meu lucro agora →</a>
+      <p class="cta-small">Gratuito · Sem cadastro · Funciona no celular</p>
+    </div>
+
+    <h2 id="exemplos">4. Exemplos práticos por categoria</h2>
+
+    <p>Veja como o lucro muda radicalmente dependendo da categoria — mesmo com preço e custo parecidos:</p>
+
+    <h3>Eletrônicos (comissão 11%) — produto de R$250</h3>
+
+    <div class="calc-example">
+      <div class="calc-example-header"><strong>Fone de ouvido bluetooth · R$250 · MEI</strong><span>Full pequeno</span></div>
+      <div class="calc-example-body">
+        <div class="calc-row"><span class="k">Preço de venda</span><span class="v pos">R$ 250,00</span></div>
+        <div class="calc-row"><span class="k">Comissão ML (11%)</span><span class="v neg">– R$ 27,50</span></div>
+        <div class="calc-row"><span class="k">Frete Full pequeno</span><span class="v neg">– R$ 12,00</span></div>
+        <div class="calc-row"><span class="k">Imposto MEI (6%)</span><span class="v neg">– R$ 15,00</span></div>
+        <div class="calc-row"><span class="k">Custo do produto</span><span class="v neg">– R$ 95,00</span></div>
+        <div class="calc-total-row"><span class="k">Lucro líquido · Margem 40,2%</span><span class="v">R$ 100,50</span></div>
+      </div>
+    </div>
+
+    <h3>Beleza (comissão 16%) — produto de R$89,90</h3>
+
+    <div class="calc-example">
+      <div class="calc-example-header"><strong>Creme hidratante · R$89,90 · MEI</strong><span>Full pequeno</span></div>
+      <div class="calc-example-body">
+        <div class="calc-row"><span class="k">Preço de venda</span><span class="v pos">R$ 89,90</span></div>
+        <div class="calc-row"><span class="k">Comissão ML (16%)</span><span class="v neg">– R$ 14,38</span></div>
+        <div class="calc-row"><span class="k">Frete Full pequeno</span><span class="v neg">– R$ 12,00</span></div>
+        <div class="calc-row"><span class="k">Imposto MEI (6%)</span><span class="v neg">– R$ 5,39</span></div>
+        <div class="calc-row"><span class="k">Custo do produto</span><span class="v neg">– R$ 35,00</span></div>
+        <div class="calc-total-row"><span class="k">Lucro líquido · Margem 25,7%</span><span class="v">R$ 23,13</span></div>
+      </div>
+    </div>
+
+    <h3>Moda (comissão 13%) — produto de R$59,90 com custo alto</h3>
+
+    <div class="calc-example">
+      <div class="calc-example-header"><strong>Camiseta premium · R$59,90 · Simples Nacional</strong><span>Full pequeno</span></div>
+      <div class="calc-example-body">
+        <div class="calc-row"><span class="k">Preço de venda</span><span class="v pos">R$ 59,90</span></div>
+        <div class="calc-row"><span class="k">Comissão ML (13%)</span><span class="v neg">– R$ 7,79</span></div>
+        <div class="calc-row"><span class="k">Frete Full pequeno</span><span class="v neg">– R$ 12,00</span></div>
+        <div class="calc-row"><span class="k">Imposto Simples (8,5%)</span><span class="v neg">– R$ 5,09</span></div>
+        <div class="calc-row"><span class="k">Custo do produto</span><span class="v neg">– R$ 38,00</span></div>
+        <div class="calc-total-row loss"><span class="k">Prejuízo líquido ⚠️</span><span class="v">– R$ 2,98</span></div>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <strong>O terceiro exemplo é muito comum.</strong> Um produto de R$60 com custo de R$38 parece ter margem de 37% sobre o custo. Na prática, dá prejuízo de quase R$3 por unidade vendida. Quem vende 100 unidades por mês está perdendo R$300 sem saber.
+    </div>
+
+    <h2 id="imposto">5. Como o regime tributário afeta sua margem</h2>
+
+    <p>O imposto é o item mais subestimado na precificação de vendedores iniciantes. A diferença entre MEI e Lucro Presumido pode representar mais de 5 pontos percentuais de margem:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Regime</th>
+            <th>Alíquota sobre venda</th>
+            <th>Imposto em R$100</th>
+            <th>Ideal para</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-bold">MEI</td><td class="td-green">~6%</td><td>R$ 6,00</td><td>Faturamento até R$81 mil/ano</td></tr>
+          <tr><td class="td-bold">Simples Nacional</td><td>~8,5%</td><td>R$ 8,50</td><td>Faturamento até R$4,8 mi/ano</td></tr>
+          <tr><td class="td-bold">Lucro Presumido</td><td>~11,4%</td><td>R$ 11,40</td><td>Faturamento acima do Simples</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Se você ainda não tem CNPJ e vende como pessoa física, o imposto pode ser ainda maior — e o ML é obrigado a reportar suas vendas à Receita Federal acima de determinados valores.</p>
+
+    <div class="callout info">
+      <strong>Dica:</strong> Se você está começando e fatura menos de R$81 mil por ano, o MEI é quase sempre a melhor opção tributária para vender no ML. A diferença na margem em relação ao Simples pode ser de 2 a 3 pontos percentuais por venda.
+    </div>
+
+    <h2 id="erros">6. Os 3 erros mais comuns de precificação</h2>
+
+    <div class="compare-grid">
+      <div class="compare-card wrong">
+        <div class="compare-label">❌ Errado</div>
+        <div class="compare-item">Copiar o preço do concorrente sem calcular custo próprio</div>
+        <div class="compare-item">Calcular só a comissão do ML, ignorar frete e imposto</div>
+        <div class="compare-item">Usar margem sobre o custo em vez de margem sobre o preço</div>
+      </div>
+      <div class="compare-card right">
+        <div class="compare-label">✓ Certo</div>
+        <div class="compare-item">Calcular o preço mínimo a partir do custo real + margem desejada</div>
+        <div class="compare-item">Incluir comissão + frete Full + imposto no cálculo</div>
+        <div class="compare-item">Trabalhar com margem sobre preço de venda (padrão do mercado)</div>
+      </div>
+    </div>
+
+    <h3>Erro 1: copiar o preço do concorrente</h3>
+    <p>O concorrente pode ter um custo de produto diferente, um regime tributário diferente, ou simplesmente estar vendendo no prejuízo sem saber. O preço do concorrente é uma referência de mercado — não uma referência de viabilidade para o seu negócio.</p>
+
+    <h3>Erro 2: esquecer o frete Full e o imposto</h3>
+    <p>Esses dois itens juntos costumam representar entre 14% e 20% do preço de venda. Ignorá-los é como calcular o resultado de um jogo sem contar os gols do adversário.</p>
+
+    <h3>Erro 3: confundir margem sobre custo com margem sobre preço</h3>
+    <p>Se você comprou um produto por R$50 e vendeu por R$100, não tem 100% de margem — tem 50%. Margem é sempre calculada sobre o preço de venda, não sobre o custo. É assim que bancos, investidores e o próprio ML avaliam a saúde de um negócio.</p>
+
+    <!-- CTA 2 -->
+    <div class="cta-inline">
+      <h3>Calcule a margem real do seu produto agora</h3>
+      <p>O Margem Certa já tem <strong>todas as taxas do ML atualizadas</strong>. Você digita o preço, o custo e o regime tributário — ele entrega o lucro real em segundos.</p>
+      <a href="/#calculator" class="cta-btn">Abrir calculadora grátis →</a>
+      <p class="cta-small">Gratuito · Sem instalar nada · Funciona no celular</p>
+    </div>
+
+    <h2 id="faq">7. Perguntas frequentes</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Qual a diferença entre lucro bruto e lucro líquido?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Lucro bruto é o preço de venda menos o custo do produto — sem descontar comissões, frete ou impostos. Lucro líquido é o que sobra depois de todas as deduções. Para tomar decisões de precificação, sempre use o lucro líquido.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Como saber o tamanho do pacote para calcular o frete Full?<span class="faq-icon">+</span></button>
+      <div class="faq-a">No Mercado Envios Full, o tamanho é classificado por peso e dimensões do produto embalado. Você pode consultar a tabela oficial de tarifas no Painel do Vendedor, em Envios &gt; Tarifas. Para a maioria dos produtos pequenos, a tarifa de R$12 (pacote pequeno) se aplica.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Preciso incluir o frete no preço ou cobrar separado?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Depende da sua estratégia. Frete grátis no anúncio aumenta conversão, mas o custo do envio sai do seu bolso. Se optar por frete grátis, inclua o custo no preço do produto — e recalcule a margem com esse valor embutido.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Qual margem mínima vale a pena para vender no ML?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Não existe uma resposta única — depende do seu volume e do seu custo fixo. Como referência, margens abaixo de 15% sobre o preço de venda são arriscadas para vendedores independentes, pois deixam pouca gordura para promoções, devoluções e variações de custo.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">O imposto incide sobre o preço cheio ou só sobre o lucro?<span class="faq-icon">+</span></button>
+      <div class="faq-a">No MEI e no Simples Nacional, o imposto incide sobre o faturamento bruto — ou seja, sobre o preço de venda cheio, não sobre o lucro. Por isso ele entra como uma dedução do preço de venda no cálculo de margem.</div>
+    </div>
+
+    <div class="related">
+      <h4>Continue lendo</h4>
+      <a href="/blog/comissao-mercado-livre-por-categoria">
+        <span class="related-arrow">→</span>
+        Tabela completa de comissão do ML por categoria em 2026
+      </a>
+      <a href="/#calculator">
+        <span class="related-arrow">→</span>
+        Calculadora de margem gratuita — calcule agora sem cadastro
+      </a>
+    </div>
+
+  </article>
+</div>
+
+<footer>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <span>Feito para vendedores 🇧🇷</span>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.parentElement,ans=item.querySelector('.faq-a'),open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').classList.remove('open');});
+  if(!open){item.classList.add('open');ans.classList.add('open');}
+}
+</script>
+</body>
+</html>
