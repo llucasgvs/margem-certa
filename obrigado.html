@@ -3,214 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Obrigado — Margem Certa</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
-<!-- Google tag (gtag.js) -->
+<title>Você está na lista — Margem Certa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3VLXHCCFBS');
-  // Evento de conversão
-  gtag('event', 'conversion_lead', { event_category: 'conversao', event_label: 'obrigado' });
+  gtag('event', 'conversion_lead', {event_category:'conversao', event_label:'obrigado'});
 </script>
-
 <style>
-  :root {
-    --green: #00C853;
-    --dark: #0A0F0D;
-    --card: #141A14;
-    --border: rgba(0,200,83,0.15);
-    --text: #E8F0E9;
-    --muted: #6B7C6D;
-  }
+:root {
+  --green:#00C853; --green-light:#E8FAF0; --green-mid:#00A846;
+  --bg:#FAFAF9; --surface:#FFFFFF; --dark:#0F1410;
+  --text:#1A1F1B; --muted:#6B7A6D; --border:#E4E9E5;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 20px;}
+nav .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:800;font-size:18px;letter-spacing:-.5px;color:var(--text);text-decoration:none;}
+.logo em{color:var(--green);font-style:normal;}
+.back-link{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s;}
+.back-link:hover{color:var(--text);}
 
-  body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
+/* MAIN */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+.confirm-wrap{width:100%;max-width:480px;}
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(0,200,83,0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
+/* CARD */
+.confirm-card{background:var(--surface);border:1.5px solid var(--border);border-radius:24px;padding:32px 24px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.05);animation:popIn .5s ease both;}
+@keyframes popIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.check-wrap{width:72px;height:72px;background:var(--green-light);border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:28px;animation:bounceIn .5s .2s ease both;}
+@keyframes bounceIn{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+h1{font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:10px;}
+h1 em{color:var(--green);font-style:normal;}
+.confirm-sub{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:28px;}
+.divider{height:1px;background:var(--border);margin:0 0 24px;}
 
-  .logo {
-    position: fixed;
-    top: 24px; left: 40px;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    color: #00C853;
-    text-decoration: none;
-  }
+.steps-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;text-align:left;}
+.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;text-align:left;}
+.step{display:flex;gap:12px;align-items:flex-start;}
+.step-icon{width:36px;height:36px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.step-body h4{font-size:13px;font-weight:700;margin-bottom:2px;letter-spacing:-.2px;}
+.step-body p{font-size:12px;color:var(--muted);line-height:1.5;}
 
-  .logo span { color: var(--text); }
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--green);color:#fff;text-decoration:none;padding:16px;border-radius:14px;font-size:15px;font-weight:800;font-family:var(--font);transition:background .2s,transform .15s;letter-spacing:-.3px;}
+.cta-btn:active{transform:scale(.98);}
+.cta-note{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;}
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 56px 48px;
-    max-width: 480px;
-    width: 100%;
-    position: relative;
-    animation: fadeUp 0.6s ease both;
-  }
+.social-row{margin-top:28px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
+.social-item{text-align:center;}
+.social-num{font-size:20px;font-weight:800;letter-spacing:-.5px;color:var(--green-mid);}
+.social-label{font-size:11px;color:var(--muted);margin-top:2px;}
 
-  .check-circle {
-    width: 72px; height: 72px;
-    background: rgba(0,200,83,0.12);
-    border: 2px solid var(--green);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 28px;
-    font-size: 32px;
-    animation: pop 0.5s 0.3s ease both;
-  }
+/* FOOTER */
+footer{padding:20px;border-top:1px solid var(--border);}
+footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);}
 
-  @keyframes pop {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-  }
-
-  h1 span { color: var(--green); }
-
-  p {
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 36px;
-  }
-
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin-bottom: 28px;
-  }
-
-  .next-steps {
-    text-align: left;
-    margin-bottom: 32px;
-  }
-
-  .next-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    font-family: 'Syne', sans-serif;
-  }
-
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-
-  .step-icon {
-    width: 32px; height: 32px;
-    background: rgba(0,200,83,0.1);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .step-text { font-size: 13px; color: var(--muted); line-height: 1.5; padding-top: 6px; }
-  .step-text strong { color: var(--text); font-weight: 500; }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--green);
-    color: var(--dark);
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    text-decoration: none;
-    font-family: 'Syne', sans-serif;
-    transition: all 0.2s;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .btn:hover {
-    background: #00E060;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,200,83,0.25);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* DESKTOP */
+@media(min-width:900px){
+  nav{padding:16px 0;}
+  nav .inner{padding:0 40px;}
+  main{padding:60px 40px;}
+  .confirm-wrap{max-width:560px;}
+  .confirm-card{padding:48px 40px;}
+  h1{font-size:32px;}
+  .confirm-sub{font-size:15px;}
+  footer{padding:24px 0;}
+  footer .inner{padding:0 40px;}
+}
 </style>
 </head>
 <body>
 
-<a href="/" class="logo">Margem<span>Certa</span></a>
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <a href="/" class="back-link">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Voltar ao início
+    </a>
+  </div>
+</nav>
 
-<div class="card">
-  <div class="check-circle">✓</div>
-  <h1>Você está<br><span>na lista!</span></h1>
-  <p>Assim que o Margem Certa abrir o acesso, você será um dos primeiros a saber. Fique de olho no seu email.</p>
-
-  <hr class="divider">
-
-  <div class="next-steps">
-    <div class="next-label">Enquanto isso</div>
-    <div class="step">
-      <div class="step-icon">🧮</div>
-      <div class="step-text"><strong>Use a calculadora grátis agora</strong> — já está disponível na página principal sem precisar de conta.</div>
-    </div>
-    <div class="step">
-      <div class="step-icon">💡</div>
-      <div class="step-text"><strong>Calcule a margem dos seus produtos</strong> — descubra se algum está te dando prejuízo hoje mesmo.</div>
+<main>
+  <div class="confirm-wrap">
+    <div class="confirm-card">
+      <div class="check-wrap">✓</div>
+      <h1>Você está<br><em>na lista!</em></h1>
+      <p class="confirm-sub">Assim que o Margem Certa abrir o acesso, você será um dos primeiros a saber. Fique de olho no seu e-mail.</p>
+      <div class="divider"></div>
+      <p class="steps-label">Enquanto isso, use agora</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">🧮</div>
+          <div class="step-body"><h4>A calculadora já está disponível</h4><p>Calcule a margem real dos seus produtos agora mesmo, sem precisar de conta.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-icon">🔍</div>
+          <div class="step-body"><h4>Descubra seus produtos no vermelho</h4><p>Muitos vendedores encontram prejuízo oculto na primeira calculada. Vale checar.</p></div>
+        </div>
+      </div>
+      <a href="/" class="cta-btn">
+        Calcular meu lucro agora
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="cta-note">Grátis · Sem instalar nada · Funciona no celular</p>
+      <div class="social-row">
+        <div class="social-item"><div class="social-num">30s</div><div class="social-label">para calcular</div></div>
+        <div class="social-item"><div class="social-num">R$0</div><div class="social-label">para começar</div></div>
+        <div class="social-item"><div class="social-num">100%</div><div class="social-label">no navegador</div></div>
+      </div>
     </div>
   </div>
+</main>
 
-  <a href="/" class="btn">
-    Usar a calculadora agora
-    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-</div>
+<footer>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <span>Feito para vendedores 🇧🇷</span>
+  </div>
+</footer>
 
 </body>
 </html>
