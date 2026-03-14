@@ -162,6 +162,7 @@ const SUPABASE_KEY = 'sb_publishable_RYARUBT9zaE8uRNGrRlJCA_BIYJ1wd8'
 const { createClient } = supabase
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY)
 const params = new URLSearchParams(window.location.search)
+const redirectAfter = params.get('redirect') || null
 if (params.get('tab') === 'login') switchTab('login')
 
 // Redireciona se já está logado
@@ -244,7 +245,7 @@ async function login(e) {
   }
 
   const plano = params.get('plano')
-  window.location.href = plano === 'pro' ? '/app?plano=pro' : '/app'
+  window.location.href = plano === 'pro' ? '/app?plano=pro' : (redirectAfter || '/app')
 }
 
 async function magicLink() {

@@ -488,6 +488,22 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-item').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-a').classList.remove('open');});
   if(!open){item.classList.add('open');ans.classList.add('open');}
 }
+
+// Verifica sessão ativa e atualiza nav
+;(async () => {
+  const { createClient: cc } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')
+  const sbp = cc('https://waxilknycqamitspnbcl.supabase.co', 'sb_publishable_RYARUBT9zaE8uRNGrRlJCA_BIYJ1wd8')
+  const { data: { session } } = await sbp.auth.getSession()
+  if (session) {
+    const pill = document.querySelector('.nav-pill')
+    if (pill) {
+      pill.textContent = 'Acessar minha conta'
+      pill.href = '/app'
+    }
+    const entrar = document.querySelector('a[href="/app/auth?tab=login"]')
+    if (entrar) entrar.style.display = 'none'
+  }
+})()
 </script>
 </body>
 </html>

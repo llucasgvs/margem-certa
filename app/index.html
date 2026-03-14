@@ -546,6 +546,10 @@ async function deletarProduto(id) {
 
 // ── STRIPE / PRO ─────────────────────────────────────────
 async function assinarPro() {
+  if (currentPerfil?.plano === 'pro') {
+    showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
+    return
+  }
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/stripe/checkout`, {
