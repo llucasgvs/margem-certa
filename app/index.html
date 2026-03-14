@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Cartela — Margem Certa</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+  --green:#00C853; --green-light:#E8FAF0; --green-mid:#00A846;
+  --bg:#FAFAF9; --surface:#FFFFFF; --dark:#0F1410;
+  --text:#1A1F1B; --muted:#6B7A6D; --border:#E4E9E5;
+  --red:#E53E3E; --red-light:#FFF5F5;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:100;}
+nav .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-weight:800;font-size:17px;color:var(--text);text-decoration:none;letter-spacing:-.4px;flex-shrink:0;}
+.logo em{color:var(--green);font-style:normal;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-plano{font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.3px;}
+.nav-plano.gratuito{background:var(--bg);border:1px solid var(--border);color:var(--muted);}
+.nav-plano.pro{background:var(--green-light);color:var(--green-mid);}
+.nav-user{font-size:13px;color:var(--muted);display:none;}
+.nav-logout{font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font);transition:color .2s;}
+.nav-logout:hover{color:var(--red);}
+
+/* LAYOUT */
+main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
+
+/* HEADER */
+.page-header{margin-bottom:28px;}
+.page-header h1{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-1px;margin-bottom:4px;}
+.page-header p{font-size:14px;color:var(--muted);}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;}
+.stat-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;}
+.stat-value{font-size:24px;font-weight:800;letter-spacing:-1px;}
+.stat-value.green{color:var(--green-mid);}
+.stat-value.red{color:var(--red);}
+
+/* BANNER PRO */
+.pro-banner{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.pro-banner-text h3{color:#fff;font-size:15px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px;}
+.pro-banner-text p{color:rgba(255,255,255,.5);font-size:12px;line-height:1.5;}
+.pro-banner-btn{background:var(--green);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s;flex-shrink:0;}
+.pro-banner-btn:active{transform:scale(.98);}
+
+/* CALCULADORA */
+.section-title{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-bottom:14px;}
+
+.calc-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;}
+.calc-header{background:var(--dark);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.calc-header-icon{width:30px;height:30px;background:rgba(0,200,83,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.calc-header strong{color:#fff;font-size:13px;font-weight:700;}
+.calc-body{padding:20px;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+.field input,.field select{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:15px;font-family:var(--font);font-weight:500;transition:border-color .2s;appearance:none;-webkit-appearance:none;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--green);background:#fff;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.select-wrap{position:relative;}
+.select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.field input[type="text"]{font-size:14px;}
+
+.calc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+.btn-calcular{background:var(--green);color:#fff;border:none;padding:14px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s,transform .15s;}
+.btn-calcular:active{transform:scale(.98);}
+.btn-salvar{background:var(--bg);color:var(--text);border:1.5px solid var(--border);padding:14px;border-radius:10px;font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;}
+.btn-salvar:hover{border-color:var(--green);color:var(--green-mid);}
+.btn-salvar:disabled{opacity:.4;cursor:not-allowed;}
+
+/* RESULTADO */
+.result-box{display:none;border-top:1px solid var(--border);margin-top:16px;padding-top:16px;}
+.result-box.show{display:block;animation:slideDown .3s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.result-total{border-radius:10px;padding:16px;text-align:center;margin-bottom:12px;}
+.result-total.profit{background:var(--green-light);}
+.result-total.loss{background:var(--red-light);}
+.result-value{font-size:36px;font-weight:800;letter-spacing:-2px;line-height:1;}
+.result-total.profit .result-value{color:var(--green-mid);}
+.result-total.loss .result-value{color:var(--red);}
+.result-label{font-size:12px;font-weight:600;margin-top:4px;}
+.result-total.profit .result-label{color:var(--green-mid);}
+.result-total.loss .result-label{color:var(--red);}
+.breakdown{font-size:13px;}
+.bk-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);}
+.bk-row:last-child{border-bottom:none;}
+.bk-row .k{color:var(--muted);}
+.bk-row .v{font-weight:700;}
+.bk-row .v.neg{color:var(--red);}
+.bk-row .v.pos{color:var(--green-mid);}
+
+/* LISTA DE PRODUTOS */
+.produtos-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.produtos-count{font-size:13px;color:var(--muted);}
+
+.produto-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:border-color .2s;}
+.produto-card:hover{border-color:var(--green);}
+.produto-nome{font-size:14px;font-weight:700;letter-spacing:-.3px;margin-bottom:3px;}
+.produto-meta{font-size:12px;color:var(--muted);}
+.produto-margem{text-align:right;flex-shrink:0;}
+.produto-margem-valor{font-size:18px;font-weight:800;letter-spacing:-.5px;}
+.produto-margem-valor.profit{color:var(--green-mid);}
+.produto-margem-valor.loss{color:var(--red);}
+.produto-margem-label{font-size:11px;color:var(--muted);}
+.produto-delete{background:none;border:none;color:var(--border);cursor:pointer;font-size:16px;transition:color .2s;padding:4px;flex-shrink:0;}
+.produto-delete:hover{color:var(--red);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
+.empty-icon{font-size:40px;margin-bottom:12px;}
+.empty-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.empty-sub{font-size:13px;line-height:1.6;}
+
+/* LOADING */
+.loading{text-align:center;padding:32px;color:var(--muted);font-size:14px;}
+
+/* PRO LOCK */
+.pro-lock{background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;padding:32px;text-align:center;}
+.pro-lock-icon{font-size:32px;margin-bottom:12px;}
+.pro-lock h3{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-bottom:6px;}
+.pro-lock p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.pro-lock-btn{background:var(--green);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s,transform .15s;}
+.pro-lock-btn:active{transform:scale(.98);}
+
+footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
+
+@media(min-width:900px){
+  nav{padding:14px 0;}
+  nav .inner{padding:0 40px;}
+  .nav-user{display:block;}
+  main{padding:40px 40px;}
+  .stats-grid{grid-template-columns:repeat(4,1fr);}
+  .app-grid{display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:start;}
+  .calc-card{margin-bottom:0;}
+  footer{padding:24px 0;}
+}
+@media(min-width:1200px){
+  nav .inner{padding:0;}
+  main{padding:40px 0;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-email"></span>
+      <span class="nav-plano gratuito" id="nav-plano">Gratuito</span>
+      <button class="nav-logout" onclick="logout()">Sair</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1>Minha Cartela</h1>
+    <p id="header-sub">Carregando...</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid" id="stats-grid" style="display:none;">
+    <div class="stat-card">
+      <div class="stat-label">Produtos</div>
+      <div class="stat-value" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Margem média</div>
+      <div class="stat-value green" id="stat-margem">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">No lucro</div>
+      <div class="stat-value green" id="stat-lucro">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">No prejuízo</div>
+      <div class="stat-value red" id="stat-prejuizo">0</div>
+    </div>
+  </div>
+
+  <!-- BANNER PRO (só aparece no gratuito) -->
+  <div class="pro-banner" id="pro-banner" style="display:none;">
+    <div class="pro-banner-text">
+      <h3>Salve produtos e monitore sua cartela</h3>
+      <p>Assine o plano Pro por R$37/mês e desbloqueie salvamento de produtos, cálculo em lote e alertas de margem.</p>
+    </div>
+    <button class="pro-banner-btn" onclick="assinarPro()">Assinar Pro →</button>
+  </div>
+
+  <div class="app-grid">
+
+    <!-- CALCULADORA -->
+    <div>
+      <div class="section-title">Calculadora</div>
+      <div class="calc-card">
+        <div class="calc-header">
+          <div class="calc-header-icon">🧮</div>
+          <strong>Calcular lucro real</strong>
+        </div>
+        <div class="calc-body">
+          <div class="field">
+            <label>Nome do produto</label>
+            <input type="text" id="prod-nome" placeholder="Ex: Creme hidratante 200ml">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Preço de venda</label>
+              <input type="number" id="prod-preco" placeholder="R$ 89,90" min="0" step="0.01" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label>Custo do produto</label>
+              <input type="number" id="prod-custo" placeholder="R$ 35,00" min="0" step="0.01" inputmode="decimal">
+            </div>
+          </div>
+          <div class="field">
+            <label>Categoria ML</label>
+            <div class="select-wrap">
+              <select id="prod-categoria">
+                <option value="0.11">Eletrônicos — 11%</option>
+                <option value="0.13" selected>Moda e vestuário — 13%</option>
+                <option value="0.14">Casa e decoração — 14%</option>
+                <option value="0.16">Beleza e cuidado — 16%</option>
+                <option value="0.18">Outros — 18%</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Envio</label>
+              <div class="select-wrap">
+                <select id="prod-envio">
+                  <option value="0">Próprio (R$0)</option>
+                  <option value="12" selected>Full pequeno</option>
+                  <option value="18">Full médio</option>
+                  <option value="28">Full grande</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Tributação</label>
+              <div class="select-wrap">
+                <select id="prod-imposto">
+                  <option value="0.06" selected>MEI — 6%</option>
+                  <option value="0.085">Simples — 8,5%</option>
+                  <option value="0.114">L. Presumido</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-actions">
+            <button class="btn-calcular" onclick="calcular()">Calcular →</button>
+            <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()" disabled>Salvar produto</button>
+          </div>
+
+          <!-- RESULTADO -->
+          <div class="result-box" id="resultado">
+            <div class="result-total" id="result-total-box">
+              <div class="result-value" id="r-lucro">—</div>
+              <div class="result-label" id="r-margem">Lucro líquido</div>
+            </div>
+            <div class="breakdown">
+              <div class="bk-row"><span class="k">Preço de venda</span><span class="v pos" id="r-preco">—</span></div>
+              <div class="bk-row"><span class="k">Comissão ML</span><span class="v neg" id="r-comissao">—</span></div>
+              <div class="bk-row"><span class="k">Frete Full</span><span class="v neg" id="r-envio">—</span></div>
+              <div class="bk-row"><span class="k">Imposto</span><span class="v neg" id="r-imposto">—</span></div>
+              <div class="bk-row"><span class="k">Custo do produto</span><span class="v neg" id="r-custo">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTA DE PRODUTOS -->
+    <div id="produtos-section">
+      <div class="produtos-header">
+        <div class="section-title" style="margin:0">Produtos salvos</div>
+        <div class="produtos-count" id="produtos-count"></div>
+      </div>
+      <div id="produtos-lista">
+        <div class="loading">Carregando...</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>Margem<strong style="color:var(--green)">Certa</strong> · Feito para vendedores 🇧🇷</footer>
+
+<script>
+const SUPABASE_URL = 'https://waxilknycqamitspnbcl.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_RYARUBT9zaE8uRNGrRlJCA_BIYJ1wd8'
+const API_URL = 'https://margem-certa-api-production.up.railway.app'
+const { createClient } = supabase
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+let currentUser = null
+let currentPerfil = null
+let ultimoCalculo = null
+
+// ── INIT ────────────────────────────────────────────────
+async function init() {
+  const { data: { session } } = await sb.auth.getSession()
+  if (!session) { window.location.href = '/app/auth'; return; }
+
+  currentUser = session.user
+  document.getElementById('nav-email').textContent = currentUser.email
+
+  await carregarPerfil(session.access_token)
+  await carregarProdutos(session.access_token)
+}
+
+async function carregarPerfil(token) {
+  try {
+    const res = await fetch(`${API_URL}/perfil`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    currentPerfil = await res.json()
+
+    const plano = currentPerfil.plano
+    const navPlano = document.getElementById('nav-plano')
+    navPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'
+    navPlano.className = `nav-plano ${plano}`
+
+    document.getElementById('header-sub').textContent = plano === 'pro'
+      ? 'Calcule e salve os produtos da sua cartela.'
+      : 'Calcule a margem dos seus produtos. Assine o Pro para salvar.'
+
+    if (plano !== 'pro') {
+      document.getElementById('pro-banner').style.display = 'flex'
+      document.getElementById('btn-salvar').title = 'Disponível no plano Pro'
+    } else {
+      document.getElementById('btn-salvar').disabled = false
+    }
+  } catch(e) {
+    console.error('Erro ao carregar perfil', e)
+  }
+}
+
+async function carregarProdutos(token) {
+  const lista = document.getElementById('produtos-lista')
+
+  if (currentPerfil?.plano !== 'pro') {
+    lista.innerHTML = `
+      <div class="pro-lock">
+        <div class="pro-lock-icon">🔒</div>
+        <h3>Salve e monitore seus produtos</h3>
+        <p>Com o plano Pro você salva produtos ilimitados, vê a margem de toda a cartela e recebe alertas quando um produto entrar no vermelho.</p>
+        <button class="pro-lock-btn" onclick="assinarPro()">Assinar Pro por R$37/mês →</button>
+      </div>`
+    return
+  }
+
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/produtos`, {
+      headers: { 'Authorization': `Bearer ${session.access_token}` }
+    })
+    const produtos = await res.json()
+    renderProdutos(produtos)
+  } catch(e) {
+    lista.innerHTML = '<div class="loading">Erro ao carregar produtos.</div>'
+  }
+}
+
+function renderProdutos(produtos) {
+  const lista = document.getElementById('produtos-lista')
+  const count = document.getElementById('produtos-count')
+
+  if (produtos.length === 0) {
+    lista.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <div class="empty-title">Nenhum produto salvo ainda</div>
+        <div class="empty-sub">Calcule a margem de um produto e clique em "Salvar produto" para adicionar à sua cartela.</div>
+      </div>`
+    count.textContent = ''
+    document.getElementById('stats-grid').style.display = 'none'
+    return
+  }
+
+  const total = produtos.length
+  const comLucro = produtos.filter(p => p.lucro >= 0).length
+  const comPrejuizo = produtos.filter(p => p.lucro < 0).length
+  const margemMedia = produtos.reduce((acc, p) => acc + p.margem, 0) / total
+
+  document.getElementById('stats-grid').style.display = 'grid'
+  document.getElementById('stat-total').textContent = total
+  document.getElementById('stat-margem').textContent = margemMedia.toFixed(1) + '%'
+  document.getElementById('stat-lucro').textContent = comLucro
+  document.getElementById('stat-prejuizo').textContent = comPrejuizo
+  count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
+
+  lista.innerHTML = produtos.map(p => `
+    <div class="produto-card">
+      <div style="flex:1;min-width:0;">
+        <div class="produto-nome">${p.nome}</div>
+        <div class="produto-meta">R$ ${p.preco_venda.toFixed(2).replace('.',',')} · custo R$ ${p.custo_produto.toFixed(2).replace('.',',')}</div>
+      </div>
+      <div class="produto-margem">
+        <div class="produto-margem-valor ${p.lucro >= 0 ? 'profit' : 'loss'}">${p.margem.toFixed(1)}%</div>
+        <div class="produto-margem-label">${p.lucro >= 0 ? 'lucro' : 'prejuízo'}</div>
+      </div>
+      <button class="produto-delete" onclick="deletarProduto('${p.id}')" title="Remover">✕</button>
+    </div>
+  `).join('')
+}
+
+// ── CALCULADORA ─────────────────────────────────────────
+function fmt(v) { return 'R$ ' + Math.abs(v).toFixed(2).replace('.', ',') }
+
+function calcular() {
+  const preco    = parseFloat(document.getElementById('prod-preco').value) || 0
+  const custo    = parseFloat(document.getElementById('prod-custo').value) || 0
+  const comRate  = parseFloat(document.getElementById('prod-categoria').value)
+  const envio    = parseFloat(document.getElementById('prod-envio').value)
+  const impRate  = parseFloat(document.getElementById('prod-imposto').value)
+
+  if (!preco || !custo) { alert('Preencha o preço de venda e o custo do produto.'); return }
+
+  const comissao = preco * comRate
+  const imposto  = preco * impRate
+  const lucro    = preco - comissao - envio - imposto - custo
+  const margem   = (lucro / preco * 100).toFixed(1)
+  const ok       = lucro >= 0
+
+  document.getElementById('r-preco').textContent    = fmt(preco)
+  document.getElementById('r-comissao').textContent = '- ' + fmt(comissao)
+  document.getElementById('r-envio').textContent    = envio > 0 ? '- ' + fmt(envio) : 'R$ 0,00'
+  document.getElementById('r-imposto').textContent  = '- ' + fmt(imposto)
+  document.getElementById('r-custo').textContent    = '- ' + fmt(custo)
+  document.getElementById('r-lucro').textContent    = (ok ? '+' : '-') + ' R$ ' + Math.abs(lucro).toFixed(2).replace('.', ',')
+  document.getElementById('r-margem').textContent   = 'Margem líquida: ' + margem + '%' + (!ok ? ' ⚠️' : '')
+  document.getElementById('result-total-box').className = 'result-total ' + (ok ? 'profit' : 'loss')
+  document.getElementById('resultado').classList.add('show')
+
+  ultimoCalculo = { preco, custo, comRate, envio, impRate, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
+
+  if (currentPerfil?.plano === 'pro') {
+    document.getElementById('btn-salvar').disabled = false
+  }
+}
+
+// ── SALVAR PRODUTO ───────────────────────────────────────
+async function salvarProduto() {
+  if (!ultimoCalculo) { alert('Calcule primeiro.'); return }
+  const nome = document.getElementById('prod-nome').value.trim()
+  if (!nome) { alert('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
+
+  const btn = document.getElementById('btn-salvar')
+  btn.disabled = true
+  btn.textContent = 'Salvando...'
+
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/produtos`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nome,
+        preco_venda: ultimoCalculo.preco,
+        custo_produto: ultimoCalculo.custo,
+        categoria: ultimoCalculo.comRate,
+        envio: ultimoCalculo.envio,
+        imposto: ultimoCalculo.impRate
+      })
+    })
+
+    if (!res.ok) throw new Error('Erro ao salvar')
+
+    btn.textContent = 'Salvo ✓'
+    setTimeout(() => { btn.textContent = 'Salvar produto'; btn.disabled = false }, 2000)
+
+    await carregarProdutos()
+
+  } catch(e) {
+    alert('Erro ao salvar produto. Tente novamente.')
+    btn.textContent = 'Salvar produto'
+    btn.disabled = false
+  }
+}
+
+// ── DELETAR PRODUTO ──────────────────────────────────────
+async function deletarProduto(id) {
+  if (!confirm('Remover este produto da cartela?')) return
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    await fetch(`${API_URL}/produtos/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${session.access_token}` }
+    })
+    await carregarProdutos()
+  } catch(e) {
+    alert('Erro ao remover produto.')
+  }
+}
+
+// ── STRIPE / PRO ─────────────────────────────────────────
+function assinarPro() {
+  // Será implementado quando configurar o Stripe
+  alert('Integração com Stripe em breve!')
+}
+
+// ── LOGOUT ───────────────────────────────────────────────
+async function logout() {
+  await sb.auth.signOut()
+  window.location.href = '/'
+}
+
+init()
+</script>
+</body>
+</html>
