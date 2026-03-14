@@ -343,14 +343,20 @@ async function init() {
 
   // Trata retorno do Stripe e plano pro
   const params = new URLSearchParams(window.location.search)
-  if (params.get('success') === '1') {
+  const planoParam = params.get('plano')
+  const successParam = params.get('success')
+  const canceledParam = params.get('canceled')
+
+  // Limpa a URL antes de qualquer coisa
+  if (planoParam || successParam || canceledParam) {
+    window.history.replaceState({}, '', '/app')
+  }
+
+  if (successParam === '1') {
     showToast('✓ Plano Pro ativado com sucesso!')
-    window.history.replaceState({}, '', '/app')
-  } else if (params.get('canceled') === '1') {
+  } else if (canceledParam === '1') {
     showToast('Pagamento cancelado.')
-    window.history.replaceState({}, '', '/app')
-  } else if (params.get('plano') === 'pro') {
-    window.history.replaceState({}, '', '/app')
+  } else if (planoParam === 'pro') {
     if (currentPerfil?.plano === 'pro') {
       showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
     } else {
