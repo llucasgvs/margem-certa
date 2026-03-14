@@ -4,7 +4,8 @@
     { "source": "/blog/comissao-mercado-livre-por-categoria", "destination": "/blog/comissao-mercado-livre-por-categoria/index.html" },
     { "source": "/blog/como-calcular-lucro-real-mercado-livre", "destination": "/blog/como-calcular-lucro-real-mercado-livre/index.html" },
     { "source": "/blog/como-precificar-produtos-mercado-livre", "destination": "/blog/como-precificar-produtos-mercado-livre/index.html" },
-    { "source": "/blog/frete-full-mercado-livre-vale-a-pena", "destination": "/blog/frete-full-mercado-livre-vale-a-pena/index.html" }
+    { "source": "/blog/frete-full-mercado-livre-vale-a-pena", "destination": "/blog/frete-full-mercado-livre-vale-a-pena/index.html" },
+    { "source": "/blog/mei-ou-simples-nacional-mercado-livre", "destination": "/blog/mei-ou-simples-nacional-mercado-livre/index.html" }
   ],
   "headers": [
     {
