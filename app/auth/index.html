@@ -209,6 +209,7 @@ async function cadastrar(e) {
 
   showMsg('msg-cadastro', 'success', 'Conta criada! Verifique seu e-mail para confirmar o cadastro.')
   btn.textContent = 'E-mail enviado ✓'
+  gtag('event', 'cadastro_realizado', { event_category: 'conversao' })
 }
 
 async function login(e) {
