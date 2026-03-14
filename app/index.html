@@ -349,9 +349,13 @@ async function init() {
   } else if (params.get('canceled') === '1') {
     showToast('Pagamento cancelado.')
     window.history.replaceState({}, '', '/app')
-  } else if (params.get('plano') === 'pro' && currentPerfil?.plano !== 'pro') {
+  } else if (params.get('plano') === 'pro') {
     window.history.replaceState({}, '', '/app')
-    await assinarPro()
+    if (currentPerfil?.plano === 'pro') {
+      showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
+    } else {
+      await assinarPro()
+    }
   }
 }
 
