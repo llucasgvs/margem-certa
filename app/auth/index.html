@@ -144,6 +144,8 @@ footer{padding:20px;text-align:center;font-size:12px;color:var(--muted);}
           <div class="msg" id="msg-login"></div>
           <button type="submit" class="auth-btn" id="btn-login">Entrar →</button>
           <div class="divider"><span>ou</span></div>
+          <button type="button" class="auth-btn" id="btn-magic" onclick="magicLink()" style="background:var(--bg);color:var(--text);border:1.5px solid var(--border);">Entrar sem senha (link por e-mail)</button>
+          <div class="msg" id="msg-magic"></div>
           <p class="auth-note"><a href="#" onclick="esqueceuSenha()">Esqueceu a senha?</a></p>
         </form>
 
@@ -232,6 +234,33 @@ async function login(e) {
   }
 
   window.location.href = '/app'
+}
+
+async function magicLink() {
+  const email = document.getElementById('login-email').value.trim()
+  if (!email) {
+    showMsg('msg-magic', 'error', 'Digite seu e-mail primeiro.')
+    return
+  }
+  const btn = document.getElementById('btn-magic')
+  btn.disabled = true
+  btn.textContent = 'Enviando link...'
+  hideMsg('msg-magic')
+
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: 'https://margem-certa.vercel.app/app' }
+  })
+
+  if (error) {
+    showMsg('msg-magic', 'error', traduzirErro(error.message))
+    btn.disabled = false
+    btn.textContent = 'Entrar sem senha (link por e-mail)'
+    return
+  }
+
+  showMsg('msg-magic', 'success', 'Link enviado! Verifique seu e-mail.')
+  btn.textContent = 'Link enviado ✓'
 }
 
 async function esqueceuSenha() {
