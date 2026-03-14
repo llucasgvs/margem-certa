@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>Blog — Margem Certa · Guias para Vendedores do Mercado Livre</title>
+<meta name="description" content="Guias práticos sobre comissão, frete Full, tributação e precificação para vendedores do Mercado Livre. Conteúdo gratuito e atualizado.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://margem-certa.vercel.app/blog">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Blog — Margem Certa · Guias para Vendedores do Mercado Livre">
+<meta property="og:description" content="Guias práticos sobre comissão, frete Full, tributação e precificação para vendedores do Mercado Livre.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://margem-certa.vercel.app/blog">
+<meta property="og:image" content="https://margem-certa.vercel.app/og-blog.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3VLXHCCFBS');</script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<style>
+:root {
+  --green:#00C853; --green-light:#E8FAF0; --green-mid:#00A846;
+  --bg:#FAFAF9; --surface:#FFFFFF; --dark:#0F1410;
+  --text:#1A1F1B; --muted:#6B7A6D; --border:#E4E9E5;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;}
+
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:100;}
+nav .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:800;font-size:17px;color:var(--text);text-decoration:none;letter-spacing:-.4px;}
+.logo em{color:var(--green);font-style:normal;}
+.nav-links{display:none;gap:28px;}
+.nav-links a{font-size:14px;font-weight:600;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-cta{background:var(--green);color:#fff;font-weight:700;font-size:13px;padding:9px 20px;border-radius:100px;text-decoration:none;white-space:nowrap;}
+
+/* HERO */
+.blog-hero{padding:56px 20px 48px;border-bottom:1px solid var(--border);}
+.blog-hero .inner{max-width:1140px;margin:0 auto;}
+.blog-chip{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px;}
+.blog-hero h1{font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:12px;}
+.blog-hero h1 em{color:var(--green);font-style:normal;}
+.blog-hero p{font-size:15px;color:var(--muted);max-width:520px;line-height:1.7;}
+
+/* GRID */
+.blog-section{padding:48px 20px 80px;}
+.blog-inner{max-width:1140px;margin:0 auto;}
+.blog-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+
+/* CARD */
+.blog-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:24px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;gap:12px;transition:border-color .2s,box-shadow .2s;}
+.blog-card:hover{border-color:var(--green);box-shadow:0 4px 20px rgba(0,200,83,.1);}
+.blog-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.blog-tag{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
+.blog-read{font-size:11px;color:var(--muted);white-space:nowrap;}
+.blog-card h2{font-size:17px;font-weight:800;letter-spacing:-.5px;line-height:1.3;margin:0;}
+.blog-card p{font-size:13px;color:var(--muted);line-height:1.65;margin:0;}
+.blog-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);}
+.blog-card-date{font-size:12px;color:var(--muted);}
+.blog-card-arrow{font-size:14px;color:var(--green-mid);font-weight:700;}
+
+/* FEATURED */
+.blog-card.featured{border-color:var(--green);background:#FAFFFC;}
+.blog-card.featured .blog-tag{background:var(--green);color:#fff;}
+
+/* CTA BOTTOM */
+.blog-cta{background:var(--dark);border-radius:16px;padding:32px 24px;text-align:center;margin-top:48px;}
+.blog-cta h3{color:#fff;font-size:20px;font-weight:800;letter-spacing:-.6px;margin-bottom:8px;}
+.blog-cta p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:20px;}
+.blog-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:15px;font-weight:800;transition:background .2s,transform .15s;letter-spacing:-.3px;}
+.blog-cta-btn:active{transform:scale(.98);}
+.blog-cta-note{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;}
+
+footer{border-top:1px solid var(--border);padding:24px 20px;}
+footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);}
+
+@media(min-width:900px){
+  nav{padding:14px 0;}
+  nav .inner{padding:0 40px;}
+  .nav-links{display:flex;}
+  .blog-hero{padding:72px 40px 56px;}
+  .blog-section{padding:56px 40px 100px;}
+  .blog-grid{grid-template-columns:repeat(2,1fr);}
+  .blog-card.featured{grid-column:span 2;}
+  .blog-card.featured{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+  .blog-card.featured .blog-card-content{display:flex;flex-direction:column;gap:12px;}
+  footer{padding:28px 0;}
+  footer .inner{padding:0 40px;}
+}
+
+@media(min-width:1200px){
+  nav .inner{padding:0;}
+  .blog-hero .inner{padding:0;}
+  .blog-inner{padding:0;}
+  footer .inner{padding:0;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <div class="nav-links">
+      <a href="/#how">Como funciona</a>
+      <a href="/#depoimentos">Depoimentos</a>
+      <a href="/#pricing">Preços</a>
+      <a href="/blog" class="active">Blog</a>
+    </div>
+    <a href="/#calculator" class="nav-cta">Calcular grátis →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="inner">
+    <div class="blog-chip">Conteúdo gratuito</div>
+    <h1>Guias para vender no ML<br><em>com margem de verdade.</em></h1>
+    <p>Tudo que você precisa saber sobre comissão, frete Full, tributação e precificação — explicado de forma direta e prática.</p>
+  </div>
+</div>
+
+<!-- ARTIGOS -->
+<div class="blog-section">
+  <div class="blog-inner">
+    <div class="blog-grid">
+
+      <!-- DESTAQUE -->
+      <a href="/blog/como-calcular-lucro-real-mercado-livre" class="blog-card featured">
+        <div class="blog-card-content">
+          <div class="blog-card-top">
+            <div class="blog-tag">Guia completo</div>
+            <div class="blog-read">10 min de leitura</div>
+          </div>
+          <h2>Como Calcular o Lucro Real no Mercado Livre em 2026</h2>
+          <p>Comissão, frete Full e imposto: o método completo para saber exatamente quanto sobra depois de cada venda. Com exemplos práticos para diferentes categorias e regimes tributários.</p>
+          <div class="blog-card-footer">
+            <span class="blog-card-date">março de 2026</span>
+            <span class="blog-card-arrow">Ler artigo →</span>
+          </div>
+        </div>
+        <div class="blog-card-content">
+          <div style="background:var(--green-light);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:11px;font-weight:700;color:var(--green-mid);text-transform:uppercase;letter-spacing:.5px;">Fórmula do lucro real</div>
+            <div style="font-size:13px;color:#2D3530;line-height:1.8;">
+              Preço de venda<br>
+              <span style="color:var(--red);font-weight:600;">− Comissão ML (11% a 18%)</span><br>
+              <span style="color:var(--red);font-weight:600;">− Frete Full (R$12 a R$28)</span><br>
+              <span style="color:var(--red);font-weight:600;">− Imposto (6% a 11,4%)</span><br>
+              <span style="color:var(--red);font-weight:600;">− Custo do produto</span><br>
+              <span style="display:block;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-weight:800;color:var(--green-mid);font-size:15px;">= Lucro líquido real</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- ARTIGO 2 -->
+      <a href="/blog/comissao-mercado-livre-por-categoria" class="blog-card">
+        <div class="blog-card-top">
+          <div class="blog-tag">Taxas e comissões</div>
+          <div class="blog-read">8 min</div>
+        </div>
+        <h2>Comissão do ML por Categoria em 2026 — Tabela Completa</h2>
+        <p>Tabela atualizada com as taxas de comissão de todas as categorias do Mercado Livre, de 11% a 18%. Saiba quanto o ML desconta em cada venda.</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">março de 2026</span>
+          <span class="blog-card-arrow">Ler artigo →</span>
+        </div>
+      </a>
+
+      <!-- ARTIGO 3 -->
+      <a href="/blog/como-precificar-produtos-mercado-livre" class="blog-card">
+        <div class="blog-card-top">
+          <div class="blog-tag">Precificação</div>
+          <div class="blog-read">10 min</div>
+        </div>
+        <h2>Como Precificar Produtos no ML Sem Vender no Prejuízo</h2>
+        <p>O método correto para calcular o preço mínimo de qualquer produto no ML, garantindo margem real a cada venda. Com exemplos por categoria.</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">março de 2026</span>
+          <span class="blog-card-arrow">Ler artigo →</span>
+        </div>
+      </a>
+
+      <!-- ARTIGO 4 -->
+      <a href="/blog/frete-full-mercado-livre-vale-a-pena" class="blog-card">
+        <div class="blog-card-top">
+          <div class="blog-tag">Envio e logística</div>
+          <div class="blog-read">9 min</div>
+        </div>
+        <h2>Frete Full Vale a Pena? Calcule o Impacto na Sua Margem</h2>
+        <p>Tabela de tarifas Full atualizada e como calcular se o Mercado Envios Full é viável para o seu produto. Inclui comparativo Full vs envio próprio.</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">março de 2026</span>
+          <span class="blog-card-arrow">Ler artigo →</span>
+        </div>
+      </a>
+
+      <!-- ARTIGO 5 -->
+      <a href="/blog/mei-ou-simples-nacional-mercado-livre" class="blog-card">
+        <div class="blog-card-top">
+          <div class="blog-tag">Tributação</div>
+          <div class="blog-read">9 min</div>
+        </div>
+        <h2>MEI ou Simples Nacional para Vender no ML? Qual É Melhor em 2026</h2>
+        <p>Comparativo completo entre MEI, Simples Nacional e Lucro Presumido. Veja o impacto real de cada regime na sua margem de lucro com exemplos práticos.</p>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">março de 2026</span>
+          <span class="blog-card-arrow">Ler artigo →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="blog-cta">
+      <h3>Calculadora gratuita de margem</h3>
+      <p>Aplique o que aprendeu nos artigos e calcule o lucro real do seu produto agora.</p>
+      <a href="/#calculator" class="blog-cta-btn">
+        Calcular meu lucro →
+      </a>
+      <p class="blog-cta-note">Gratuito · Sem cadastro · Funciona no celular</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <span>Feito para vendedores 🇧🇷</span>
+  </div>
+</footer>
+
+</body>
+</html>
