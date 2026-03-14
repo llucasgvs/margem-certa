@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/obrigado", "destination": "/obrigado.html" }
+    { "source": "/obrigado", "destination": "/obrigado.html" },
+    { "source": "/blog/comissao-mercado-livre-por-categoria", "destination": "/blog/comissao-mercado-livre-por-categoria/index.html" },
+    { "source": "/blog/como-calcular-lucro-real-mercado-livre", "destination": "/blog/como-calcular-lucro-real-mercado-livre/index.html" },
+    { "source": "/blog/como-precificar-produtos-mercado-livre", "destination": "/blog/como-precificar-produtos-mercado-livre/index.html" }
   ],
   "headers": [
     {
