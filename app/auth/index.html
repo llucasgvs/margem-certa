@@ -243,7 +243,8 @@ async function login(e) {
     return
   }
 
-  window.location.href = '/app'
+  const plano = params.get('plano')
+  window.location.href = plano === 'pro' ? '/app?plano=pro' : '/app'
 }
 
 async function magicLink() {
@@ -259,7 +260,11 @@ async function magicLink() {
 
   const { error } = await sb.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: 'https://margem-certa.vercel.app/app' }
+    options: {
+      emailRedirectTo: params.get('plano') === 'pro'
+        ? 'https://margem-certa.vercel.app/app?plano=pro'
+        : 'https://margem-certa.vercel.app/app'
+    }
   })
 
   if (error) {
