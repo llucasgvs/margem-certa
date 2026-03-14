@@ -254,7 +254,10 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
       <a href="#faq">FAQ</a>
       <a href="/blog">Blog</a>
     </div>
-    <a href="/app/auth" class="nav-pill" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'nav'})">Começar grátis</a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="/app/auth" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'login'})" style="font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;">Entrar</a>
+      <a href="/app/auth" class="nav-pill" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'nav'})">Começar grátis</a>
+    </div>
   </div>
 </nav>
 
