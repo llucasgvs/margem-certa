@@ -341,7 +341,7 @@ async function init() {
   await carregarPerfil(session.access_token)
   await carregarProdutos(session.access_token)
 
-  // Trata retorno do Stripe
+  // Trata retorno do Stripe e plano pro
   const params = new URLSearchParams(window.location.search)
   if (params.get('success') === '1') {
     showToast('✓ Plano Pro ativado com sucesso!')
@@ -349,6 +349,9 @@ async function init() {
   } else if (params.get('canceled') === '1') {
     showToast('Pagamento cancelado.')
     window.history.replaceState({}, '', '/app')
+  } else if (params.get('plano') === 'pro' && currentPerfil?.plano !== 'pro') {
+    window.history.replaceState({}, '', '/app')
+    await assinarPro()
   }
 }
 

@@ -255,8 +255,8 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
       <a href="/blog">Blog</a>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <a href="/app/auth" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'login'})" style="font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;">Entrar</a>
-      <a href="/app/auth" class="nav-pill" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'nav'})">Começar grátis</a>
+      <a href="/app/auth?tab=login" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'login'})" style="font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;">Entrar</a>
+      <a href="/app/auth?tab=cadastro" class="nav-pill" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'nav'})">Começar grátis</a>
     </div>
   </div>
 </nav>
@@ -448,9 +448,13 @@ const pEl=document.getElementById('pricing');if(pEl)pricingObs.observe(pEl);
 const fadeObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>fadeObs.observe(el));
 
-function irParaApp(origem){
-  gtag('event','cta_click',{event_category:'engajamento',event_label:origem||'calculadora'});
-  window.location.href='/app/auth';
+function irParaApp(origem) {
+  gtag('event', 'cta_click', {event_category:'engajamento', event_label:origem||'calculadora'})
+  if (origem === 'pro') {
+    window.location.href = '/app/auth?tab=cadastro&plano=pro'
+  } else {
+    window.location.href = '/app/auth?tab=cadastro'
+  }
 }
 
 function fmt(v){return 'R$ '+Math.abs(v).toFixed(2).replace('.',',');}

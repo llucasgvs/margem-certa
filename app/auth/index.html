@@ -161,6 +161,8 @@ const SUPABASE_URL = 'https://waxilknycqamitspnbcl.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_RYARUBT9zaE8uRNGrRlJCA_BIYJ1wd8'
 const { createClient } = supabase
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY)
+const params = new URLSearchParams(window.location.search)
+if (params.get('tab') === 'login') switchTab('login')
 
 // Redireciona se já está logado
 sb.auth.getSession().then(({ data }) => {
@@ -199,7 +201,12 @@ async function cadastrar(e) {
   const { error } = await sb.auth.signUp({
     email,
     password: senha,
-    options: { data: { nome } }
+    options: {
+      data: { nome },
+      emailRedirectTo: params.get('plano') === 'pro'
+        ? 'https://margem-certa.vercel.app/app?plano=pro'
+        : 'https://margem-certa.vercel.app/app'
+    }
   })
 
   if (error) {
@@ -212,6 +219,9 @@ async function cadastrar(e) {
   showMsg('msg-cadastro', 'success', 'Conta criada! Verifique seu e-mail para confirmar o cadastro.')
   btn.textContent = 'E-mail enviado ✓'
   gtag('event', 'cadastro_realizado', { event_category: 'conversao' })
+  if (params.get('plano') === 'pro') {
+    showMsg('msg-cadastro', 'success', 'Conta criada! Após confirmar o e-mail, você será direcionado para o pagamento.')
+  }
 }
 
 async function login(e) {
