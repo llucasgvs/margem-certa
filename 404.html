@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página não encontrada — Margem Certa</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3VLXHCCFBS');</script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<style>
+:root {
+  --green:#00C853; --green-light:#E8FAF0; --green-mid:#00A846;
+  --bg:#FAFAF9; --surface:#FFFFFF; --dark:#0F1410;
+  --text:#1A1F1B; --muted:#6B7A6D; --border:#E4E9E5;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 20px;}
+nav .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:800;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:-.5px;}
+.logo em{color:var(--green);font-style:normal;}
+.nav-cta{background:var(--green);color:#fff;font-weight:700;font-size:13px;padding:9px 20px;border-radius:100px;text-decoration:none;}
+
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+
+.wrap{width:100%;max-width:480px;text-align:center;}
+
+.code{font-size:96px;font-weight:800;letter-spacing:-6px;line-height:1;color:var(--border);margin-bottom:8px;animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-mid);font-size:12px;font-weight:700;padding:5px 12px;border-radius:100px;margin-bottom:20px;}
+
+h1{font-size:clamp(22px,5vw,30px);font-weight:800;letter-spacing:-1px;line-height:1.2;margin-bottom:10px;}
+h1 em{color:var(--green);font-style:normal;}
+
+p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px;}
+
+.actions{display:flex;flex-direction:column;gap:10px;}
+.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;padding:15px 24px;border-radius:12px;font-size:15px;font-weight:800;font-family:var(--font);transition:background .2s,transform .15s;letter-spacing:-.3px;}
+.btn-primary:active{transform:scale(.98);}
+.btn-secondary{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--surface);color:var(--text);text-decoration:none;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--font);border:1.5px solid var(--border);transition:border-color .2s,transform .15s;}
+.btn-secondary:active{transform:scale(.98);}
+.btn-secondary:hover{border-color:var(--green);}
+
+.divider{height:1px;background:var(--border);margin:32px 0;}
+
+.links-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px;}
+.quick-links{display:flex;flex-direction:column;gap:2px;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.quick-link{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:var(--surface);text-decoration:none;color:var(--text);font-size:14px;font-weight:600;border-bottom:1px solid var(--border);transition:background .15s;}
+.quick-link:last-child{border-bottom:none;}
+.quick-link:hover{background:var(--green-light);}
+.quick-link-arrow{color:var(--green-mid);font-size:14px;}
+
+footer{border-top:1px solid var(--border);padding:20px;}
+footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);}
+
+@media(min-width:600px){
+  .actions{flex-direction:row;}
+  .btn-primary,.btn-secondary{flex:1;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <a href="/#calculator" class="nav-cta">Calcular grátis →</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <div class="code">404</div>
+    <div class="badge">Página não encontrada</div>
+    <h1>Essa URL não existe.<br><em>Mas sua margem pode.</em></h1>
+    <p>A página que você tentou acessar não foi encontrada. Talvez o link esteja errado ou a página foi movida.</p>
+
+    <div class="actions">
+      <a href="/" class="btn-primary">
+        Ir para o início
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="/#calculator" class="btn-secondary">
+        Usar calculadora
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="links-title">Páginas úteis</div>
+    <div class="quick-links">
+      <a href="/blog" class="quick-link">
+        Blog — guias para vendedores
+        <span class="quick-link-arrow">→</span>
+      </a>
+      <a href="/blog/como-calcular-lucro-real-mercado-livre" class="quick-link">
+        Como calcular o lucro real no ML
+        <span class="quick-link-arrow">→</span>
+      </a>
+      <a href="/blog/comissao-mercado-livre-por-categoria" class="quick-link">
+        Comissão do ML por categoria
+        <span class="quick-link-arrow">→</span>
+      </a>
+      <a href="/blog/como-precificar-produtos-mercado-livre" class="quick-link">
+        Como precificar no Mercado Livre
+        <span class="quick-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="inner">
+    <a href="/" class="logo">Margem<em>Certa</em></a>
+    <span>Feito para vendedores 🇧🇷</span>
+  </div>
+</footer>
+
+</body>
+</html>
