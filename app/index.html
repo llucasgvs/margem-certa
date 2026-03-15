@@ -123,6 +123,14 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .produto-margem-label{font-size:11px;color:var(--muted);}
 .produto-delete{background:none;border:none;color:var(--border);cursor:pointer;font-size:16px;transition:color .2s;padding:4px;flex-shrink:0;}
 .produto-delete:hover{color:var(--red);}
+.produto-edit{background:none;border:none;color:var(--border);cursor:pointer;font-size:15px;transition:color .2s;padding:4px;flex-shrink:0;}
+.produto-edit:hover{color:var(--green-mid);}
+.produto-card.editing{border-color:var(--green);background:var(--green-light);}
+
+.btn-cancelar{width:100%;background:none;border:1.5px solid var(--border);color:var(--muted);padding:11px;border-radius:10px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;margin-top:8px;transition:all .2s;display:none;}
+.btn-cancelar:hover{border-color:var(--red);color:var(--red);}
+.calc-card.edit-mode .calc-header{background:#0d2b1a;}
+.calc-card.edit-mode{border-color:var(--green);}
 
 /* EMPTY STATE */
 .empty-state{text-align:center;padding:48px 20px;color:var(--muted);}
@@ -229,8 +237,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <div class="section-title">Calculadora</div>
       <div class="calc-card">
         <div class="calc-header">
-          <div class="calc-header-icon">🧮</div>
-          <strong>Calcular lucro real</strong>
+          <div class="calc-header-icon" id="calc-header-icon">🧮</div>
+          <strong id="calc-header-title">Calcular lucro real</strong>
         </div>
         <div class="calc-body">
           <div class="field">
@@ -288,6 +296,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()" disabled>Salvar produto</button>
           </div>
           <div class="calc-error" id="calc-error"></div>
+          <button class="btn-cancelar" id="btn-cancelar" onclick="cancelarEdicao()">← Cancelar edição</button>
 
           <!-- RESULTADO -->
           <div class="result-box" id="resultado">
@@ -335,6 +344,8 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY)
 let currentUser = null
 let currentPerfil = null
 let ultimoCalculo = null
+let editandoId = null
+let produtosCache = []
 
 // ── INIT ────────────────────────────────────────────────
 async function init() {
@@ -455,8 +466,10 @@ function renderProdutos(produtos) {
   document.getElementById('stat-prejuizo').textContent = comPrejuizo
   count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
 
+  produtosCache = produtos
+
   lista.innerHTML = produtos.map(p => `
-    <div class="produto-card">
+    <div class="produto-card" id="card-${p.id}">
       <div style="flex:1;min-width:0;">
         <div class="produto-nome">${escapeHtml(p.nome)}</div>
         <div class="produto-meta">R$ ${p.preco_venda.toFixed(2).replace('.',',')} · custo R$ ${p.custo_produto.toFixed(2).replace('.',',')}</div>
@@ -465,6 +478,7 @@ function renderProdutos(produtos) {
         <div class="produto-margem-valor ${p.lucro >= 0 ? 'profit' : 'loss'}">${p.margem.toFixed(1)}%</div>
         <div class="produto-margem-label">${p.lucro >= 0 ? 'lucro' : 'prejuízo'}</div>
       </div>
+      <button class="produto-edit" onclick="editarProduto('${p.id}')" title="Editar">✎</button>
       <button class="produto-delete" onclick="deletarProduto('${p.id}')" title="Remover">✕</button>
     </div>
   `).join('')
@@ -477,6 +491,51 @@ function escapeHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
+}
+
+// ── EDIÇÃO DE PRODUTO ────────────────────────────────────
+function editarProduto(id) {
+  const p = produtosCache.find(x => x.id === id)
+  if (!p) return
+
+  // Remove highlight anterior
+  document.querySelectorAll('.produto-card.editing').forEach(el => el.classList.remove('editing'))
+  document.getElementById(`card-${id}`)?.classList.add('editing')
+
+  editandoId = id
+  document.getElementById('prod-nome').value = p.nome
+  document.getElementById('prod-preco').value = p.preco_venda
+  document.getElementById('prod-custo').value = p.custo_produto
+  document.getElementById('prod-categoria').value = p.categoria
+  document.getElementById('prod-envio').value = p.envio
+  document.getElementById('prod-imposto').value = p.imposto
+
+  const nome_curto = p.nome.length > 22 ? p.nome.slice(0, 22) + '…' : p.nome
+  document.getElementById('calc-header-title').textContent = `Editando: ${nome_curto}`
+  document.getElementById('calc-header-icon').textContent = '✏️'
+  document.querySelector('.calc-card').classList.add('edit-mode')
+  document.getElementById('btn-salvar').textContent = 'Atualizar produto'
+  document.getElementById('btn-salvar').disabled = false
+  document.getElementById('btn-cancelar').style.display = 'block'
+
+  calcular()
+  document.querySelector('.calc-card').scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function cancelarEdicao() {
+  editandoId = null
+  document.querySelectorAll('.produto-card.editing').forEach(el => el.classList.remove('editing'))
+  document.getElementById('calc-header-title').textContent = 'Calcular lucro real'
+  document.getElementById('calc-header-icon').textContent = '🧮'
+  document.querySelector('.calc-card').classList.remove('edit-mode')
+  document.getElementById('btn-salvar').textContent = 'Salvar produto'
+  document.getElementById('btn-salvar').disabled = true
+  document.getElementById('btn-cancelar').style.display = 'none'
+  document.getElementById('prod-nome').value = ''
+  document.getElementById('prod-preco').value = ''
+  document.getElementById('prod-custo').value = ''
+  document.getElementById('resultado').classList.remove('show')
+  hideCalcError()
 }
 
 // ── CALCULADORA ─────────────────────────────────────────
@@ -535,20 +594,23 @@ function calcular() {
   }
 }
 
-// ── SALVAR PRODUTO ───────────────────────────────────────
+// ── SALVAR / ATUALIZAR PRODUTO ───────────────────────────
 async function salvarProduto() {
-  if (!ultimoCalculo) { alert('Calcule primeiro.'); return }
+  if (!ultimoCalculo) { showCalcError('Calcule o produto antes de salvar.'); return }
   const nome = document.getElementById('prod-nome').value.trim()
-  if (!nome) { alert('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
+  if (!nome) { showCalcError('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
 
   const btn = document.getElementById('btn-salvar')
   btn.disabled = true
-  btn.textContent = 'Salvando...'
+  btn.textContent = editandoId ? 'Atualizando...' : 'Salvando...'
 
   try {
     const { data: { session } } = await sb.auth.getSession()
-    const res = await fetch(`${API_URL}/produtos`, {
-      method: 'POST',
+    const url = editandoId ? `${API_URL}/produtos/${editandoId}` : `${API_URL}/produtos`
+    const method = editandoId ? 'PUT' : 'POST'
+
+    const res = await fetch(url, {
+      method,
       headers: {
         'Authorization': `Bearer ${session.access_token}`,
         'Content-Type': 'application/json'
@@ -565,14 +627,19 @@ async function salvarProduto() {
 
     if (!res.ok) throw new Error('Erro ao salvar')
 
-    btn.textContent = 'Salvo ✓'
-    setTimeout(() => { btn.textContent = 'Salvar produto'; btn.disabled = false }, 2000)
+    if (editandoId) {
+      showToast('Produto atualizado com sucesso.')
+      cancelarEdicao()
+    } else {
+      btn.textContent = 'Salvo ✓'
+      setTimeout(() => { btn.textContent = 'Salvar produto'; btn.disabled = false }, 2000)
+    }
 
     await carregarProdutos()
 
   } catch(e) {
-    alert('Erro ao salvar produto. Tente novamente.')
-    btn.textContent = 'Salvar produto'
+    showToast('Erro ao salvar produto. Tente novamente.', 'error')
+    btn.textContent = editandoId ? 'Atualizar produto' : 'Salvar produto'
     btn.disabled = false
   }
 }
