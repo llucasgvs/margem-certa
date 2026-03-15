@@ -161,6 +161,52 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 
 footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
 
+/* IMPORTAÇÃO EM LOTE */
+.lote-btn{font-size:12px;font-weight:700;color:var(--green-mid);background:none;border:1.5px solid var(--green);padding:5px 12px;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;display:none;}
+.lote-btn:hover{background:var(--green-light);}
+.lote-painel{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;display:none;}
+.lote-painel.show{display:block;}
+.lote-painel-title{font-size:14px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
+.lote-painel-sub{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.lote-config{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+.lote-config .field{margin-bottom:0;}
+.lote-textarea{width:100%;min-height:110px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:13px;font-family:var(--font);resize:vertical;transition:border-color .2s;line-height:1.6;}
+.lote-textarea:focus{outline:none;border-color:var(--green);background:#fff;}
+.lote-textarea-hint{font-size:11px;color:var(--muted);margin-top:5px;margin-bottom:12px;}
+.lote-parse-btn{width:100%;background:var(--green);color:#fff;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s;}
+.lote-parse-btn:hover{background:var(--green-mid);}
+.lote-preview{margin-top:18px;display:none;}
+.lote-preview.show{display:block;}
+.lote-preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;}
+.lote-preview-header h4{font-size:13px;font-weight:800;letter-spacing:-.2px;}
+.lote-preview-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.lote-sel-all{font-size:12px;font-weight:600;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font);padding:0;}
+.lote-sel-all:hover{color:var(--text);}
+.lote-save-btn{background:var(--green);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s;white-space:nowrap;}
+.lote-save-btn:disabled{opacity:.4;cursor:not-allowed;}
+.lote-table{width:100%;border-collapse:collapse;font-size:13px;}
+.lote-table th{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.lote-table td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.lote-table tr:last-child td{border-bottom:none;}
+.lote-table tr.danger-row td:first-child{border-left:3px solid var(--red);}
+.lote-table tr.danger-row{background:var(--red-light);}
+.lote-input{width:100%;background:transparent;border:1.5px solid transparent;border-radius:6px;padding:4px 6px;font-size:13px;font-family:var(--font);color:var(--text);transition:border-color .2s;}
+.lote-input:focus{outline:none;border-color:var(--green);background:#fff;}
+.lote-margem{font-weight:800;font-size:13px;letter-spacing:-.3px;}
+.lote-margem.profit{color:var(--green-mid);}
+.lote-margem.loss{color:var(--red);}
+.lote-erro-parse{background:var(--red-light);color:var(--red);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;margin-top:8px;display:none;}
+.lote-erro-parse.show{display:block;}
+.lote-file-row{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
+.lote-file-btn{font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;font-family:var(--font);transition:all .2s;white-space:nowrap;}
+.lote-file-btn:hover{border-color:var(--green);color:var(--green-mid);}
+.lote-file-sep{font-size:12px;color:var(--muted);}
+.lote-config{grid-template-columns:1fr 1fr;}
+.lote-config .field:last-child{grid-column:span 2;}
+.lote-preview-header{flex-wrap:wrap;gap:8px;}
+.lote-preview-actions{flex-wrap:wrap;}
+.lote-save-btn{flex:1;min-width:160px;text-align:center;}
+
 /* PORTAL BTN */
 .nav-portal{font-size:12px;font-weight:600;color:var(--green-mid);background:none;border:1px solid var(--green);padding:5px 12px;border-radius:100px;cursor:pointer;font-family:var(--font);transition:all .2s;display:none;}
 .nav-portal:hover{background:var(--green-light);}
@@ -174,6 +220,13 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .calc-error{display:none;background:var(--red-light);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:8px;}
 .calc-error.show{display:block;}
 
+@media(max-width:480px){
+  .nav-portal{display:none !important;}
+}
+@media(min-width:600px){
+  .lote-config{grid-template-columns:1fr 1fr 1fr;}
+  .lote-config .field:last-child{grid-column:auto;}
+}
 @media(min-width:900px){
   nav{padding:14px 0;}
   nav .inner{padding:0 40px;}
@@ -340,6 +393,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <div class="produtos-header">
         <div class="section-title" style="margin:0">Produtos salvos</div>
         <div class="produtos-header-right">
+          <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
           <span class="produtos-count" id="produtos-count"></span>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
@@ -351,6 +405,86 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
           </select>
         </div>
       </div>
+
+      <!-- PAINEL IMPORTAÇÃO EM LOTE -->
+      <div class="lote-painel" id="lote-painel">
+        <div class="lote-painel-title">Importar produtos em lote</div>
+        <div class="lote-painel-sub">Cole os dados direto do Excel ou Google Sheets.<br>Formato: <strong>nome | preço de venda | custo do produto</strong> — uma linha por produto. Máximo 25.</div>
+
+        <div class="lote-config">
+          <div class="field">
+            <label>Categoria ML</label>
+            <div class="select-wrap">
+              <select id="lote-categoria">
+                <option value="0.11">Eletrônicos — 11%</option>
+                <option value="0.13" selected>Moda e vestuário — 13%</option>
+                <option value="0.14">Casa e decoração — 14%</option>
+                <option value="0.16">Beleza e cuidado — 16%</option>
+                <option value="0.18">Outros — 18%</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Envio</label>
+            <div class="select-wrap">
+              <select id="lote-envio">
+                <option value="0">Próprio (R$0)</option>
+                <option value="12" selected>Full pequeno</option>
+                <option value="18">Full médio</option>
+                <option value="28">Full grande</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Tributação</label>
+            <div class="select-wrap">
+              <select id="lote-imposto">
+                <option value="0.06" selected>MEI — 6%</option>
+                <option value="0.085">Simples — 8,5%</option>
+                <option value="0.114">L. Presumido</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="lote-file-row">
+          <label class="lote-file-btn" for="lote-file-input">📎 Subir CSV ou Excel</label>
+          <input type="file" id="lote-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="loteArquivo(this)">
+          <span class="lote-file-sep">ou cole abaixo:</span>
+        </div>
+        <textarea class="lote-textarea" id="lote-textarea" placeholder="Creme hidratante 200ml	89,90	35,00&#10;Nécessaire viagem	49,90	18,00&#10;Kit skincare premium	199,90	75,00"></textarea>
+        <div class="lote-textarea-hint">Dica: copie direto do Excel/Sheets — colunas separadas por Tab são reconhecidas automaticamente.</div>
+        <div class="lote-erro-parse" id="lote-erro-parse"></div>
+        <button class="lote-parse-btn" onclick="parseLote()">Calcular margens →</button>
+
+        <!-- PREVIEW -->
+        <div class="lote-preview" id="lote-preview">
+          <div class="lote-preview-header">
+            <h4 id="lote-preview-titulo">0 produtos</h4>
+            <div class="lote-preview-actions">
+              <button class="lote-sel-all" onclick="loteSelectAll(true)">Selecionar todos</button>
+              <button class="lote-sel-all" onclick="loteSelectAll(false)">Desmarcar todos</button>
+              <button class="lote-save-btn" id="lote-save-btn" onclick="salvarLote()" disabled>Salvar selecionados (0)</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="lote-table">
+              <thead>
+                <tr>
+                  <th style="width:32px;"></th>
+                  <th>Nome</th>
+                  <th>Preço</th>
+                  <th>Custo</th>
+                  <th>Margem</th>
+                  <th>Lucro/un.</th>
+                </tr>
+              </thead>
+              <tbody id="lote-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <div id="produtos-lista">
         <div class="loading">Carregando...</div>
       </div>
@@ -433,6 +567,7 @@ async function carregarPerfil(token) {
     } else {
       document.getElementById('btn-salvar').disabled = false
       document.getElementById('nav-portal').style.display = 'block'
+      document.getElementById('lote-btn').style.display = 'block'
     }
   } catch(e) {
     console.error('Erro ao carregar perfil', e)
@@ -802,6 +937,247 @@ async function abrirPortal() {
 async function logout() {
   await sb.auth.signOut()
   window.location.href = '/'
+}
+
+// ── IMPORTAÇÃO EM LOTE ───────────────────────────────────
+let loteDados = []
+
+function carregarSheetJS() {
+  return new Promise((resolve, reject) => {
+    if (window.XLSX) { resolve(); return }
+    const s = document.createElement('script')
+    s.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js'
+    s.onload = resolve
+    s.onerror = () => reject(new Error('Falha ao carregar leitor de Excel'))
+    document.head.appendChild(s)
+  })
+}
+
+async function loteArquivo(input) {
+  const file = input.files[0]
+  if (!file) return
+  input.value = ''
+  const erroEl = document.getElementById('lote-erro-parse')
+  erroEl.classList.remove('show')
+
+  // Rejeita arquivos que não sejam CSV ou Excel
+  if (!/\.(csv|xlsx?)$/i.test(file.name)) {
+    erroEl.textContent = 'Formato inválido. Envie apenas arquivos .csv, .xlsx ou .xls.'
+    erroEl.classList.add('show')
+    return
+  }
+
+  if (/\.xlsx?$/i.test(file.name)) {
+    // Excel — carrega SheetJS e converte primeira planilha para texto TSV
+    const btn = document.querySelector('.lote-file-btn')
+    btn.textContent = '⏳ Lendo Excel...'
+    try {
+      await carregarSheetJS()
+      const buf = await file.arrayBuffer()
+      const wb  = XLSX.read(buf, { type: 'array' })
+      const ws  = wb.Sheets[wb.SheetNames[0]]
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' })
+      // Converte para texto tab-separado (mesmo formato que o parse espera)
+      const texto = rows
+        .filter(r => r.some(c => String(c).trim()))
+        .map(r => r.map(c => String(c).trim()).join('\t'))
+        .join('\n')
+      document.getElementById('lote-textarea').value = texto
+      btn.textContent = '📎 Subir CSV ou Excel'
+    } catch(e) {
+      erroEl.textContent = e.message || 'Erro ao ler arquivo Excel.'
+      erroEl.classList.add('show')
+      document.querySelector('.lote-file-btn').textContent = '📎 Subir CSV ou Excel'
+    }
+    return
+  }
+
+  // CSV — lê como texto
+  const reader = new FileReader()
+  reader.onload = e => {
+    document.getElementById('lote-textarea').value = e.target.result.trim()
+  }
+  reader.readAsText(file, 'UTF-8')
+}
+
+function toggleLotePanel() {
+  const p = document.getElementById('lote-painel')
+  p.classList.toggle('show')
+  if (p.classList.contains('show')) document.getElementById('lote-textarea').focus()
+}
+
+function calcularLinhaDados(nome, preco, custo, categoria, envio, imposto) {
+  const comissao = preco * categoria
+  const imp = preco * imposto
+  const lucro = parseFloat((preco - comissao - envio - imp - custo).toFixed(2))
+  const margem = parseFloat((lucro / preco * 100).toFixed(1))
+  return { nome, preco_venda: preco, custo_produto: custo, categoria, envio, imposto, lucro, margem }
+}
+
+function parseLote() {
+  const raw = document.getElementById('lote-textarea').value.trim()
+  const erroEl = document.getElementById('lote-erro-parse')
+  erroEl.classList.remove('show')
+
+  if (!raw) { erroEl.textContent = 'Cole os dados antes de calcular.'; erroEl.classList.add('show'); return }
+
+  const categoria = parseFloat(document.getElementById('lote-categoria').value)
+  const envio     = parseFloat(document.getElementById('lote-envio').value)
+  const imposto   = parseFloat(document.getElementById('lote-imposto').value)
+
+  // Remove linhas de comentário (#), linhas vazias e linhas só com separadores
+  const linhas = raw.split('\n')
+    .map(l => l.trim())
+    .filter(l => l && !l.startsWith('#') && !l.startsWith('//'))
+
+  if (!linhas.length) {
+    erroEl.textContent = 'Nenhum dado válido encontrado no arquivo.'
+    erroEl.classList.add('show'); return
+  }
+
+  if (linhas.length > 26) { // 26 = 25 dados + possível cabeçalho
+    erroEl.textContent = `Máximo de 25 produtos. Arquivo tem ${linhas.length} linhas.`
+    erroEl.classList.add('show'); return
+  }
+
+  // Detecta separador dominante
+  const sepPrimeira = linhas[0].includes('\t') ? '\t' : linhas[0].includes(';') ? ';' : ','
+
+  // Detecta e pula cabeçalho (col[1] não é numérico)
+  const colsPrimeira = linhas[0].split(sepPrimeira).map(c => c.trim())
+  const temCabecalho = colsPrimeira.length >= 2 &&
+    isNaN(parseFloat(colsPrimeira[1].replace(',', '.').replace(/[^\d.]/g, '')))
+  const linhasParseadas = temCabecalho ? linhas.slice(1) : linhas
+
+  if (!linhasParseadas.length) {
+    erroEl.textContent = 'Arquivo tem apenas cabeçalho, sem dados de produtos.'
+    erroEl.classList.add('show'); return
+  }
+
+  // Verifica número de colunas: deve ser exatamente 3
+  // Verifica nas primeiras 3 linhas de dados
+  const amostra = linhasParseadas.slice(0, 3)
+  for (const linha of amostra) {
+    const cols = linha.split(sepPrimeira)
+    if (cols.length !== 3) {
+      erroEl.textContent = `Formato inválido: encontrado ${cols.length} coluna${cols.length > 1 ? 's' : ''} (esperado exatamente 3: nome, preço de venda, custo). Verifique se é o arquivo correto.`
+      erroEl.classList.add('show'); return
+    }
+  }
+
+  const erros = [], dados = []
+  linhasParseadas.forEach((linha, i) => {
+    const cols = linha.split(sepPrimeira).map(c => c.trim())
+
+    if (cols.length !== 3) { erros.push(`Linha ${i+1}: ${cols.length} colunas (esperado 3)`); return }
+
+    const nome  = cols[0]
+    const preco = parseFloat(cols[1].replace(',', '.').replace(/[^\d.]/g, ''))
+    const custo = parseFloat(cols[2].replace(',', '.').replace(/[^\d.]/g, ''))
+
+    // Nome não pode ser vazio ou puramente numérico
+    if (!nome || nome.length < 2) { erros.push(`Linha ${i+1}: nome inválido ("${nome}")`); return }
+    if (/^\d+([.,]\d+)?$/.test(nome)) { erros.push(`Linha ${i+1}: nome parece ser um número — verifique a ordem das colunas`); return }
+
+    // Preço: deve ser número válido entre R$0,01 e R$50.000
+    if (isNaN(preco) || preco <= 0)      { erros.push(`Linha ${i+1}: preço inválido ("${cols[1]}")`); return }
+    if (preco > 50000)                   { erros.push(`Linha ${i+1}: preço R$${preco} acima do máximo (R$50.000)`); return }
+
+    // Custo: deve ser número válido entre R$0 e R$50.000
+    if (isNaN(custo) || custo < 0)       { erros.push(`Linha ${i+1}: custo inválido ("${cols[2]}")`); return }
+    if (custo > 50000)                   { erros.push(`Linha ${i+1}: custo R$${custo} acima do máximo (R$50.000)`); return }
+
+    // Custo não pode ser muito maior que o preço (provável troca de colunas)
+    if (custo > preco * 3)               { erros.push(`Linha ${i+1}: custo (R$${custo}) muito maior que preço (R$${preco}) — colunas invertidas?`); return }
+
+    dados.push(calcularLinhaDados(nome, preco, custo, categoria, envio, imposto))
+  })
+
+  if (erros.length) {
+    erroEl.textContent = erros.slice(0, 3).join(' · ') + (erros.length > 3 ? ` (+${erros.length-3} erros)` : '')
+    erroEl.classList.add('show')
+  }
+  if (!dados.length) return
+  loteDados = dados
+  renderLotePreview()
+}
+
+function renderLotePreview() {
+  document.getElementById('lote-tbody').innerHTML = loteDados.map((p, i) => `
+    <tr class="${p.lucro < 0 ? 'danger-row' : ''}" id="lote-row-${i}">
+      <td><input type="checkbox" class="lote-check" data-i="${i}" checked onchange="atualizarContadorLote()"></td>
+      <td><input class="lote-input" style="min-width:130px;" value="${escapeHtml(p.nome)}" onchange="loteEditarCampo(${i},'nome',this.value)"></td>
+      <td><input class="lote-input" style="width:80px;" type="number" value="${p.preco_venda}" min="0.01" step="0.01" onchange="loteEditarNumero(${i},'preco_venda',this.value)"></td>
+      <td><input class="lote-input" style="width:80px;" type="number" value="${p.custo_produto}" min="0" step="0.01" onchange="loteEditarNumero(${i},'custo_produto',this.value)"></td>
+      <td><span class="lote-margem ${p.lucro >= 0 ? 'profit' : 'loss'}" id="lote-margem-${i}">${p.margem.toFixed(1)}%</span></td>
+      <td><span class="lote-margem ${p.lucro >= 0 ? 'profit' : 'loss'}" id="lote-lucro-${i}">${p.lucro >= 0 ? '+' : ''}R$ ${Math.abs(p.lucro).toFixed(2).replace('.',',')}</span></td>
+    </tr>
+  `).join('')
+  document.getElementById('lote-preview-titulo').textContent = `${loteDados.length} produto${loteDados.length !== 1 ? 's' : ''} encontrado${loteDados.length !== 1 ? 's' : ''}`
+  document.getElementById('lote-preview').classList.add('show')
+  atualizarContadorLote()
+}
+
+function loteEditarCampo(i, field, val) { loteDados[i][field] = val }
+
+function loteEditarNumero(i, field, val) {
+  const num = parseFloat(val)
+  if (isNaN(num) || num < 0) return
+  loteDados[i][field] = num
+  const p = loteDados[i]
+  const r = calcularLinhaDados(p.nome, p.preco_venda, p.custo_produto, p.categoria, p.envio, p.imposto)
+  loteDados[i].lucro = r.lucro; loteDados[i].margem = r.margem
+  const ok = r.lucro >= 0
+  document.getElementById(`lote-row-${i}`).className = ok ? '' : 'danger-row'
+  document.getElementById(`lote-margem-${i}`).textContent = r.margem.toFixed(1) + '%'
+  document.getElementById(`lote-margem-${i}`).className = 'lote-margem ' + (ok ? 'profit' : 'loss')
+  document.getElementById(`lote-lucro-${i}`).textContent = (ok ? '+' : '') + 'R$ ' + Math.abs(r.lucro).toFixed(2).replace('.', ',')
+  document.getElementById(`lote-lucro-${i}`).className = 'lote-margem ' + (ok ? 'profit' : 'loss')
+}
+
+function loteSelectAll(check) {
+  document.querySelectorAll('.lote-check').forEach(el => el.checked = check)
+  atualizarContadorLote()
+}
+
+function atualizarContadorLote() {
+  const n = document.querySelectorAll('.lote-check:checked').length
+  const btn = document.getElementById('lote-save-btn')
+  btn.textContent = `Salvar selecionados (${n})`
+  btn.disabled = n === 0
+}
+
+async function salvarLote() {
+  const checks = [...document.querySelectorAll('.lote-check:checked')]
+  if (!checks.length) return
+  const btn = document.getElementById('lote-save-btn')
+  btn.disabled = true; btn.textContent = 'Salvando...'
+
+  const selecionados = checks.map(el => {
+    const p = loteDados[parseInt(el.dataset.i)]
+    return { nome: p.nome, preco_venda: p.preco_venda, custo_produto: p.custo_produto,
+             categoria: p.categoria, envio: p.envio, imposto: p.imposto }
+  })
+
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/produtos/lote`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(selecionados)
+    })
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || 'Erro ao salvar') }
+    const { inseridos } = await res.json()
+    showToast(`${inseridos} produto${inseridos !== 1 ? 's' : ''} importado${inseridos !== 1 ? 's' : ''} com sucesso.`)
+    document.getElementById('lote-painel').classList.remove('show')
+    document.getElementById('lote-textarea').value = ''
+    document.getElementById('lote-preview').classList.remove('show')
+    loteDados = []
+    await carregarProdutos()
+  } catch(e) {
+    showToast(e.message || 'Erro ao importar.', 'error')
+    btn.disabled = false; atualizarContadorLote()
+  }
 }
 
 init()
