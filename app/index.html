@@ -118,6 +118,13 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .produtos-count{font-size:13px;color:var(--muted);}
 .sort-select{font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 24px 5px 10px;font-family:var(--font);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A6D'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s;}
 .sort-select:focus{outline:none;border-color:var(--green);}
+@media(max-width:600px){
+  .produtos-header{flex-wrap:wrap;}
+  .produtos-header-right{width:100%;justify-content:space-between;}
+}
+.lote-manual-toggle{font-size:13px;color:var(--green-mid);background:none;border:none;cursor:pointer;padding:0;font-family:var(--font);font-weight:600;text-decoration:underline;margin-bottom:10px;display:block;}
+.lote-manual-section{display:none;}
+.lote-manual-section.show{display:block;}
 
 .produto-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:border-color .2s;}
 .produto-card:hover{border-color:var(--green);}
@@ -450,12 +457,14 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div class="lote-file-row">
           <label class="lote-file-btn" for="lote-file-input">📎 Subir CSV ou Excel</label>
           <input type="file" id="lote-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="loteArquivo(this)">
-          <span class="lote-file-sep">ou cole abaixo:</span>
         </div>
-        <textarea class="lote-textarea" id="lote-textarea" placeholder="Creme hidratante 200ml	89,90	35,00&#10;Nécessaire viagem	49,90	18,00&#10;Kit skincare premium	199,90	75,00"></textarea>
-        <div class="lote-textarea-hint">Dica: copie direto do Excel/Sheets — colunas separadas por Tab são reconhecidas automaticamente.</div>
+        <button class="lote-manual-toggle" id="lote-manual-toggle" onclick="toggleLoteManual()">✏️ Digitar manualmente</button>
+        <div class="lote-manual-section" id="lote-manual-section">
+          <textarea class="lote-textarea" id="lote-textarea" placeholder="Creme hidratante 200ml	89,90	35,00&#10;Nécessaire viagem	49,90	18,00&#10;Kit skincare premium	199,90	75,00"></textarea>
+          <div class="lote-textarea-hint">Dica: copie direto do Excel/Sheets — colunas separadas por Tab são reconhecidas automaticamente.</div>
+          <button class="lote-parse-btn" onclick="parseLote()">Calcular margens →</button>
+        </div>
         <div class="lote-erro-parse" id="lote-erro-parse"></div>
-        <button class="lote-parse-btn" onclick="parseLote()">Calcular margens →</button>
 
         <!-- PREVIEW -->
         <div class="lote-preview" id="lote-preview">
@@ -984,6 +993,7 @@ async function loteArquivo(input) {
         .join('\n')
       document.getElementById('lote-textarea').value = texto
       btn.textContent = '📎 Subir CSV ou Excel'
+      parseLote()
     } catch(e) {
       erroEl.textContent = e.message || 'Erro ao ler arquivo Excel.'
       erroEl.classList.add('show')
@@ -996,14 +1006,21 @@ async function loteArquivo(input) {
   const reader = new FileReader()
   reader.onload = e => {
     document.getElementById('lote-textarea').value = e.target.result.trim()
+    parseLote()
   }
   reader.readAsText(file, 'UTF-8')
 }
 
 function toggleLotePanel() {
-  const p = document.getElementById('lote-painel')
-  p.classList.toggle('show')
-  if (p.classList.contains('show')) document.getElementById('lote-textarea').focus()
+  document.getElementById('lote-painel').classList.toggle('show')
+}
+
+function toggleLoteManual() {
+  const s = document.getElementById('lote-manual-section')
+  const btn = document.getElementById('lote-manual-toggle')
+  const show = s.classList.toggle('show')
+  btn.textContent = show ? '✕ Fechar digitação' : '✏️ Digitar manualmente'
+  if (show) document.getElementById('lote-textarea').focus()
 }
 
 function calcularLinhaDados(nome, preco, custo, categoria, envio, imposto) {
