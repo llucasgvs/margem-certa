@@ -665,7 +665,7 @@ function renderProdutos(produtos) {
   margemEl.className = 'stat-value ' + (margemMedia >= 0 ? 'green' : 'red')
   document.getElementById('stat-lucro').textContent = comLucro
   document.getElementById('stat-prejuizo').textContent = comPrejuizo
-  lucroTotalEl.textContent = (lucroTotal >= 0 ? '+ ' : '- ') + 'R$ ' + Math.abs(lucroTotal).toFixed(2).replace('.', ',')
+  lucroTotalEl.textContent = (lucroTotal >= 0 ? '+ ' : '- ') + 'R$\u00A0' + Math.abs(lucroTotal).toFixed(2).replace('.', ',')
   lucroTotalEl.className = 'stat-value ' + (lucroTotal >= 0 ? 'green' : 'red')
   count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
 
@@ -677,7 +677,7 @@ function renderProdutos(produtos) {
     <div class="produto-card${p.lucro < 0 ? ' danger' : ''}" id="card-${p.id}">
       <div style="flex:1;min-width:0;">
         <div class="produto-nome">${escapeHtml(p.nome)}</div>
-        <div class="produto-meta">R$ ${p.preco_venda.toFixed(2).replace('.',',')} · custo R$ ${p.custo_produto.toFixed(2).replace('.',',')}</div>
+        <div class="produto-meta">R$\u00A0${p.preco_venda.toFixed(2).replace('.',',')} · custo R$\u00A0${p.custo_produto.toFixed(2).replace('.',',')}</div>
       </div>
       ${p.lucro < 0 ? '<span class="produto-danger-icon" title="Produto no prejuízo">⚠️</span>' : ''}
       <div class="produto-margem">
@@ -745,7 +745,7 @@ function cancelarEdicao() {
 }
 
 // ── CALCULADORA ─────────────────────────────────────────
-function fmt(v) { return 'R$ ' + Math.abs(v).toFixed(2).replace('.', ',') }
+function fmt(v) { return 'R$\u00A0' + Math.abs(v).toFixed(2).replace('.', ',') }
 
 function showCalcError(msg) {
   const el = document.getElementById('calc-error')
@@ -785,7 +785,7 @@ function calcular() {
   document.getElementById('r-envio').textContent    = envio > 0 ? '- ' + fmt(envio) : 'R$ 0,00'
   document.getElementById('r-imposto').textContent  = '- ' + fmt(imposto)
   document.getElementById('r-custo').textContent    = '- ' + fmt(custo)
-  document.getElementById('r-lucro').textContent    = (ok ? '+' : '-') + ' R$ ' + Math.abs(lucro).toFixed(2).replace('.', ',')
+  document.getElementById('r-lucro').textContent    = (ok ? '+' : '-') + ' R$\u00A0' + Math.abs(lucro).toFixed(2).replace('.', ',')
   document.getElementById('r-margem').textContent   = 'Margem líquida: ' + margem + '%' + (!ok ? ' ⚠️' : '')
   document.getElementById('result-total-box').className = 'result-total ' + (ok ? 'profit' : 'loss')
   document.getElementById('resultado').classList.add('show')
@@ -798,7 +798,7 @@ function calcular() {
   const precoMinRow = document.getElementById('bk-preco-min')
   if (denom > 0) {
     const precoMin = (custo + envio) / denom
-    precoMinEl.textContent = 'R$ ' + precoMin.toFixed(2).replace('.', ',')
+    precoMinEl.textContent = 'R$\u00A0' + precoMin.toFixed(2).replace('.', ',')
     precoMinEl.style.color = preco >= precoMin ? 'var(--green-mid)' : 'var(--red)'
     precoMinRow.classList.add('show')
   } else {
@@ -1133,7 +1133,7 @@ function renderLotePreview() {
       <td><input class="lote-input" style="width:80px;" type="number" value="${p.preco_venda}" min="0.01" step="0.01" onchange="loteEditarNumero(${i},'preco_venda',this.value)"></td>
       <td><input class="lote-input" style="width:80px;" type="number" value="${p.custo_produto}" min="0" step="0.01" onchange="loteEditarNumero(${i},'custo_produto',this.value)"></td>
       <td><span class="lote-margem ${p.lucro >= 0 ? 'profit' : 'loss'}" id="lote-margem-${i}">${p.margem.toFixed(1)}%</span></td>
-      <td><span class="lote-margem ${p.lucro >= 0 ? 'profit' : 'loss'}" id="lote-lucro-${i}">${p.lucro >= 0 ? '+' : ''}R$ ${Math.abs(p.lucro).toFixed(2).replace('.',',')}</span></td>
+      <td><span class="lote-margem ${p.lucro >= 0 ? 'profit' : 'loss'}" id="lote-lucro-${i}">${p.lucro >= 0 ? '+' : ''}R$\u00A0${Math.abs(p.lucro).toFixed(2).replace('.',',')}</span></td>
     </tr>
   `).join('')
   document.getElementById('lote-preview-titulo').textContent = `${loteDados.length} produto${loteDados.length !== 1 ? 's' : ''} encontrado${loteDados.length !== 1 ? 's' : ''}`
@@ -1154,7 +1154,7 @@ function loteEditarNumero(i, field, val) {
   document.getElementById(`lote-row-${i}`).className = ok ? '' : 'danger-row'
   document.getElementById(`lote-margem-${i}`).textContent = r.margem.toFixed(1) + '%'
   document.getElementById(`lote-margem-${i}`).className = 'lote-margem ' + (ok ? 'profit' : 'loss')
-  document.getElementById(`lote-lucro-${i}`).textContent = (ok ? '+' : '') + 'R$ ' + Math.abs(r.lucro).toFixed(2).replace('.', ',')
+  document.getElementById(`lote-lucro-${i}`).textContent = (ok ? '+' : '') + 'R$\u00A0' + Math.abs(r.lucro).toFixed(2).replace('.', ',')
   document.getElementById(`lote-lucro-${i}`).className = 'lote-margem ' + (ok ? 'profit' : 'loss')
 }
 
