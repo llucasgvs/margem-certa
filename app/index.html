@@ -985,6 +985,11 @@ async function assinarPro(periodo = 'mensal') {
     showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
     return
   }
+
+  const btns = [...document.querySelectorAll('[onclick*="assinarPro"]')]
+  const textos = btns.map(b => b.textContent)
+  btns.forEach(b => { b.disabled = true; b.textContent = 'Aguarde...' })
+
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/stripe/checkout`, {
@@ -997,6 +1002,7 @@ async function assinarPro(periodo = 'mensal') {
     })
     const data = await res.json()
     if (!res.ok) {
+      btns.forEach((b, i) => { b.disabled = false; b.textContent = textos[i] })
       if (res.status === 400 && data.detail?.includes('anual')) {
         showToast('Plano anual indisponível no momento. Tente o mensal.', 'error')
       } else {
@@ -1005,8 +1011,12 @@ async function assinarPro(periodo = 'mensal') {
       return
     }
     if (data.url) window.location.href = data.url
-    else showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
+    else {
+      btns.forEach((b, i) => { b.disabled = false; b.textContent = textos[i] })
+      showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
+    }
   } catch(e) {
+    btns.forEach((b, i) => { b.disabled = false; b.textContent = textos[i] })
     showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
   }
 }
