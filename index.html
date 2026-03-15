@@ -154,14 +154,14 @@ h1 .strike::after{content:'';position:absolute;left:-2px;right:-2px;top:52%;heig
 .feature-card p{font-size:12px;color:var(--muted);line-height:1.55;}
 
 .pricing-cards{display:flex;flex-direction:column;gap:16px;margin-top:28px;}
-.pricing-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 20px;position:relative;}
+.pricing-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px 20px;position:relative;display:flex;flex-direction:column;}
 .pricing-card.featured{border-color:var(--green);background:#FAFFFC;}
 .popular-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:10px;font-weight:800;padding:3px 12px;border-radius:100px;letter-spacing:.5px;white-space:nowrap;}
 .plan-name{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
 .plan-price{font-size:40px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;}
 .plan-price sub{font-size:16px;font-weight:500;letter-spacing:0;vertical-align:baseline;color:var(--muted);}
 .plan-period{font-size:12px;color:var(--muted);margin-bottom:20px;}
-.plan-features{list-style:none;margin-bottom:20px;}
+.plan-features{list-style:none;margin-bottom:20px;flex:1;}
 .plan-features li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;color:var(--muted);}
 .plan-features li:last-child{border-bottom:none;}
 .plan-features li.on{color:var(--text);}
@@ -171,6 +171,16 @@ h1 .strike::after{content:'';position:absolute;left:-2px;right:-2px;top:52%;heig
 .plan-btn.outline{background:transparent;border:1.5px solid var(--border);color:var(--text);}
 .plan-btn.filled{background:var(--green);color:#fff;}
 .plan-btn:active{transform:scale(.98);}
+
+.billing-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:6px 14px;width:fit-content;margin-left:auto;margin-right:auto;}
+.toggle-label{font-size:12px;font-weight:700;color:var(--muted);transition:color .2s;cursor:pointer;user-select:none;}
+.toggle-label.active{color:var(--text);}
+.toggle-track{width:36px;height:20px;background:var(--green);border-radius:100px;cursor:pointer;position:relative;flex-shrink:0;transition:background .25s;}
+.toggle-track.off{background:var(--border);}
+.toggle-thumb{width:14px;height:14px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .25s ease;transform:translateX(16px);}
+.toggle-track.off .toggle-thumb{transform:translateX(0);}
+.save-badge{display:inline-block;background:var(--green);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:100px;margin-left:4px;letter-spacing:.3px;vertical-align:middle;}
+.plan-price .cents{font-size:24px;letter-spacing:0;font-weight:800;}
 
 .faq-list{margin-top:28px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
 .faq-item{background:var(--surface);border-bottom:1px solid var(--border);}
@@ -395,8 +405,15 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
       <div class="pricing-card featured">
         <div class="popular-badge">MAIS POPULAR</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-price">R$37<sub>/mês</sub></div>
-        <div class="plan-period">ou R$297/ano — economize 33%</div>
+        <div class="billing-toggle">
+          <span class="toggle-label" id="tgl-mensal" onclick="setBilling(false)">Mensal</span>
+          <div class="toggle-track" id="billing-track" onclick="setBilling(!billingAnual)">
+            <div class="toggle-thumb"></div>
+          </div>
+          <span class="toggle-label active" id="tgl-anual" onclick="setBilling(true)">Anual <span class="save-badge">-33%</span></span>
+        </div>
+        <div class="plan-price" id="pro-price">R$24<span class="cents">,75</span><sub>/mês</sub></div>
+        <div class="plan-period" id="pro-period">cobrado R$297/ano · economize R$147</div>
         <ul class="plan-features">
           <li class="on"><span class="ck">✓</span> Tudo do Gratuito</li>
           <li class="on"><span class="ck">✓</span> Salvar produtos ilimitados</li>
@@ -452,10 +469,36 @@ const pEl=document.getElementById('pricing');if(pEl)pricingObs.observe(pEl);
 const fadeObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>fadeObs.observe(el));
 
+let billingAnual = true
+
+function setBilling(anual) {
+  billingAnual = anual
+  const track = document.getElementById('billing-track')
+  const tglM  = document.getElementById('tgl-mensal')
+  const tglA  = document.getElementById('tgl-anual')
+  const price = document.getElementById('pro-price')
+  const period= document.getElementById('pro-period')
+
+  if (anual) {
+    track.classList.remove('off')
+    tglM.classList.remove('active')
+    tglA.classList.add('active')
+    price.innerHTML  = 'R$24<span class="cents">,75</span><sub>/mês</sub>'
+    period.textContent = 'cobrado R$297/ano · economize R$147'
+  } else {
+    track.classList.add('off')
+    tglM.classList.add('active')
+    tglA.classList.remove('active')
+    price.innerHTML  = 'R$37<sub>/mês</sub>'
+    period.textContent = 'sem fidelidade · cancele quando quiser'
+  }
+}
+
 function irParaApp(origem) {
   gtag('event', 'cta_click', {event_category:'engajamento', event_label:origem||'calculadora'})
   if (origem === 'pro') {
-    window.location.href = '/app/auth?tab=cadastro&plano=pro'
+    const p = billingAnual ? '&periodo=anual' : ''
+    window.location.href = '/app/auth?tab=cadastro&plano=pro' + p
   } else {
     window.location.href = '/app/auth?tab=cadastro'
   }

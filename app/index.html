@@ -360,7 +360,7 @@ async function init() {
     if (currentPerfil?.plano === 'pro') {
       showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
     } else {
-      await assinarPro()
+      await assinarPro(params.get('periodo') || 'mensal')
     }
   }
 }
@@ -440,9 +440,11 @@ function renderProdutos(produtos) {
   const comPrejuizo = produtos.filter(p => p.lucro < 0).length
   const margemMedia = produtos.reduce((acc, p) => acc + p.margem, 0) / total
 
+  const margemEl = document.getElementById('stat-margem')
   document.getElementById('stats-grid').style.display = 'grid'
   document.getElementById('stat-total').textContent = total
-  document.getElementById('stat-margem').textContent = margemMedia.toFixed(1) + '%'
+  margemEl.textContent = margemMedia.toFixed(1) + '%'
+  margemEl.className = 'stat-value ' + (margemMedia >= 0 ? 'green' : 'red')
   document.getElementById('stat-lucro').textContent = comLucro
   document.getElementById('stat-prejuizo').textContent = comPrejuizo
   count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
@@ -450,7 +452,7 @@ function renderProdutos(produtos) {
   lista.innerHTML = produtos.map(p => `
     <div class="produto-card">
       <div style="flex:1;min-width:0;">
-        <div class="produto-nome">${p.nome}</div>
+        <div class="produto-nome">${escapeHtml(p.nome)}</div>
         <div class="produto-meta">R$ ${p.preco_venda.toFixed(2).replace('.',',')} · custo R$ ${p.custo_produto.toFixed(2).replace('.',',')}</div>
       </div>
       <div class="produto-margem">
@@ -460,6 +462,15 @@ function renderProdutos(produtos) {
       <button class="produto-delete" onclick="deletarProduto('${p.id}')" title="Remover">✕</button>
     </div>
   `).join('')
+}
+
+// ── UTILS ────────────────────────────────────────────────
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }
 
 // ── CALCULADORA ─────────────────────────────────────────
@@ -555,7 +566,7 @@ async function deletarProduto(id) {
 }
 
 // ── STRIPE / PRO ─────────────────────────────────────────
-async function assinarPro() {
+async function assinarPro(periodo = 'mensal') {
   if (currentPerfil?.plano === 'pro') {
     showToast('Você já é Pro! Use "Gerenciar plano" para ver sua assinatura.')
     return
@@ -564,7 +575,11 @@ async function assinarPro() {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/stripe/checkout`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${session.access_token}` }
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ periodo })
     })
     const data = await res.json()
     if (data.url) window.location.href = data.url
