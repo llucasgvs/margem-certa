@@ -148,8 +148,13 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .nav-portal:hover{background:var(--green-light);}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s ease;pointer-events:none;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s ease;pointer-events:none;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
+.toast.error{background:var(--red);}
+
+/* CALC ERROR */
+.calc-error{display:none;background:var(--red-light);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:8px;}
+.calc-error.show{display:block;}
 
 @media(min-width:900px){
   nav{padding:14px 0;}
@@ -279,9 +284,10 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
           </div>
 
           <div class="calc-actions">
-            <button class="btn-calcular" onclick="calcular()">Calcular →</button>
+            <button class="btn-calcular" id="btn-calcular" onclick="calcular()">Calcular →</button>
             <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()" disabled>Salvar produto</button>
           </div>
+          <div class="calc-error" id="calc-error"></div>
 
           <!-- RESULTADO -->
           <div class="result-box" id="resultado">
@@ -476,6 +482,16 @@ function escapeHtml(str) {
 // ── CALCULADORA ─────────────────────────────────────────
 function fmt(v) { return 'R$ ' + Math.abs(v).toFixed(2).replace('.', ',') }
 
+function showCalcError(msg) {
+  const el = document.getElementById('calc-error')
+  el.textContent = msg
+  el.classList.add('show')
+}
+
+function hideCalcError() {
+  document.getElementById('calc-error').classList.remove('show')
+}
+
 function calcular() {
   const preco    = parseFloat(document.getElementById('prod-preco').value) || 0
   const custo    = parseFloat(document.getElementById('prod-custo').value) || 0
@@ -483,7 +499,15 @@ function calcular() {
   const envio    = parseFloat(document.getElementById('prod-envio').value)
   const impRate  = parseFloat(document.getElementById('prod-imposto').value)
 
-  if (!preco || !custo) { alert('Preencha o preço de venda e o custo do produto.'); return }
+  if (!preco || !custo) {
+    showCalcError('Preencha o preço de venda e o custo do produto.')
+    return
+  }
+  hideCalcError()
+
+  const btn = document.getElementById('btn-calcular')
+  btn.disabled = true
+  btn.textContent = 'Calculando...'
 
   const comissao = preco * comRate
   const imposto  = preco * impRate
@@ -502,6 +526,9 @@ function calcular() {
   document.getElementById('resultado').classList.add('show')
 
   ultimoCalculo = { preco, custo, comRate, envio, impRate, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
+
+  btn.textContent = 'Calculado ✓'
+  setTimeout(() => { btn.disabled = false; btn.textContent = 'Calcular →' }, 800)
 
   if (currentPerfil?.plano === 'pro') {
     document.getElementById('btn-salvar').disabled = false
@@ -555,13 +582,15 @@ async function deletarProduto(id) {
   if (!confirm('Remover este produto da cartela?')) return
   try {
     const { data: { session } } = await sb.auth.getSession()
-    await fetch(`${API_URL}/produtos/${id}`, {
+    const res = await fetch(`${API_URL}/produtos/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${session.access_token}` }
     })
+    if (!res.ok) throw new Error('Erro ao remover')
     await carregarProdutos()
+    showToast('Produto removido da cartela.')
   } catch(e) {
-    alert('Erro ao remover produto.')
+    showToast('Erro ao remover produto. Tente novamente.', 'error')
   }
 }
 
@@ -582,19 +611,28 @@ async function assinarPro(periodo = 'mensal') {
       body: JSON.stringify({ periodo })
     })
     const data = await res.json()
+    if (!res.ok) {
+      if (res.status === 400 && data.detail?.includes('anual')) {
+        showToast('Plano anual indisponível no momento. Tente o mensal.', 'error')
+      } else {
+        showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
+      }
+      return
+    }
     if (data.url) window.location.href = data.url
-    else alert('Erro ao iniciar checkout. Tente novamente.')
+    else showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
   } catch(e) {
-    alert('Erro ao iniciar checkout. Tente novamente.')
+    showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
   }
 }
 
 // ── TOAST ────────────────────────────────────────────────
-function showToast(msg) {
+function showToast(msg, tipo = '') {
   const t = document.getElementById('toast')
   t.textContent = msg
-  t.classList.add('show')
-  setTimeout(() => t.classList.remove('show'), 3500)
+  t.className = 'toast show' + (tipo ? ' ' + tipo : '')
+  clearTimeout(t._timer)
+  t._timer = setTimeout(() => t.classList.remove('show'), 3500)
 }
 
 // ── PORTAL ───────────────────────────────────────────────
