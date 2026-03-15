@@ -596,9 +596,20 @@ function calcular() {
 
 // ── SALVAR / ATUALIZAR PRODUTO ───────────────────────────
 async function salvarProduto() {
-  if (!ultimoCalculo) { showCalcError('Calcule o produto antes de salvar.'); return }
   const nome = document.getElementById('prod-nome').value.trim()
   if (!nome) { showCalcError('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
+
+  const preco    = parseFloat(document.getElementById('prod-preco').value)
+  const custo    = parseFloat(document.getElementById('prod-custo').value)
+  const categoria = parseFloat(document.getElementById('prod-categoria').value)
+  const envio    = parseFloat(document.getElementById('prod-envio').value)
+  const imposto  = parseFloat(document.getElementById('prod-imposto').value)
+
+  if (!preco || custo < 0 || isNaN(preco) || isNaN(custo)) {
+    showCalcError('Preencha preço de venda e custo do produto.')
+    return
+  }
+  if (!ultimoCalculo && !editandoId) { showCalcError('Calcule o produto antes de salvar.'); return }
 
   const btn = document.getElementById('btn-salvar')
   btn.disabled = true
@@ -617,11 +628,11 @@ async function salvarProduto() {
       },
       body: JSON.stringify({
         nome,
-        preco_venda: ultimoCalculo.preco,
-        custo_produto: ultimoCalculo.custo,
-        categoria: ultimoCalculo.comRate,
-        envio: ultimoCalculo.envio,
-        imposto: ultimoCalculo.impRate
+        preco_venda: preco,
+        custo_produto: custo,
+        categoria,
+        envio,
+        imposto
       })
     })
 
