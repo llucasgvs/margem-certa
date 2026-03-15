@@ -136,10 +136,13 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .produto-margem-valor.profit{color:var(--green-mid);}
 .produto-margem-valor.loss{color:var(--red);}
 .produto-margem-label{font-size:11px;color:var(--muted);}
-.produto-delete{background:none;border:none;color:var(--border);cursor:pointer;font-size:16px;transition:color .2s;padding:4px;flex-shrink:0;}
+.produto-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;transition:color .2s;padding:6px;flex-shrink:0;}
 .produto-delete:hover{color:var(--red);}
-.produto-edit{background:none;border:none;color:var(--border);cursor:pointer;font-size:15px;transition:color .2s;padding:4px;flex-shrink:0;}
+.produto-edit{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;transition:color .2s;padding:6px;flex-shrink:0;}
 .produto-edit:hover{color:var(--green-mid);}
+@media(max-width:600px){
+  .produto-edit,.produto-delete{font-size:18px;padding:8px;}
+}
 .produto-card.editing{border-color:var(--green);background:var(--green-light);}
 .produto-card.danger{border-color:var(--red);background:var(--red-light);}
 .produto-card.danger:hover{border-color:var(--red);}
@@ -183,7 +186,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .lote-textarea-hint{font-size:11px;color:var(--muted);margin-top:5px;margin-bottom:12px;}
 .lote-parse-btn{width:100%;background:var(--green);color:#fff;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s;}
 .lote-parse-btn:hover{background:var(--green-mid);}
-@media(max-width:600px){.lote-textarea,.field input,.field select,.lote-input{font-size:16px;}}
+@media(max-width:600px){.lote-textarea,.field input,.field input[type="text"],.field select,.lote-input{font-size:16px;}}
 .lote-preview{margin-top:18px;display:none;}
 .lote-preview.show{display:block;}
 .lote-preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;}
@@ -260,7 +263,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
     <a href="/" class="logo">Margem<em>Certa</em></a>
     <div class="nav-right">
       <span class="nav-user" id="nav-email"></span>
-      <span class="nav-plano gratuito" id="nav-plano">Gratuito</span>
+      <span class="nav-plano" id="nav-plano" style="visibility:hidden"></span>
       <button class="nav-portal" id="nav-portal" onclick="abrirPortal()">Gerenciar plano</button>
       <button class="nav-logout" onclick="logout()">Sair</button>
     </div>
@@ -567,6 +570,7 @@ async function carregarPerfil(token) {
     const navPlano = document.getElementById('nav-plano')
     navPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'
     navPlano.className = `nav-plano ${plano}`
+    navPlano.style.visibility = 'visible'
 
     document.getElementById('header-sub').textContent = plano === 'pro'
       ? 'Calcule e salve os produtos da sua cartela.'
