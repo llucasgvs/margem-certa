@@ -163,12 +163,44 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .loading{text-align:center;padding:32px;color:var(--muted);font-size:14px;}
 
 /* PRO LOCK */
-.pro-lock{background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;padding:32px;text-align:center;}
-.pro-lock-icon{font-size:32px;margin-bottom:12px;}
+.pro-lock{background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;padding:28px 24px;text-align:center;}
+.pro-lock-icon{font-size:32px;margin-bottom:10px;}
 .pro-lock h3{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-bottom:6px;}
-.pro-lock p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
-.pro-lock-btn{background:var(--green);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s,transform .15s;}
+.pro-lock-sub{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.pro-lock-list{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-direction:column;gap:8px;text-align:left;}
+.pro-lock-list li{font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.pro-lock-list li span:first-child{flex-shrink:0;}
+.pro-lock-price{font-size:12px;color:var(--muted);margin:12px 0 16px;text-align:center;}
+.pro-lock-preview-wrap{position:relative;margin-bottom:20px;border-radius:12px;overflow:hidden;}
+.pro-lock-preview-blur{filter:blur(3px);pointer-events:none;user-select:none;opacity:.7;}
+.pro-lock-preview-badge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.pro-lock-preview-badge span{background:rgba(255,255,255,.95);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.pro-lock-btn{background:var(--green);color:#fff;border:none;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s,transform .15s;width:100%;}
 .pro-lock-btn:active{transform:scale(.98);}
+
+/* CTA PÓS-CÁLCULO */
+.calc-pro-cta{display:none;margin-top:14px;background:linear-gradient(135deg,var(--dark) 0%,#0d3d22 100%);border-radius:12px;padding:16px 18px;text-align:center;}
+.calc-pro-cta.show{display:block;animation:fadeInUp .3s ease;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.calc-pro-cta-title{color:#fff;font-size:14px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
+.calc-pro-cta-sub{color:rgba(255,255,255,.6);font-size:12px;margin-bottom:12px;line-height:1.5;}
+.calc-pro-cta-btn{width:100%;background:var(--green);color:#fff;border:none;padding:11px;border-radius:10px;font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s;}
+.calc-pro-cta-btn:hover{background:var(--green-mid);}
+
+/* MODAL UPGRADE */
+.upgrade-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:flex-end;justify-content:center;}
+.upgrade-overlay.show{display:flex;}
+.upgrade-modal{background:#fff;border-radius:20px 20px 0 0;padding:28px 24px 36px;width:100%;max-width:500px;animation:slideUpModal .25s ease;}
+@keyframes slideUpModal{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.upgrade-modal-icon{font-size:30px;margin-bottom:10px;}
+.upgrade-modal h3{font-size:18px;font-weight:800;letter-spacing:-.4px;margin-bottom:6px;}
+.upgrade-modal-sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.upgrade-benefits{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px;}
+.upgrade-benefits li{font-size:13px;color:var(--text);display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.upgrade-benefits li span:first-child{flex-shrink:0;font-size:15px;}
+.upgrade-btn{width:100%;background:var(--green);color:#fff;border:none;padding:15px;border-radius:12px;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-bottom:10px;transition:background .2s,transform .15s;}
+.upgrade-btn:active{transform:scale(.98);}
+.upgrade-close{width:100%;background:none;border:none;color:var(--muted);font-size:13px;font-family:var(--font);cursor:pointer;padding:8px;}
 
 footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
 
@@ -396,6 +428,13 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               <strong id="r-preco-min">—</strong>
             </div>
           </div>
+
+          <!-- CTA PÓS-CÁLCULO (só para gratuito) -->
+          <div class="calc-pro-cta" id="calc-pro-cta">
+            <div class="calc-pro-cta-title">💾 Quer salvar esse produto?</div>
+            <div class="calc-pro-cta-sub">Com o Pro você salva produtos ilimitados e monitora toda a sua cartela em tempo real.</div>
+            <button class="calc-pro-cta-btn" onclick="assinarPro()">Assinar Pro por R$&nbsp;37/mês →</button>
+          </div>
         </div>
       </div>
     </div>
@@ -507,6 +546,23 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   </div>
 </main>
 
+<!-- MODAL UPGRADE -->
+<div class="upgrade-overlay" id="upgrade-overlay" onclick="fecharUpgrade(event)">
+  <div class="upgrade-modal">
+    <div class="upgrade-modal-icon">🚀</div>
+    <h3>Salve esse produto no Pro</h3>
+    <div class="upgrade-modal-sub">Você calculou a margem — agora salve e monitore. Com o Pro você nunca mais perde o controle da sua cartela.</div>
+    <ul class="upgrade-benefits">
+      <li><span>✅</span><span><strong>Salvar produtos ilimitados</strong> — acesse de qualquer dispositivo</span></li>
+      <li><span>✅</span><span><strong>Cartela completa com estatísticas</strong> — margem média, lucro total, alertas de prejuízo</span></li>
+      <li><span>✅</span><span><strong>Importação em lote</strong> — importe até 25 produtos de uma vez por CSV ou Excel</span></li>
+      <li><span>✅</span><span><strong>Alertas de margem negativa</strong> — identifique produtos no vermelho de imediato</span></li>
+    </ul>
+    <button class="upgrade-btn" onclick="assinarPro()">Assinar Pro por R$&nbsp;37/mês →</button>
+    <button class="upgrade-close" onclick="fecharUpgrade()">Agora não</button>
+  </div>
+</div>
+
 <footer>Margem<strong style="color:var(--green)">Certa</strong> · Feito para vendedores 🇧🇷 · <a href="/privacidade" style="color:var(--muted);text-decoration:none;">Privacidade</a> · <a href="/termos" style="color:var(--muted);text-decoration:none;">Termos</a></footer>
 
 <div class="toast" id="toast"></div>
@@ -595,10 +651,34 @@ async function carregarProdutos(token) {
   if (currentPerfil?.plano !== 'pro') {
     lista.innerHTML = `
       <div class="pro-lock">
-        <div class="pro-lock-icon">🔒</div>
-        <h3>Salve e monitore seus produtos</h3>
-        <p>Com o plano Pro você salva produtos ilimitados, vê a margem de toda a cartela e recebe alertas quando um produto entrar no vermelho.</p>
-        <button class="pro-lock-btn" onclick="assinarPro()">Assinar Pro por R$37/mês →</button>
+        <div class="pro-lock-icon">📦</div>
+        <h3>Sua cartela de produtos, organizada</h3>
+        <div class="pro-lock-sub">Salve, monitore e nunca perca dinheiro sem saber.</div>
+        <div class="pro-lock-preview-wrap">
+          <div class="pro-lock-preview-blur">
+            <div class="produto-card" style="margin-bottom:8px">
+              <div><div class="produto-nome">Creme hidratante 200ml</div><div class="produto-meta">R$&nbsp;89,90 · custo R$&nbsp;35,00</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><div><div class="produto-margem green" style="text-align:right;font-size:15px;font-weight:800">23.4%</div><div class="produto-margem-label" style="text-align:right">lucro</div></div></div>
+            </div>
+            <div class="produto-card" style="margin-bottom:8px">
+              <div><div class="produto-nome">Kit skincare premium</div><div class="produto-meta">R$&nbsp;199,90 · custo R$&nbsp;75,00</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><div><div class="produto-margem green" style="text-align:right;font-size:15px;font-weight:800">18.1%</div><div class="produto-margem-label" style="text-align:right">lucro</div></div></div>
+            </div>
+            <div class="produto-card danger">
+              <div><div class="produto-nome">Nécessaire viagem</div><div class="produto-meta">R$&nbsp;49,90 · custo R$&nbsp;42,00</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><span class="produto-danger-icon">⚠️</span><div><div class="produto-margem red" style="text-align:right;font-size:15px;font-weight:800">-8.2%</div><div class="produto-margem-label" style="text-align:right">prejuízo</div></div></div>
+            </div>
+          </div>
+          <div class="pro-lock-preview-badge"><span>🔒 Disponível no Pro</span></div>
+        </div>
+        <ul class="pro-lock-list">
+          <li><span>✅</span><span><strong>Salvar produtos ilimitados</strong> — acesse de qualquer dispositivo</span></li>
+          <li><span>✅</span><span><strong>Estatísticas da cartela</strong> — margem média, lucro total, alertas de prejuízo</span></li>
+          <li><span>✅</span><span><strong>Importação em lote</strong> — importe até 25 produtos por CSV ou Excel</span></li>
+          <li><span>⚠️</span><span><strong>Alerta de margem negativa</strong> — saiba imediatamente quando um produto entrar no vermelho</span></li>
+        </ul>
+        <p class="pro-lock-price">Por apenas R$&nbsp;37/mês · Cancele quando quiser</p>
+        <button class="pro-lock-btn" onclick="assinarPro()">Assinar Pro agora →</button>
       </div>`
     return
   }
@@ -810,11 +890,25 @@ function calcular() {
 
   if (currentPerfil?.plano === 'pro') {
     document.getElementById('btn-salvar').disabled = false
+  } else {
+    document.getElementById('btn-salvar').disabled = false
+    document.getElementById('calc-pro-cta').classList.add('show')
   }
+}
+
+function fecharUpgrade(e) {
+  if (e && e.target !== document.getElementById('upgrade-overlay')) return
+  document.getElementById('upgrade-overlay').classList.remove('show')
+}
+
+function abrirUpgrade() {
+  document.getElementById('upgrade-overlay').classList.add('show')
 }
 
 // ── SALVAR / ATUALIZAR PRODUTO ───────────────────────────
 async function salvarProduto() {
+  if (currentPerfil?.plano !== 'pro') { abrirUpgrade(); return }
+
   const nome = document.getElementById('prod-nome').value.trim()
   if (!nome) { showCalcError('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
 
