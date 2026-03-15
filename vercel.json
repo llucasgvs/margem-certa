@@ -4,6 +4,8 @@
     { "source": "/app", "destination": "/app/index.html" },
     { "source": "/app/auth", "destination": "/app/auth/index.html" },
     { "source": "/app/reset-senha", "destination": "/app/reset-senha/index.html" },
+    { "source": "/privacidade", "destination": "/privacidade.html" },
+    { "source": "/termos", "destination": "/termos.html" },
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/comissao-mercado-livre-por-categoria", "destination": "/blog/comissao-mercado-livre-por-categoria/index.html" },
     { "source": "/blog/como-calcular-lucro-real-mercado-livre", "destination": "/blog/como-calcular-lucro-real-mercado-livre/index.html" },
