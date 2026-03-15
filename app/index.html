@@ -405,7 +405,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
           <div class="calc-actions">
             <button class="btn-calcular" id="btn-calcular" onclick="calcular()">Calcular →</button>
-            <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()" disabled>Salvar produto</button>
+            <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()">Salvar produto</button>
           </div>
           <div class="calc-error" id="calc-error"></div>
           <button class="btn-cancelar" id="btn-cancelar" onclick="cancelarEdicao()">← Cancelar edição</button>
@@ -634,9 +634,7 @@ async function carregarPerfil(token) {
 
     if (plano !== 'pro') {
       document.getElementById('pro-banner').style.display = 'flex'
-      document.getElementById('btn-salvar').title = 'Disponível no plano Pro'
     } else {
-      document.getElementById('btn-salvar').disabled = false
       document.getElementById('nav-portal').style.display = 'block'
       document.getElementById('lote-btn').style.display = 'block'
     }
@@ -712,7 +710,7 @@ function sortProdutos(produtos) {
 
 function onSortChange() {
   localStorage.setItem('mc_sort', document.getElementById('sort-produtos').value)
-  renderProdutos(produtosCache)
+  if (produtosCache.length > 0) renderProdutos(produtosCache)
 }
 
 function renderProdutos(produtos) {
@@ -815,7 +813,6 @@ function cancelarEdicao() {
   document.getElementById('calc-header-icon').textContent = '🧮'
   document.querySelector('.calc-card').classList.remove('edit-mode')
   document.getElementById('btn-salvar').textContent = 'Salvar produto'
-  document.getElementById('btn-salvar').disabled = true
   document.getElementById('btn-cancelar').style.display = 'none'
   document.getElementById('prod-nome').value = ''
   document.getElementById('prod-preco').value = ''
@@ -888,10 +885,7 @@ function calcular() {
   btn.textContent = 'Calculado ✓'
   setTimeout(() => { btn.disabled = false; btn.textContent = 'Calcular →' }, 800)
 
-  if (currentPerfil?.plano === 'pro') {
-    document.getElementById('btn-salvar').disabled = false
-  } else {
-    document.getElementById('btn-salvar').disabled = false
+  if (currentPerfil?.plano !== 'pro') {
     document.getElementById('calc-pro-cta').classList.add('show')
   }
 }
