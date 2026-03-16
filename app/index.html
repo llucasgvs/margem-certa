@@ -1099,6 +1099,8 @@ function deletarProduto(id) {
 }
 
 async function confirmarDelete(id) {
+  const btn = document.querySelector(`#card-${id} .del-sim`)
+  if (btn) { btn.disabled = true; btn.textContent = 'Removendo...' }
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/produtos/${id}`, {
@@ -1109,6 +1111,7 @@ async function confirmarDelete(id) {
     await carregarProdutos()
     showToast('Produto removido da cartela.')
   } catch(e) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Sim, remover' }
     showToast('Erro ao remover produto. Tente novamente.', 'error')
   }
 }
