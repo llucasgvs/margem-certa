@@ -872,6 +872,7 @@ function editarProduto(id) {
 
 function cancelarEdicao() {
   editandoId = null
+  ultimoCalculo = null
   document.querySelectorAll('.produto-card.editing').forEach(el => el.classList.remove('editing'))
   document.getElementById('calc-header-title').textContent = 'Calcular lucro real'
   document.getElementById('calc-header-icon').textContent = '🧮'
@@ -882,6 +883,9 @@ function cancelarEdicao() {
   document.getElementById('prod-preco').value = ''
   document.getElementById('prod-custo').value = ''
   document.getElementById('resultado').classList.remove('show')
+  document.getElementById('simulador').classList.remove('show')
+  document.getElementById('sim-resultado').classList.remove('show')
+  document.getElementById('calc-pro-cta').classList.remove('show')
   hideCalcError()
 }
 
@@ -933,9 +937,11 @@ function calcular() {
 
   ultimoCalculo = { preco, custo, comRate, envio, impRate, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
 
-  // Histórico da sessão
-  const nomeHistorico = document.getElementById('prod-nome').value.trim()
-  adicionarHistorico(nomeHistorico, parseFloat(margem), parseFloat(lucro.toFixed(2)))
+  // Histórico da sessão — só para usuários gratuitos
+  if (currentPerfil?.plano !== 'pro') {
+    const nomeHistorico = document.getElementById('prod-nome').value.trim()
+    adicionarHistorico(nomeHistorico, parseFloat(margem), parseFloat(lucro.toFixed(2)))
+  }
 
   // Simulador de promoção — mostra e configura acesso por plano
   const simEl = document.getElementById('simulador')
