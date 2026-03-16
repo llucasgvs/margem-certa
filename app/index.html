@@ -686,7 +686,6 @@ async function init() {
     showToast('✓ Plano Pro ativado com sucesso!')
     const valorParam = parseFloat(params.get('valor')) || 37.00
     gtag('event', 'purchase', { currency: 'BRL', value: valorParam, transaction_id: Date.now().toString() })
-    gtag('event', 'conversion', { send_to: 'G-3VLXHCCFBS', value: valorParam, currency: 'BRL' })
   } else if (canceledParam === '1') {
     showToast('Pagamento cancelado.')
   } else if (planoParam === 'pro') {
