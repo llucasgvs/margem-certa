@@ -431,8 +431,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
           <!-- CTA PÓS-CÁLCULO (só para gratuito) -->
           <div class="calc-pro-cta" id="calc-pro-cta">
-            <div class="calc-pro-cta-title">💾 Quer salvar esse produto?</div>
-            <div class="calc-pro-cta-sub">Com o Pro você salva produtos ilimitados e monitora toda a sua cartela em tempo real.</div>
+            <div class="calc-pro-cta-title" id="calc-pro-cta-title">💾 Quer salvar esse produto?</div>
+            <div class="calc-pro-cta-sub" id="calc-pro-cta-sub">Com o Pro você salva produtos ilimitados e monitora toda a sua cartela em tempo real.</div>
             <button class="calc-pro-cta-btn" onclick="assinarPro()">Assinar Pro por R$&nbsp;37/mês →</button>
           </div>
         </div>
@@ -886,6 +886,31 @@ function calcular() {
   setTimeout(() => { btn.disabled = false; btn.textContent = 'Calcular →' }, 800)
 
   if (currentPerfil?.plano !== 'pro') {
+    // Contador de cálculos (localStorage)
+    const count = (parseInt(localStorage.getItem('mc_calc_count') || '0')) + 1
+    localStorage.setItem('mc_calc_count', count)
+
+    const nome = document.getElementById('prod-nome').value.trim()
+    const margemStr = ultimoCalculo?.margem?.toFixed(1).replace('.', ',') ?? '—'
+    const lucroStr  = ultimoCalculo?.lucro  != null
+      ? (ultimoCalculo.lucro >= 0 ? '+ R$ ' : '- R$ ') + Math.abs(ultimoCalculo.lucro).toFixed(2).replace('.', ',')
+      : '—'
+
+    const titleEl = document.getElementById('calc-pro-cta-title')
+    const subEl   = document.getElementById('calc-pro-cta-sub')
+
+    if (count === 1) {
+      // Primeiro cálculo — contextual com nome/margem
+      titleEl.textContent = nome
+        ? `💾 "${nome}" com ${margemStr}% de margem — salve antes de sair`
+        : `💾 Margem ${margemStr}% calculada — salve antes de sair`
+      subEl.textContent = `Lucro líquido ${lucroStr} por unidade. Com o Pro você salva ilimitados e acompanha tudo em tempo real.`
+    } else {
+      // 2º cálculo em diante — gatilho de perda + contador
+      titleEl.textContent = `💾 Você já calculou ${count} produtos — não perca esse trabalho`
+      subEl.textContent = `Esse produto tem ${margemStr}% de margem (${lucroStr}/unid.). Feche a aba e tudo some. Salve no Pro.`
+    }
+
     document.getElementById('calc-pro-cta').classList.add('show')
   }
 }
