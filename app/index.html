@@ -288,6 +288,12 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   main{padding:40px 0;}
 }
 
+/* CONFIRMAÇÃO DE DELETE */
+.del-confirm{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;margin-top:10px;padding:10px 12px;background:var(--red-light);border:1px solid #fca5a5;border-radius:10px;font-size:12px;font-weight:600;color:var(--text);}
+.del-confirm span{flex:1;min-width:0;}
+.del-sim{background:var(--red);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;white-space:nowrap;}
+.del-nao{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;white-space:nowrap;}
+
 /* SIMULADOR DE PROMOÇÃO */
 .simulador{display:none;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:12px;}
 .simulador.show{display:block;}
@@ -1080,8 +1086,19 @@ async function salvarProduto() {
 }
 
 // ── DELETAR PRODUTO ──────────────────────────────────────
-async function deletarProduto(id) {
-  if (!confirm('Remover este produto da cartela?')) return
+function deletarProduto(id) {
+  const card = document.getElementById(`card-${id}`)
+  if (!card) return
+  // Se já tem confirmação aberta, remove
+  card.querySelectorAll('.del-confirm').forEach(el => el.remove())
+  const nome = card.querySelector('.produto-nome')?.textContent || 'este produto'
+  const conf = document.createElement('div')
+  conf.className = 'del-confirm'
+  conf.innerHTML = `<span>Remover <strong>${nome}</strong>?</span><button class="del-sim" onclick="confirmarDelete('${id}')">Sim, remover</button><button class="del-nao" onclick="this.closest('.del-confirm').remove()">Cancelar</button>`
+  card.appendChild(conf)
+}
+
+async function confirmarDelete(id) {
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/produtos/${id}`, {
@@ -1161,9 +1178,9 @@ async function abrirPortal() {
     })
     const data = await res.json()
     if (data.url) window.location.href = data.url
-    else { alert('Erro ao abrir portal. Tente novamente.'); btn.disabled = false; btn.textContent = original }
+    else { showToast('Erro ao abrir portal. Tente novamente.', 'error'); btn.disabled = false; btn.textContent = original }
   } catch(e) {
-    alert('Erro ao abrir portal. Tente novamente.')
+    showToast('Erro ao abrir portal. Tente novamente.', 'error')
     btn.disabled = false
     btn.textContent = original
   }
