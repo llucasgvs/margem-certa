@@ -303,6 +303,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .sim-resultado.show{display:block;}
 .sim-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:4px 0;}
 .sim-alert{margin-top:8px;font-size:12px;font-weight:700;color:var(--red);background:var(--red-light);border-radius:8px;padding:6px 10px;}
+.sim-erro{font-size:12px;font-weight:600;color:var(--red);min-height:0;margin-top:6px;display:none;}
+.sim-erro.show{display:block;}
 .sim-lock{display:none;text-align:center;padding:6px;font-size:13px;color:var(--muted);}
 .sim-lock button{margin-left:6px;font-size:12px;font-weight:700;color:var(--green-mid);background:none;border:none;cursor:pointer;font-family:var(--font);}
 
@@ -470,11 +472,12 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             <div id="sim-form">
               <div class="sim-input-row">
                 <div class="sim-input-wrap">
-                  <input type="number" id="sim-desconto" class="sim-input" min="1" max="90" placeholder="ex: 15">
+                  <input type="number" id="sim-desconto" class="sim-input" min="1" max="99" placeholder="ex: 15">
                   <span>% off</span>
                 </div>
                 <button class="sim-btn" onclick="simularPromocao()">Simular</button>
               </div>
+              <div class="sim-erro" id="sim-erro"></div>
               <div class="sim-resultado" id="sim-resultado"></div>
             </div>
             <div class="sim-lock" id="sim-lock">
@@ -885,6 +888,8 @@ function cancelarEdicao() {
   document.getElementById('resultado').classList.remove('show')
   document.getElementById('simulador').classList.remove('show')
   document.getElementById('sim-resultado').classList.remove('show')
+  document.getElementById('sim-erro').classList.remove('show')
+  document.getElementById('sim-desconto').value = ''
   document.getElementById('calc-pro-cta').classList.remove('show')
   hideCalcError()
 }
@@ -1189,22 +1194,58 @@ function adicionarHistorico(nome, margem, lucro) {
 
 // ── SIMULADOR DE PROMOÇÃO ─────────────────────────────────
 function simularPromocao() {
-  if (!ultimoCalculo) return
-  const desc = parseFloat(document.getElementById('sim-desconto').value)
-  if (isNaN(desc) || desc <= 0 || desc >= 100) return
+  const erroEl = document.getElementById('sim-erro')
+  const resEl  = document.getElementById('sim-resultado')
+
+  function simErro(msg) {
+    erroEl.textContent = msg
+    erroEl.classList.add('show')
+    resEl.classList.remove('show')
+  }
+
+  erroEl.classList.remove('show')
+
+  if (!ultimoCalculo) {
+    simErro('Calcule um produto primeiro antes de simular.')
+    return
+  }
+
+  const raw = document.getElementById('sim-desconto').value.trim()
+  if (!raw) {
+    simErro('Informe o percentual de desconto (ex: 15).')
+    return
+  }
+
+  // Aceita tanto ponto quanto vírgula como separador decimal
+  const desc = parseFloat(raw.replace(',', '.'))
+
+  if (isNaN(desc)) {
+    simErro('Valor inválido. Digite apenas números (ex: 15 ou 15,5).')
+    return
+  }
+  if (desc <= 0) {
+    simErro('O desconto deve ser maior que 0%.')
+    return
+  }
+  if (desc >= 100) {
+    simErro('O desconto deve ser menor que 100%. Tente um valor como 15 ou 30.')
+    return
+  }
+
   const { preco, custo, comRate, envio, impRate } = ultimoCalculo
-  const novoPreco = preco * (1 - desc / 100)
-  const novoLucro = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate
+  const novoPreco  = preco * (1 - desc / 100)
+  const novoLucro  = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate
   const novaMargem = (novoLucro / novoPreco) * 100
   const danger = novaMargem < 0
-  const fmt = n => 'R$\u00A0' + Math.abs(n).toFixed(2).replace('.', ',')
-  document.getElementById('sim-resultado').innerHTML = `
-    <div class="sim-row"><span>Preço com desconto</span><strong>${fmt(novoPreco)}</strong></div>
+  const fmtVal = n => 'R$\u00A0' + Math.abs(n).toFixed(2).replace('.', ',')
+
+  resEl.innerHTML = `
+    <div class="sim-row"><span>Preço com desconto</span><strong>${fmtVal(novoPreco)}</strong></div>
     <div class="sim-row"><span>Nova margem</span><strong class="${danger ? 'loss' : 'profit'}">${novaMargem.toFixed(1).replace('.', ',')}%</strong></div>
-    <div class="sim-row"><span>Novo lucro/unid.</span><strong class="${danger ? 'loss' : 'profit'}">${novoLucro >= 0 ? '+' : '−'}&nbsp;${fmt(novoLucro)}</strong></div>
+    <div class="sim-row"><span>Novo lucro/unid.</span><strong class="${danger ? 'loss' : 'profit'}">${novoLucro >= 0 ? '+' : '−'}&nbsp;${fmtVal(novoLucro)}</strong></div>
     ${danger ? '<div class="sim-alert">⚠️ Produto no prejuízo com esse desconto</div>' : ''}
   `
-  document.getElementById('sim-resultado').classList.add('show')
+  resEl.classList.add('show')
 }
 
 // ── LOGOUT ───────────────────────────────────────────────
