@@ -1058,6 +1058,10 @@ function showToast(msg, tipo = '') {
 
 // ── PORTAL ───────────────────────────────────────────────
 async function abrirPortal() {
+  const btn = document.getElementById('nav-portal')
+  const original = btn.textContent
+  btn.disabled = true
+  btn.textContent = 'Aguarde...'
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/stripe/portal`, {
@@ -1066,9 +1070,11 @@ async function abrirPortal() {
     })
     const data = await res.json()
     if (data.url) window.location.href = data.url
-    else alert('Erro ao abrir portal. Tente novamente.')
+    else { alert('Erro ao abrir portal. Tente novamente.'); btn.disabled = false; btn.textContent = original }
   } catch(e) {
     alert('Erro ao abrir portal. Tente novamente.')
+    btn.disabled = false
+    btn.textContent = original
   }
 }
 
