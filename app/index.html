@@ -287,6 +287,37 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   nav .inner{padding:0;}
   main{padding:40px 0;}
 }
+
+/* SIMULADOR DE PROMOÇÃO */
+.simulador{display:none;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:12px;}
+.simulador.show{display:block;}
+.sim-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:13px;font-weight:700;}
+.sim-pro-tag{font-size:10px;font-weight:700;background:var(--green-light);color:var(--green-mid);border-radius:100px;padding:2px 7px;letter-spacing:.3px;}
+.sim-input-row{display:flex;align-items:center;gap:8px;}
+.sim-input-wrap{display:flex;align-items:center;gap:6px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;flex:1;}
+.sim-input-wrap span{color:var(--muted);font-size:13px;font-weight:600;}
+.sim-input{border:none;outline:none;font-family:var(--font);font-size:16px;font-weight:600;width:100%;background:transparent;}
+.sim-btn{background:var(--dark);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;white-space:nowrap;transition:opacity .2s;}
+.sim-btn:hover{opacity:.85;}
+.sim-resultado{display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px;}
+.sim-resultado.show{display:block;}
+.sim-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:4px 0;}
+.sim-alert{margin-top:8px;font-size:12px;font-weight:700;color:var(--red);background:var(--red-light);border-radius:8px;padding:6px 10px;}
+.sim-lock{display:none;text-align:center;padding:6px;font-size:13px;color:var(--muted);}
+.sim-lock button{margin-left:6px;font-size:12px;font-weight:700;color:var(--green-mid);background:none;border:none;cursor:pointer;font-family:var(--font);}
+
+/* HISTÓRICO DA SESSÃO */
+.historico{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:24px;}
+.historico.show{display:block;}
+.historico-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.historico-title{font-size:13px;font-weight:700;}
+.historico-aviso{font-size:11px;color:var(--muted);}
+.historico-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.historico-item:last-of-type{border-bottom:none;}
+.hist-nome{flex:1;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hist-margem{font-size:12px;font-weight:700;min-width:48px;text-align:right;}
+.hist-lucro{font-size:12px;color:var(--muted);min-width:88px;text-align:right;}
+.historico-cta{margin-top:12px;text-align:center;font-size:12px;font-weight:700;color:var(--green-mid);cursor:pointer;padding:8px;background:var(--green-light);border-radius:8px;}
 </style>
 </head>
 <body>
@@ -430,6 +461,28 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
           </div>
 
+          <!-- SIMULADOR DE PROMOÇÃO -->
+          <div class="simulador" id="simulador">
+            <div class="sim-header">
+              <span>🏷️ Simular promoção</span>
+              <span class="sim-pro-tag">PRO</span>
+            </div>
+            <div id="sim-form">
+              <div class="sim-input-row">
+                <div class="sim-input-wrap">
+                  <input type="number" id="sim-desconto" class="sim-input" min="1" max="90" placeholder="ex: 15">
+                  <span>% off</span>
+                </div>
+                <button class="sim-btn" onclick="simularPromocao()">Simular</button>
+              </div>
+              <div class="sim-resultado" id="sim-resultado"></div>
+            </div>
+            <div class="sim-lock" id="sim-lock">
+              <span>🔒 Disponível no plano Pro</span>
+              <button onclick="abrirUpgrade()">Assinar →</button>
+            </div>
+          </div>
+
           <!-- CTA PÓS-CÁLCULO (só para gratuito) -->
           <div class="calc-pro-cta" id="calc-pro-cta">
             <div class="calc-pro-cta-title" id="calc-pro-cta-title">💾 Quer salvar esse produto?</div>
@@ -438,6 +491,16 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- HISTÓRICO DA SESSÃO -->
+    <div class="historico" id="historico-sessao">
+      <div class="historico-header">
+        <span class="historico-title">🕐 Histórico da sessão</span>
+        <span class="historico-aviso">Some ao fechar a aba</span>
+      </div>
+      <div id="historico-lista"></div>
+      <div class="historico-cta" id="historico-cta" onclick="abrirUpgrade()" style="display:none">Salvar tudo no Pro — não perca esse trabalho →</div>
     </div>
 
     <!-- LISTA DE PRODUTOS -->
@@ -870,6 +933,23 @@ function calcular() {
 
   ultimoCalculo = { preco, custo, comRate, envio, impRate, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
 
+  // Histórico da sessão
+  const nomeHistorico = document.getElementById('prod-nome').value.trim()
+  adicionarHistorico(nomeHistorico, parseFloat(margem), parseFloat(lucro.toFixed(2)))
+
+  // Simulador de promoção — mostra e configura acesso por plano
+  const simEl = document.getElementById('simulador')
+  simEl.classList.add('show')
+  document.getElementById('sim-resultado').classList.remove('show')
+  document.getElementById('sim-desconto').value = ''
+  if (currentPerfil?.plano === 'pro') {
+    document.getElementById('sim-form').style.display = 'block'
+    document.getElementById('sim-lock').style.display = 'none'
+  } else {
+    document.getElementById('sim-form').style.display = 'none'
+    document.getElementById('sim-lock').style.display = 'block'
+  }
+
   // Preço mínimo para 15% de margem
   const denom = 1 - comRate - impRate - 0.15
   const precoMinEl = document.getElementById('r-preco-min')
@@ -1076,6 +1156,49 @@ async function abrirPortal() {
     btn.disabled = false
     btn.textContent = original
   }
+}
+
+// ── HISTÓRICO DA SESSÃO ──────────────────────────────────
+const historicoSessao = []
+
+function adicionarHistorico(nome, margem, lucro) {
+  const item = { nome: nome || 'Sem nome', margem, lucro }
+  const idx = historicoSessao.findIndex(h => h.nome === item.nome)
+  if (idx !== -1) historicoSessao.splice(idx, 1)
+  historicoSessao.unshift(item)
+  if (historicoSessao.length > 5) historicoSessao.pop()
+  const container = document.getElementById('historico-sessao')
+  const lista = document.getElementById('historico-lista')
+  const ctaEl = document.getElementById('historico-cta')
+  container.classList.add('show')
+  lista.innerHTML = historicoSessao.map(h => `
+    <div class="historico-item">
+      <span class="hist-nome">${h.nome}</span>
+      <span class="hist-margem ${h.margem >= 0 ? 'profit' : 'loss'}">${h.margem.toFixed(1).replace('.', ',')}%</span>
+      <span class="hist-lucro ${h.lucro >= 0 ? 'profit' : 'loss'}">${h.lucro >= 0 ? '+' : '−'}&nbsp;R$&nbsp;${Math.abs(h.lucro).toFixed(2).replace('.', ',')}</span>
+    </div>
+  `).join('')
+  if (ctaEl) ctaEl.style.display = currentPerfil?.plano !== 'pro' ? 'block' : 'none'
+}
+
+// ── SIMULADOR DE PROMOÇÃO ─────────────────────────────────
+function simularPromocao() {
+  if (!ultimoCalculo) return
+  const desc = parseFloat(document.getElementById('sim-desconto').value)
+  if (isNaN(desc) || desc <= 0 || desc >= 100) return
+  const { preco, custo, comRate, envio, impRate } = ultimoCalculo
+  const novoPreco = preco * (1 - desc / 100)
+  const novoLucro = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate
+  const novaMargem = (novoLucro / novoPreco) * 100
+  const danger = novaMargem < 0
+  const fmt = n => 'R$\u00A0' + Math.abs(n).toFixed(2).replace('.', ',')
+  document.getElementById('sim-resultado').innerHTML = `
+    <div class="sim-row"><span>Preço com desconto</span><strong>${fmt(novoPreco)}</strong></div>
+    <div class="sim-row"><span>Nova margem</span><strong class="${danger ? 'loss' : 'profit'}">${novaMargem.toFixed(1).replace('.', ',')}%</strong></div>
+    <div class="sim-row"><span>Novo lucro/unid.</span><strong class="${danger ? 'loss' : 'profit'}">${novoLucro >= 0 ? '+' : '−'}&nbsp;${fmt(novoLucro)}</strong></div>
+    ${danger ? '<div class="sim-alert">⚠️ Produto no prejuízo com esse desconto</div>' : ''}
+  `
+  document.getElementById('sim-resultado').classList.add('show')
 }
 
 // ── LOGOUT ───────────────────────────────────────────────
@@ -1352,6 +1475,9 @@ if (savedSort) {
   document.getElementById(id).addEventListener('change', () => {
     if (ultimoCalculo) calcular()
   })
+})
+document.getElementById('sim-desconto').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); simularPromocao() }
 })
 </script>
 </body>
