@@ -227,6 +227,7 @@ async function cadastrar(e) {
 
   showMsg('msg-cadastro', 'success', 'Conta criada! Verifique seu e-mail para confirmar o cadastro.')
   btn.textContent = 'E-mail enviado ✓'
+  gtag('event', 'sign_up', { method: 'email' })
   gtag('event', 'cadastro_realizado', { event_category: 'conversao' })
   if (params.get('plano') === 'pro') {
     showMsg('msg-cadastro', 'success', 'Conta criada! Após confirmar o e-mail, você será direcionado para o pagamento.')
