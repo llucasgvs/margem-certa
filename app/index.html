@@ -337,7 +337,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .ml-connect-sub{font-size:11px;color:var(--muted);margin-top:8px;}
 .ml-thumb{width:36px;height:36px;object-fit:cover;border-radius:6px;display:block;}
 .ml-td-img{width:44px;padding:4px 0!important;}
-.ml-td-nome{font-size:12px;font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ml-td-nome{font-size:12px;font-weight:600;max-width:180px;}
+.ml-badge-pausado{display:inline-block;background:#FFF3CD;color:#856404;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;vertical-align:middle;margin-left:4px;white-space:nowrap;}
 .ml-td-preco{font-size:12px;font-weight:700;white-space:nowrap;}
 .ml-custo-input{width:80px;border:1.5px solid var(--border);border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;font-family:var(--font);background:var(--bg);}
 .ml-margem-cell{font-size:12px;font-weight:700;}
@@ -923,7 +924,7 @@ function renderAnunciosML(anuncios) {
     <tr id="ml-row-${i}" data-preco="${a.preco}" data-titulo="${a.titulo.replace(/"/g,'&quot;')}" data-cat="${a.categoria_sugerida}" data-env="${a.envio_sugerido}">
       <td><input type="checkbox" class="ml-check" onchange="atualizarContadorML()"></td>
       <td class="ml-td-img">${a.thumbnail ? `<img src="${a.thumbnail}" class="ml-thumb">` : ''}</td>
-      <td class="ml-td-nome">${a.titulo}</td>
+      <td class="ml-td-nome">${a.titulo}${a.status === 'paused' ? ' <span class="ml-badge-pausado">Pausado</span>' : ''}</td>
       <td class="ml-td-preco" style="white-space:nowrap">R$&nbsp;${a.preco.toFixed(2).replace('.',',')}</td>
       <td><input type="number" class="ml-custo-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal" oninput="recalcMLRow(${i},${a.preco})"></td>
       <td class="ml-margem-cell" id="ml-m-${i}">—</td>
