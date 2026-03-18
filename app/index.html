@@ -912,8 +912,15 @@ function renderAnunciosML(anuncios) {
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Nenhum anúncio ativo encontrado</td></tr>'
     return
   }
+
+  // Auto-preenche selects globais se todos os itens tiverem o mesmo valor
+  const cats = [...new Set(anuncios.map(a => a.categoria_sugerida))]
+  const envs = [...new Set(anuncios.map(a => a.envio_sugerido))]
+  if (cats.length === 1) _setSelectNearest('ml-categoria', cats[0])
+  if (envs.length === 1) _setSelectNearest('ml-envio', envs[0])
+
   tbody.innerHTML = anuncios.map((a, i) => `
-    <tr id="ml-row-${i}" data-preco="${a.preco}" data-titulo="${a.titulo.replace(/"/g,'&quot;')}">
+    <tr id="ml-row-${i}" data-preco="${a.preco}" data-titulo="${a.titulo.replace(/"/g,'&quot;')}" data-cat="${a.categoria_sugerida}" data-env="${a.envio_sugerido}">
       <td><input type="checkbox" class="ml-check" onchange="atualizarContadorML()"></td>
       <td class="ml-td-img">${a.thumbnail ? `<img src="${a.thumbnail}" class="ml-thumb">` : ''}</td>
       <td class="ml-td-nome">${a.titulo}</td>
@@ -924,10 +931,24 @@ function renderAnunciosML(anuncios) {
   atualizarContadorML()
 }
 
+// Define o option do select mais próximo do valor numérico
+function _setSelectNearest(id, val) {
+  const sel = document.getElementById(id)
+  if (!sel) return
+  let best = null, bestDiff = Infinity
+  for (const opt of sel.options) {
+    const diff = Math.abs(parseFloat(opt.value) - val)
+    if (diff < bestDiff) { bestDiff = diff; best = opt }
+  }
+  if (best) sel.value = best.value
+}
+
 function recalcMLRow(i, preco) {
-  const custo = parseFloat(document.querySelector(`#ml-row-${i} .ml-custo-input`).value) || 0
-  const cat = parseFloat(document.getElementById('ml-categoria').value)
-  const env = parseFloat(document.getElementById('ml-envio').value)
+  const row = document.getElementById(`ml-row-${i}`)
+  const custo = parseFloat(row.querySelector('.ml-custo-input').value) || 0
+  // Usa categoria e envio do próprio item (detectados do ML), ou o select global como fallback
+  const cat = parseFloat(row.dataset.cat) || parseFloat(document.getElementById('ml-categoria').value)
+  const env = parseFloat(row.dataset.env) >= 0 ? parseFloat(row.dataset.env) : parseFloat(document.getElementById('ml-envio').value)
   const imp = parseFloat(document.getElementById('ml-imposto').value)
   const lucro = preco - preco * cat - env - preco * imp - custo
   const margem = (lucro / preco * 100)
@@ -956,11 +977,13 @@ async function importarAnunciosML() {
   const produtos = []
   document.querySelectorAll('#ml-tbody tr').forEach(row => {
     if (!row.querySelector('.ml-check')?.checked) return
+    const rowCat = parseFloat(row.dataset.cat) || cat
+    const rowEnv = parseFloat(row.dataset.env) >= 0 ? parseFloat(row.dataset.env) : env
     produtos.push({
       nome: row.dataset.titulo,
       preco_venda: parseFloat(row.dataset.preco),
       custo_produto: parseFloat(row.querySelector('.ml-custo-input').value) || 0,
-      categoria: cat, envio: env, imposto: imp
+      categoria: rowCat, envio: rowEnv, imposto: imp
     })
   })
   if (!produtos.length) return
