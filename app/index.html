@@ -321,6 +321,32 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .sim-lock{display:none;text-align:center;padding:6px;font-size:13px;color:var(--muted);}
 .sim-lock button{margin-left:6px;font-size:12px;font-weight:700;color:var(--green-mid);background:none;border:none;cursor:pointer;font-family:var(--font);}
 
+/* MERCADO LIVRE */
+.ml-btn{display:none;align-items:center;gap:6px;background:#fff200;color:#333;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.ml-btn:hover{opacity:.85;}
+.ml-painel{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.ml-painel.show{display:block;}
+.ml-painel-title{font-size:14px;font-weight:800;margin-bottom:4px;}
+.ml-painel-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.ml-status-bar{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:14px;}
+.ml-status-ok{font-weight:700;color:var(--green-mid);}
+.ml-desconectar-btn{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--font);text-decoration:underline;}
+.ml-connect-area{text-align:center;padding:20px 0;}
+.ml-connect-btn{background:#fff200;color:#333;border:none;border-radius:10px;padding:12px 24px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:opacity .2s;}
+.ml-connect-btn:hover{opacity:.85;}
+.ml-connect-sub{font-size:11px;color:var(--muted);margin-top:8px;}
+.ml-thumb{width:36px;height:36px;object-fit:cover;border-radius:6px;display:block;}
+.ml-td-img{width:44px;padding:4px 0!important;}
+.ml-td-nome{font-size:12px;font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ml-td-preco{font-size:12px;font-weight:700;white-space:nowrap;}
+.ml-custo-input{width:80px;border:1.5px solid var(--border);border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;font-family:var(--font);background:var(--bg);}
+.ml-margem-cell{font-size:12px;font-weight:700;}
+.ml-margem-cell.profit{color:var(--green-mid);}
+.ml-margem-cell.loss{color:var(--red);}
+.ml-importar-btn{background:var(--green-mid);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:opacity .2s;}
+.ml-importar-btn:disabled{opacity:.5;cursor:not-allowed;}
+.ml-importar-btn:not(:disabled):hover{opacity:.85;}
+
 /* HISTÓRICO DA SESSÃO */
 .historico{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:24px;}
 .historico.show{display:block;}
@@ -525,6 +551,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div class="section-title" style="margin:0">Produtos salvos</div>
         <div class="produtos-header-right">
           <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
+          <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do ML</button>
           <span class="produtos-count" id="produtos-count"></span>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
@@ -618,6 +645,65 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         </div>
       </div>
 
+      <!-- PAINEL IMPORTAÇÃO DO ML -->
+      <div class="ml-painel" id="ml-painel">
+        <div class="ml-painel-title">🛒 Importar do Mercado Livre</div>
+        <div class="ml-painel-sub">Busque seus anúncios ativos, informe o custo de cada produto e importe direto para sua cartela.</div>
+        <div class="ml-status-bar" id="ml-status-bar"></div>
+        <div class="ml-connect-area" id="ml-connect-area" style="display:none">
+          <button class="ml-connect-btn" id="ml-connect-btn" onclick="conectarML()">🔗 Conectar Mercado Livre</button>
+          <div class="ml-connect-sub">Você será redirecionado para o Mercado Livre para autorizar o acesso.</div>
+        </div>
+        <div id="ml-form" style="display:none">
+          <div class="lote-config" style="margin-bottom:12px">
+            <div class="field">
+              <label>Categoria ML</label>
+              <div class="select-wrap"><select id="ml-categoria">
+                <option value="0.11">Eletrônicos — 11%</option>
+                <option value="0.13" selected>Moda e vestuário — 13%</option>
+                <option value="0.14">Casa e decoração — 14%</option>
+                <option value="0.16">Beleza e cuidado — 16%</option>
+                <option value="0.18">Outros — 18%</option>
+              </select></div>
+            </div>
+            <div class="field">
+              <label>Envio</label>
+              <div class="select-wrap"><select id="ml-envio">
+                <option value="0">Próprio (R$0)</option>
+                <option value="12" selected>Full pequeno</option>
+                <option value="18">Full médio</option>
+                <option value="28">Full grande</option>
+              </select></div>
+            </div>
+            <div class="field">
+              <label>Tributação</label>
+              <div class="select-wrap"><select id="ml-imposto">
+                <option value="0.06" selected>MEI — 6%</option>
+                <option value="0.085">Simples — 8,5%</option>
+                <option value="0.114">L. Presumido</option>
+              </select></div>
+            </div>
+          </div>
+          <button class="lote-parse-btn" id="ml-buscar-btn" onclick="carregarAnunciosML()" style="margin-bottom:12px">Buscar anúncios →</button>
+          <div class="lote-preview" id="ml-preview" style="display:none">
+            <div class="lote-preview-header">
+              <h4 id="ml-preview-titulo">0 anúncios</h4>
+              <div class="lote-preview-actions">
+                <button class="lote-sel-all" onclick="mlSelectAll(true)">Selecionar todos</button>
+                <button class="lote-sel-all" onclick="mlSelectAll(false)">Desmarcar todos</button>
+                <button class="ml-importar-btn" id="ml-importar-btn" onclick="importarAnunciosML()" disabled>Importar selecionados</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="lote-table">
+                <thead><tr><th style="width:32px"></th><th style="width:44px"></th><th>Nome</th><th>Preço ML</th><th>Custo (R$)</th><th>Margem</th></tr></thead>
+                <tbody id="ml-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="produtos-lista">
         <div class="loading">Carregando...</div>
       </div>
@@ -635,6 +721,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
     <ul class="upgrade-benefits">
       <li><span>✅</span><span><strong>Salvar produtos ilimitados</strong> — acesse de qualquer dispositivo</span></li>
       <li><span>✅</span><span><strong>Cartela completa com estatísticas</strong> — margem média, lucro total, alertas de prejuízo</span></li>
+      <li><span>✅</span><span><strong>Importar do Mercado Livre</strong> — conecte sua conta e importe anúncios diretamente</span></li>
       <li><span>✅</span><span><strong>Importação em lote</strong> — importe até 25 produtos de uma vez por CSV ou Excel</span></li>
       <li><span>✅</span><span><strong>Alertas de margem negativa</strong> — identifique produtos no vermelho de imediato</span></li>
     </ul>
@@ -659,6 +746,7 @@ let currentPerfil = null
 let ultimoCalculo = null
 let editandoId = null
 let produtosCache = []
+let mlConectado = false
 
 // ── INIT ────────────────────────────────────────────────
 async function init() {
@@ -677,9 +765,19 @@ async function init() {
   const successParam = params.get('success')
   const canceledParam = params.get('canceled')
 
+  const mlParam = params.get('ml')
+
   // Limpa a URL antes de qualquer coisa
-  if (planoParam || successParam || canceledParam) {
+  if (planoParam || successParam || canceledParam || mlParam) {
     window.history.replaceState({}, '', '/app')
+  }
+
+  if (mlParam === 'connected') {
+    showToast('✓ Mercado Livre conectado com sucesso!')
+    mlConectado = true
+    atualizarStatusML()
+  } else if (mlParam === 'error') {
+    showToast('Erro ao conectar o Mercado Livre. Tente novamente.')
   }
 
   if (successParam === '1') {
@@ -719,9 +817,186 @@ async function carregarPerfil(token) {
     } else {
       document.getElementById('nav-portal').style.display = 'block'
       document.getElementById('lote-btn').style.display = 'block'
+      document.getElementById('ml-btn').style.display = 'inline-flex'
+      carregarStatusML(token)
     }
   } catch(e) {
     console.error('Erro ao carregar perfil', e)
+  }
+}
+
+// ── MERCADO LIVRE ────────────────────────────────────────
+async function carregarStatusML(token) {
+  try {
+    const res = await fetch(`${API_URL}/ml/status`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    const data = await res.json()
+    mlConectado = data.conectado
+    atualizarStatusML()
+  } catch(e) { /* silencioso — não é crítico */ }
+}
+
+function atualizarStatusML() {
+  const bar = document.getElementById('ml-status-bar')
+  const form = document.getElementById('ml-form')
+  const connectArea = document.getElementById('ml-connect-area')
+  if (!bar) return
+  if (mlConectado) {
+    bar.innerHTML = '<span class="ml-status-ok">✓ Conectado ao Mercado Livre</span><button class="ml-desconectar-btn" onclick="desconectarML()">Desconectar</button>'
+    form.style.display = 'block'
+    connectArea.style.display = 'none'
+  } else {
+    bar.innerHTML = ''
+    form.style.display = 'none'
+    connectArea.style.display = 'block'
+  }
+}
+
+function toggleMLPanel() {
+  const painel = document.getElementById('ml-painel')
+  const lote = document.getElementById('lote-painel')
+  const aberto = painel.classList.contains('show')
+  lote.classList.remove('show')
+  painel.classList.toggle('show', !aberto)
+}
+
+async function conectarML() {
+  const btn = document.getElementById('ml-connect-btn')
+  btn.disabled = true
+  btn.textContent = 'Aguarde...'
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/ml/auth/url`, {
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    })
+    const data = await res.json()
+    window.location.href = data.url
+  } catch(e) {
+    showToast('Erro ao conectar. Tente novamente.')
+    btn.disabled = false
+    btn.textContent = '🔗 Conectar Mercado Livre'
+  }
+}
+
+async function carregarAnunciosML() {
+  const btn = document.getElementById('ml-buscar-btn')
+  btn.disabled = true
+  btn.textContent = 'Buscando...'
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/ml/anuncios`, {
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    })
+    if (res.status === 401) {
+      mlConectado = false; atualizarStatusML()
+      showToast('Sessão ML expirada. Reconecte o Mercado Livre.')
+      return
+    }
+    if (!res.ok) throw new Error()
+    renderAnunciosML(await res.json())
+  } catch(e) {
+    showToast('Erro ao buscar anúncios.')
+  } finally {
+    btn.disabled = false
+    btn.textContent = 'Buscar anúncios →'
+  }
+}
+
+function renderAnunciosML(anuncios) {
+  const preview = document.getElementById('ml-preview')
+  const tbody = document.getElementById('ml-tbody')
+  document.getElementById('ml-preview-titulo').textContent = `${anuncios.length} anúncio${anuncios.length !== 1 ? 's' : ''} encontrado${anuncios.length !== 1 ? 's' : ''}`
+  preview.style.display = 'block'
+  if (!anuncios.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Nenhum anúncio ativo encontrado</td></tr>'
+    return
+  }
+  tbody.innerHTML = anuncios.map((a, i) => `
+    <tr id="ml-row-${i}" data-preco="${a.preco}" data-titulo="${a.titulo.replace(/"/g,'&quot;')}">
+      <td><input type="checkbox" class="ml-check" onchange="atualizarContadorML()"></td>
+      <td class="ml-td-img">${a.thumbnail ? `<img src="${a.thumbnail}" class="ml-thumb">` : ''}</td>
+      <td class="ml-td-nome">${a.titulo}</td>
+      <td class="ml-td-preco" style="white-space:nowrap">R$&nbsp;${a.preco.toFixed(2).replace('.',',')}</td>
+      <td><input type="number" class="ml-custo-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal" oninput="recalcMLRow(${i},${a.preco})"></td>
+      <td class="ml-margem-cell" id="ml-m-${i}">—</td>
+    </tr>`).join('')
+  atualizarContadorML()
+}
+
+function recalcMLRow(i, preco) {
+  const custo = parseFloat(document.querySelector(`#ml-row-${i} .ml-custo-input`).value) || 0
+  const cat = parseFloat(document.getElementById('ml-categoria').value)
+  const env = parseFloat(document.getElementById('ml-envio').value)
+  const imp = parseFloat(document.getElementById('ml-imposto').value)
+  const lucro = preco - preco * cat - env - preco * imp - custo
+  const margem = (lucro / preco * 100)
+  const el = document.getElementById(`ml-m-${i}`)
+  el.textContent = margem.toFixed(1).replace('.',',') + '%'
+  el.className = 'ml-margem-cell ' + (margem >= 0 ? 'profit' : 'loss')
+}
+
+function mlSelectAll(v) {
+  document.querySelectorAll('.ml-check').forEach(c => c.checked = v)
+  atualizarContadorML()
+}
+
+function atualizarContadorML() {
+  const n = document.querySelectorAll('.ml-check:checked').length
+  const btn = document.getElementById('ml-importar-btn')
+  btn.disabled = n === 0
+  btn.textContent = n > 0 ? `Importar selecionados (${n}) →` : 'Importar selecionados'
+}
+
+async function importarAnunciosML() {
+  const btn = document.getElementById('ml-importar-btn')
+  const cat = parseFloat(document.getElementById('ml-categoria').value)
+  const env = parseFloat(document.getElementById('ml-envio').value)
+  const imp = parseFloat(document.getElementById('ml-imposto').value)
+  const produtos = []
+  document.querySelectorAll('#ml-tbody tr').forEach(row => {
+    if (!row.querySelector('.ml-check')?.checked) return
+    produtos.push({
+      nome: row.dataset.titulo,
+      preco_venda: parseFloat(row.dataset.preco),
+      custo_produto: parseFloat(row.querySelector('.ml-custo-input').value) || 0,
+      categoria: cat, envio: env, imposto: imp
+    })
+  })
+  if (!produtos.length) return
+  btn.disabled = true; btn.textContent = 'Importando...'
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    const res = await fetch(`${API_URL}/produtos/lote`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify(produtos)
+    })
+    if (!res.ok) throw new Error()
+    const data = await res.json()
+    showToast(`✓ ${data.inseridos} produto${data.inseridos > 1 ? 's importados' : ' importado'} com sucesso!`)
+    toggleMLPanel()
+    await carregarProdutos(session.access_token)
+  } catch(e) {
+    showToast('Erro ao importar produtos.')
+  } finally {
+    btn.disabled = false; btn.textContent = 'Importar selecionados'
+  }
+}
+
+async function desconectarML() {
+  try {
+    const { data: { session } } = await sb.auth.getSession()
+    await fetch(`${API_URL}/ml/desconectar`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    })
+    mlConectado = false
+    atualizarStatusML()
+    document.getElementById('ml-preview').style.display = 'none'
+    showToast('Mercado Livre desconectado.')
+  } catch(e) {
+    showToast('Erro ao desconectar.')
   }
 }
 
