@@ -552,7 +552,6 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div class="produtos-header-right">
           <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
           <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do ML</button>
-          <span class="produtos-count" id="produtos-count"></span>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
             <option value="margem-desc">Margem ↓</option>
@@ -563,6 +562,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
           </select>
         </div>
       </div>
+      <div id="produtos-count-row" style="display:none;margin:-8px 0 14px;"><span class="produtos-count" id="produtos-count"></span></div>
 
       <!-- PAINEL IMPORTAÇÃO EM LOTE -->
       <div class="lote-painel" id="lote-painel">
@@ -1106,6 +1106,7 @@ function renderProdutos(produtos) {
         <div class="empty-sub">Calcule a margem de um produto e clique em "Salvar produto" para adicionar à sua cartela.</div>
       </div>`
     count.textContent = ''
+    document.getElementById('produtos-count-row').style.display = 'none'
     document.getElementById('stats-grid').style.display = 'none'
     return
   }
@@ -1127,6 +1128,7 @@ function renderProdutos(produtos) {
   lucroTotalEl.textContent = (lucroTotal >= 0 ? '+ ' : '- ') + 'R$\u00A0' + Math.abs(lucroTotal).toFixed(2).replace('.', ',')
   lucroTotalEl.className = 'stat-value ' + (lucroTotal >= 0 ? 'green' : 'red')
   count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
+  document.getElementById('produtos-count-row').style.display = 'block'
 
   produtosCache = produtos
 
