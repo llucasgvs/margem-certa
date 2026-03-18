@@ -409,8 +409,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   <!-- BANNER PRO (só aparece no gratuito) -->
   <div class="pro-banner" id="pro-banner" style="display:none;">
     <div class="pro-banner-text">
-      <h3>Salve produtos e monitore sua cartela</h3>
-      <p>Assine o plano Pro por R$37/mês e desbloqueie salvamento de produtos, cálculo em lote e alertas de margem.</p>
+      <h3>Salve produtos, importe do ML e monitore sua cartela</h3>
+      <p>Com o Pro você conecta sua conta Mercado Livre e importa todos os anúncios automaticamente — sem digitar produto por produto.</p>
     </div>
     <button class="pro-banner-btn" onclick="assinarPro()">Assinar Pro →</button>
   </div>
@@ -1050,10 +1050,11 @@ async function carregarProdutos(token) {
           <div class="pro-lock-preview-badge"><span>🔒 Disponível no Pro</span></div>
         </div>
         <ul class="pro-lock-list">
+          <li><span>🛒</span><span><strong>Importar do Mercado Livre</strong> — conecte sua conta e importe anúncios com 1 clique</span></li>
           <li><span>✅</span><span><strong>Salvar produtos ilimitados</strong> — acesse de qualquer dispositivo</span></li>
           <li><span>✅</span><span><strong>Estatísticas da cartela</strong> — margem média, lucro total, alertas de prejuízo</span></li>
-          <li><span>✅</span><span><strong>Importação em lote</strong> — importe até 25 produtos por CSV ou Excel</span></li>
-          <li><span>⚠️</span><span><strong>Alerta de margem negativa</strong> — saiba imediatamente quando um produto entrar no vermelho</span></li>
+          <li><span>✅</span><span><strong>Importação em lote</strong> — até 25 produtos por CSV ou Excel</span></li>
+          <li><span>⚠️</span><span><strong>Alerta de margem negativa</strong> — saiba quando um produto entrar no vermelho</span></li>
         </ul>
         <p class="pro-lock-price">Por apenas R$&nbsp;37/mês · Cancele quando quiser</p>
         <button class="pro-lock-btn" onclick="assinarPro()">Assinar Pro agora →</button>
