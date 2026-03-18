@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Margem Certa — Descubra seu lucro real no Mercado Livre</title>
+<title>Margem Certa — Calculadora de Lucro Real e Integração com Mercado Livre</title>
 
 <link rel="canonical" href="https://margem-certa.vercel.app/">
 
@@ -13,15 +13,15 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Margem Certa — Descubra seu lucro real no Mercado Livre">
-<meta property="og:description" content="Calcule comissão, frete Full e imposto em 30 segundos. Gratuito, sem cadastro.">
+<meta property="og:title" content="Margem Certa — Calculadora de Lucro Real e Integração com Mercado Livre">
+<meta property="og:description" content="Importe anúncios do Mercado Livre automaticamente e calcule comissão, frete Full e imposto em segundos. Gratuito, sem planilha.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://margem-certa.vercel.app">
 <meta property="og:image" content="https://margem-certa.vercel.app/og-home.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
-<meta name="description" content="Calculadora gratuita de lucro real para vendedores do Mercado Livre. Comissão, frete Full e imposto calculados em 30 segundos.">
+<meta name="description" content="Importe seus anúncios do Mercado Livre com 1 clique e calcule o lucro real de cada produto — comissão, frete Full e imposto. Gratuito, sem planilha, sem erro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VLXHCCFBS"></script>
@@ -250,6 +250,36 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
   footer{padding:32px 0;}
   .trust-strip{padding:28px 0;}
 }
+
+/* ML Integration section */
+.ml-section{background:linear-gradient(135deg,#0d1f12 0%,#0F1410 60%,#0a1a0e 100%);padding:72px 20px;overflow:hidden;}
+.ml-section-inner{max-width:1140px;margin:0 auto;}
+.ml-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,200,83,.15);border:1px solid rgba(0,200,83,.3);color:var(--green);font-size:11px;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:.4px;margin-bottom:20px;}
+.ml-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite;}
+.ml-section h2{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-1.5px;line-height:1.15;color:#fff;margin-bottom:12px;}
+.ml-section h2 em{color:var(--green);font-style:normal;}
+.ml-section-sub{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:40px;line-height:1.65;max-width:540px;}
+.ml-steps{display:flex;flex-direction:column;gap:16px;margin-bottom:40px;}
+.ml-step{display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;}
+.ml-step-num{width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ml-step-body h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.ml-step-body p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.6;}
+.ml-keywords{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;}
+.ml-keyword{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.45);font-size:11px;padding:4px 12px;border-radius:100px;}
+.ml-cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:12px;}
+.ml-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:none;padding:15px 32px;border-radius:13px;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s,transform .15s;letter-spacing:-.2px;text-decoration:none;}
+.ml-cta-btn:active{transform:scale(.98);}
+.ml-cta-note{font-size:11px;color:rgba(255,255,255,.25);}
+@media(min-width:900px){
+  .ml-section{padding:100px 40px;}
+  .ml-section-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+  .ml-steps{margin-bottom:0;}
+  .ml-section h2{font-size:clamp(30px,3.5vw,44px);}
+  .ml-section-sub{font-size:16px;}
+}
+@media(min-width:1200px){
+  .ml-section{padding:100px 0;}
+}
 </style>
 </head>
 <body>
@@ -276,7 +306,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
     <div class="hero-content">
       <div class="hero-badge"><div class="live-dot"></div> Para vendedores do Mercado Livre</div>
       <h1>Você está vendendo no <span class="strike">lucro</span>?<br><span class="green">Descubra agora.</span></h1>
-      <p class="hero-sub">Comissão, frete Full e imposto calculados em <strong>30 segundos</strong>. Sem planilha. Sem erro. Gratuito.</p>
+      <p class="hero-sub">Importe anúncios do ML automaticamente ou calcule na hora — comissão, frete Full e imposto em <strong>30 segundos</strong>. Sem planilha. Sem erro. Gratuito.</p>
       <div class="hero-stats">
         <div><div class="hero-stat-num">R$0</div><div class="hero-stat-label">para começar</div></div>
         <div><div class="hero-stat-num">30s</div><div class="hero-stat-label">para calcular</div></div>
@@ -383,6 +413,58 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
 
 <div class="section-divider"></div>
 
+<!-- ML Integration Section -->
+<section class="ml-section fade-up" id="mercado-livre" aria-label="Integração com Mercado Livre">
+  <div class="ml-section-inner">
+    <div class="ml-steps">
+      <div class="ml-badge"><span class="ml-badge-dot"></span> INTEGRAÇÃO OFICIAL · MERCADO LIVRE</div>
+      <h2>Importe seus anúncios<br>do ML <em>automaticamente.</em></h2>
+      <p class="ml-section-sub">Chega de digitar produto por produto. Conecte sua conta Mercado Livre e puxe todos os seus anúncios ativos com preço, categoria e tipo de envio já preenchidos.</p>
+
+      <div class="ml-step">
+        <div class="ml-step-num">1</div>
+        <div class="ml-step-body">
+          <h4>Conecte sua conta Mercado Livre</h4>
+          <p>Login seguro via OAuth2 oficial do ML. Nenhuma senha é armazenada — só você tem acesso.</p>
+        </div>
+      </div>
+      <div class="ml-step">
+        <div class="ml-step-num">2</div>
+        <div class="ml-step-body">
+          <h4>Anúncios importados com um clique</h4>
+          <p>Preço de venda, categoria e tipo de envio (Full ou próprio) detectados automaticamente de cada anúncio.</p>
+        </div>
+      </div>
+      <div class="ml-step">
+        <div class="ml-step-num">3</div>
+        <div class="ml-step-body">
+          <h4>Lucro real calculado na hora</h4>
+          <p>Digite o custo do produto, salve e pronto. Sua cartela completa com margem real de cada item.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="ml-keywords" aria-hidden="true">
+        <span class="ml-keyword">importar anúncios mercado livre</span>
+        <span class="ml-keyword">integração ML automática</span>
+        <span class="ml-keyword">sincronizar produtos ML</span>
+        <span class="ml-keyword">calcular lucro anúncio</span>
+        <span class="ml-keyword">comissão por categoria ML</span>
+        <span class="ml-keyword">frete Full automático</span>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:24px;">Vendedores com dezenas de anúncios perdiam horas calculando produto por produto em planilha. Agora, a integração direta com a API do Mercado Livre importa tudo de uma vez — <strong style="color:rgba(255,255,255,.8);">nome, preço, categoria e frete</strong> já vêm preenchidos. Você só informa o custo e salva.</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:32px;">A comissão da sua categoria é detectada automaticamente: Eletrônicos (11%), Moda (13%), Casa e Decoração (14%), Beleza (16%) e demais categorias (18%). O tipo de envio Full ou próprio também é identificado pelo ML.</p>
+      <div class="ml-cta-row">
+        <a href="/app/auth?tab=cadastro&plano=pro" class="ml-cta-btn" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'ml_section'})">Conectar meu Mercado Livre <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <span class="ml-cta-note">Disponível no plano Pro · a partir de R$24,75/mês</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
 <section class="section fade-up" id="pricing">
   <div class="section-inner" style="text-align:center;">
     <div class="section-chip">Preços</div>
@@ -442,6 +524,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Preciso instalar alguma coisa?<span class="faq-icon">+</span></button><div class="faq-a">Nada. Roda 100% no navegador. Funciona no celular, tablet e computador — sem app, sem extensão.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Posso cancelar quando quiser?<span class="faq-icon">+</span></button><div class="faq-a">Sim, sem burocracia. Cancele em um clique, a qualquer momento. Sem multa, sem fidelidade.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Qual a diferença entre grátis e Pro?<span class="faq-icon">+</span></button><div class="faq-a">No grátis você usa a calculadora à vontade, mas os resultados não são salvos. No Pro você salva sua cartela, calcula em lote, simula promoções e recebe alertas de margem negativa.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Como funciona a integração com o Mercado Livre?<span class="faq-icon">+</span></button><div class="faq-a">Você conecta sua conta ML pelo login seguro (OAuth2 oficial). O Margem Certa busca seus anúncios ativos e preenche automaticamente preço, categoria e tipo de envio (Full ou próprio). Você só informa o custo de cada produto e salva. Nenhuma senha é armazenada.</div></div>
     </div>
   </div>
 </section>
