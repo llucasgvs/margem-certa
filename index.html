@@ -89,15 +89,6 @@ h1 .strike::after{content:'';position:absolute;left:-2px;right:-2px;top:52%;heig
 .antecip-sw-track::before{content:'';position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
 input[type=checkbox]#antecip-toggle-lp:checked~.antecip-sw-track{background:var(--green-mid);}
 input[type=checkbox]#antecip-toggle-lp:checked~.antecip-sw-track::before{transform:translateX(16px);}
-.float-result{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2.5px solid #E4E9E5;padding:12px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08);transform:translateY(100%);transition:transform .3s ease;cursor:pointer;}
-.float-result.show{display:flex;}.float-result.visible{transform:translateY(0);}
-.float-result.profit{border-top-color:#00A846;}.float-result.loss{border-top-color:#E53E3E;}
-.float-result-col{display:flex;flex-direction:column;gap:1px;}.float-result-col.right{text-align:right;}
-.float-result-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6B7A6D;}
-.float-result-value{font-size:20px;font-weight:800;letter-spacing:-1px;line-height:1.1;}
-.float-result-value.profit{color:#00A846;}.float-result-value.loss{color:#E53E3E;}
-.float-result-hint{font-size:11px;color:#6B7A6D;font-weight:500;text-align:center;flex:1;}
-@media(min-width:900px){.float-result{display:none!important;}}
 .calc-btn{width:100%;background:var(--green);color:#fff;border:none;padding:16px;border-radius:12px;font-size:16px;font-weight:800;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s;margin-top:4px;letter-spacing:-.2px;}
 .calc-btn:active{transform:scale(.98);background:var(--green-mid);}
 
@@ -662,14 +653,6 @@ function calcular(){
   const box=document.getElementById('resultado');
   box.classList.add('show');
   setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
-  // Barra flutuante (mobile)
-  const fb=document.getElementById('float-result');
-  document.getElementById('float-lucro').textContent=(ok?'+':'−')+' R$\u00A0'+Math.abs(lucro).toFixed(2).replace('.',',');
-  document.getElementById('float-lucro').className='float-result-value '+(ok?'profit':'loss');
-  document.getElementById('float-margem').textContent=margem.replace('.',',')+('%');
-  document.getElementById('float-margem').className='float-result-value '+(ok?'profit':'loss');
-  fb.className='float-result show '+(ok?'profit':'loss');
-  setTimeout(()=>fb.classList.add('visible'),20);
   gtag('event','calculadora_usada',{event_category:'calculadora',lucro_real:lucro.toFixed(2),margem_pct:margem});
 }
 
@@ -696,17 +679,5 @@ function toggleFaq(btn){
 })()
 </script>
 
-<!-- BARRA FLUTUANTE RESULTADO -->
-<div class="float-result" id="float-result" onclick="document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="float-result-col">
-    <span class="float-result-label">Lucro/unid.</span>
-    <span class="float-result-value" id="float-lucro">—</span>
-  </div>
-  <span class="float-result-hint">↑ Ver detalhes</span>
-  <div class="float-result-col right">
-    <span class="float-result-label">Margem líquida</span>
-    <span class="float-result-value" id="float-margem">—</span>
-  </div>
-</div>
 </body>
 </html>

@@ -288,20 +288,6 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .calc-error{display:none;background:var(--red-light);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:8px;}
 .calc-error.show{display:block;}
 
-/* BARRA FLUTUANTE DE RESULTADO — mobile only */
-.float-result{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2.5px solid var(--border);padding:12px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08);transform:translateY(100%);transition:transform .3s ease;cursor:pointer;}
-.float-result.show{display:flex;}
-.float-result.visible{transform:translateY(0);}
-.float-result.profit{border-top-color:var(--green);}
-.float-result.loss{border-top-color:var(--red);}
-.float-result-col{display:flex;flex-direction:column;gap:1px;}
-.float-result-col.right{text-align:right;}
-.float-result-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);}
-.float-result-value{font-size:20px;font-weight:800;letter-spacing:-1px;line-height:1.1;}
-.float-result-value.profit{color:var(--green-mid);}
-.float-result-value.loss{color:var(--red);}
-.float-result-hint{font-size:11px;color:var(--muted);font-weight:500;text-align:center;flex:1;}
-@media(min-width:900px){.float-result{display:none!important;}}
 
 @media(max-width:480px){
   .nav-user{display:none !important;}
@@ -1286,9 +1272,6 @@ function cancelarEdicao() {
   document.getElementById('prod-tipo').value = '0'
   document.getElementById('antecip-toggle').checked = false
   document.getElementById('antecip-pct-wrap').style.display = 'none'
-  const fb = document.getElementById('float-result')
-  fb.classList.remove('visible')
-  setTimeout(() => fb.classList.remove('show'), 300)
   document.getElementById('resultado').classList.remove('show')
   document.getElementById('simulador').classList.remove('show')
   document.getElementById('sim-resultado').classList.remove('show')
@@ -1416,16 +1399,6 @@ function calcular() {
   // Auto-scroll ao resultado
   setTimeout(() => document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50)
 
-  // Barra flutuante (mobile)
-  const floatBar = document.getElementById('float-result')
-  const floatLucro = document.getElementById('float-lucro')
-  const floatMargem = document.getElementById('float-margem')
-  floatLucro.textContent = (ok ? '+' : '−') + ' R$\u00A0' + Math.abs(lucro).toFixed(2).replace('.', ',')
-  floatLucro.className = 'float-result-value ' + (ok ? 'profit' : 'loss')
-  floatMargem.textContent = margem.replace('.', ',') + '%'
-  floatMargem.className = 'float-result-value ' + (ok ? 'profit' : 'loss')
-  floatBar.className = 'float-result show ' + (ok ? 'profit' : 'loss')
-  setTimeout(() => floatBar.classList.add('visible'), 20)
 
   btn.textContent = 'Calculado ✓'
   setTimeout(() => { btn.disabled = false; btn.textContent = 'Calcular →' }, 800)
@@ -2000,17 +1973,5 @@ document.getElementById('sim-desconto').addEventListener('keydown', e => {
 })
 </script>
 
-<!-- BARRA FLUTUANTE RESULTADO -->
-<div class="float-result" id="float-result" onclick="document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="float-result-col">
-    <span class="float-result-label">Lucro/unid.</span>
-    <span class="float-result-value" id="float-lucro">—</span>
-  </div>
-  <span class="float-result-hint">↑ Ver detalhes</span>
-  <div class="float-result-col right">
-    <span class="float-result-label">Margem líquida</span>
-    <span class="float-result-value" id="float-margem">—</span>
-  </div>
-</div>
 </body>
 </html>
