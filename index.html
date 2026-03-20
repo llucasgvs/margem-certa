@@ -85,6 +85,19 @@ h1 .strike::after{content:'';position:absolute;left:-2px;right:-2px;top:52%;heig
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .select-wrap{position:relative;}
 .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.antecip-sw-track{position:absolute;cursor:pointer;inset:0;background:#D1D9D4;border-radius:20px;transition:.25s;}
+.antecip-sw-track::before{content:'';position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+input[type=checkbox]#antecip-toggle-lp:checked~.antecip-sw-track{background:var(--green-mid);}
+input[type=checkbox]#antecip-toggle-lp:checked~.antecip-sw-track::before{transform:translateX(16px);}
+.float-result{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2.5px solid #E4E9E5;padding:12px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08);transform:translateY(100%);transition:transform .3s ease;cursor:pointer;}
+.float-result.show{display:flex;}.float-result.visible{transform:translateY(0);}
+.float-result.profit{border-top-color:#00A846;}.float-result.loss{border-top-color:#E53E3E;}
+.float-result-col{display:flex;flex-direction:column;gap:1px;}.float-result-col.right{text-align:right;}
+.float-result-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#6B7A6D;}
+.float-result-value{font-size:20px;font-weight:800;letter-spacing:-1px;line-height:1.1;}
+.float-result-value.profit{color:#00A846;}.float-result-value.loss{color:#E53E3E;}
+.float-result-hint{font-size:11px;color:#6B7A6D;font-weight:500;text-align:center;flex:1;}
+@media(min-width:900px){.float-result{display:none!important;}}
 .calc-btn{width:100%;background:var(--green);color:#fff;border:none;padding:16px;border-radius:12px;font-size:16px;font-weight:800;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s,transform .15s;margin-top:4px;letter-spacing:-.2px;}
 .calc-btn:active{transform:scale(.98);background:var(--green-mid);}
 
@@ -327,21 +340,22 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             <div class="field"><label>Custo do produto</label><input type="number" id="custo" placeholder="R$ 35,00" min="0" step="0.01" inputmode="decimal"></div>
           </div>
           <div class="field-row">
-            <div class="field"><label>Categoria ML</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos — 11%</option><option value="0.13" selected>Moda e vestuário — 13%</option><option value="0.14">Casa e decoração — 14%</option><option value="0.16">Beleza e cuidado — 16%</option><option value="0.18">Outros — 18%</option></select></div></div>
-            <div class="field"><label>Tipo de anúncio</label><div class="select-wrap"><select id="tipo"><option value="0" selected>Clássico</option><option value="0.05">Premium (+5%)</option></select></div></div>
+            <div class="field"><label>Categoria ML</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos</option><option value="0.13" selected>Moda e vestuário</option><option value="0.14">Casa e decoração</option><option value="0.16">Beleza e cuidado</option><option value="0.18">Outros</option></select></div></div>
+            <div class="field"><label>Tipo de anúncio</label><div class="select-wrap"><select id="tipo"><option value="0" selected>Clássico</option><option value="0.05">Premium</option></select></div></div>
           </div>
           <div class="field-row">
-            <div class="field"><label>Envio</label><div class="select-wrap"><select id="envio"><option value="0">Próprio (R$0)</option><option value="12" selected>Full pequeno</option><option value="18">Full médio</option><option value="28">Full grande</option></select></div></div>
-            <div class="field"><label>Tributação</label><div class="select-wrap"><select id="imposto"><option value="0.06" selected>MEI — 6%</option><option value="0.085">Simples — 8,5%</option><option value="0.114">L. Presumido</option></select></div></div>
+            <div class="field"><label>Envio</label><div class="select-wrap"><select id="envio"><option value="0">Próprio</option><option value="12" selected>Full Pequeno</option><option value="18">Full Médio</option><option value="28">Full Grande</option></select></div></div>
+            <div class="field"><label>Tributação</label><div class="select-wrap"><select id="imposto"><option value="0.06" selected>MEI</option><option value="0.085">Simples Nacional</option><option value="0.114">Lucro Presumido</option></select></div></div>
           </div>
-          <div class="antecip-field" style="padding:8px 0 2px;display:flex;align-items:center;gap:8px;">
-            <label for="antecip-toggle-lp" style="font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;">
-              <input type="checkbox" id="antecip-toggle-lp" style="width:15px;height:15px;accent-color:#00A846;cursor:pointer;" onchange="document.getElementById('antecip-pct-wrap-lp').style.display=this.checked?'flex':'none'">
-              Antecipação Mercado Pago
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:4px;">
+            <label style="position:relative;display:inline-flex;width:36px;height:20px;flex-shrink:0;cursor:pointer;">
+              <input type="checkbox" id="antecip-toggle-lp" style="opacity:0;width:0;height:0;position:absolute;" onchange="document.getElementById('antecip-pct-wrap-lp').style.display=this.checked?'flex':'none'">
+              <span class="antecip-sw-track"></span>
             </label>
+            <span style="font-size:13px;font-weight:600;flex:1;color:#1A1F1B;">Antecipação MP <span style="font-size:11px;color:#6B7A6D;font-weight:500;">· receber na hora</span></span>
             <div id="antecip-pct-wrap-lp" style="display:none;align-items:center;gap:4px;">
-              <input type="number" id="antecip-pct-lp" style="width:60px;border:1.5px solid #E4E9E5;border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;font-family:inherit;background:#FAFAF9;text-align:right;" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal">
-              <span style="font-size:13px;color:#6B7A6D;font-weight:600;">%</span>
+              <input type="number" id="antecip-pct-lp" style="width:68px;border:1.5px solid #E4E9E5;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#fff;text-align:right;" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal">
+              <span style="font-size:12px;color:#6B7A6D;font-weight:600;">%</span>
             </div>
           </div>
 
@@ -648,6 +662,14 @@ function calcular(){
   const box=document.getElementById('resultado');
   box.classList.add('show');
   setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+  // Barra flutuante (mobile)
+  const fb=document.getElementById('float-result');
+  document.getElementById('float-lucro').textContent=(ok?'+':'−')+' R$\u00A0'+Math.abs(lucro).toFixed(2).replace('.',',');
+  document.getElementById('float-lucro').className='float-result-value '+(ok?'profit':'loss');
+  document.getElementById('float-margem').textContent=margem.replace('.',',')+('%');
+  document.getElementById('float-margem').className='float-result-value '+(ok?'profit':'loss');
+  fb.className='float-result show '+(ok?'profit':'loss');
+  setTimeout(()=>fb.classList.add('visible'),20);
   gtag('event','calculadora_usada',{event_category:'calculadora',lucro_real:lucro.toFixed(2),margem_pct:margem});
 }
 
@@ -673,5 +695,18 @@ function toggleFaq(btn){
   }
 })()
 </script>
+
+<!-- BARRA FLUTUANTE RESULTADO -->
+<div class="float-result" id="float-result" onclick="document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="float-result-col">
+    <span class="float-result-label">Lucro/unid.</span>
+    <span class="float-result-value" id="float-lucro">—</span>
+  </div>
+  <span class="float-result-hint">↑ Ver detalhes</span>
+  <div class="float-result-col right">
+    <span class="float-result-label">Margem líquida</span>
+    <span class="float-result-value" id="float-margem">—</span>
+  </div>
+</div>
 </body>
 </html>
