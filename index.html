@@ -338,14 +338,20 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             <div class="field"><label>Envio</label><div class="select-wrap"><select id="envio"><option value="0">Próprio</option><option value="12" selected>Full Pequeno</option><option value="18">Full Médio</option><option value="28">Full Grande</option></select></div></div>
             <div class="field"><label>Tributação</label><div class="select-wrap"><select id="imposto"><option value="0.06" selected>MEI</option><option value="0.085">Simples Nacional</option><option value="0.114">Lucro Presumido</option></select></div></div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:4px;">
-            <label style="position:relative;display:inline-flex;width:36px;height:20px;flex-shrink:0;cursor:pointer;">
-              <input type="checkbox" id="antecip-toggle-lp" style="opacity:0;width:0;height:0;position:absolute;" onchange="document.getElementById('antecip-pct-wrap-lp').style.display=this.checked?'flex':'none'">
-              <span class="antecip-sw-track"></span>
-            </label>
-            <span style="font-size:13px;font-weight:600;flex:1;color:#1A1F1B;">Antecipação Mercado Pago <span style="font-size:11px;color:#6B7A6D;font-weight:500;">· receber na hora</span></span>
-            <div id="antecip-pct-wrap-lp" style="display:none;align-items:center;gap:4px;">
-              <input type="number" id="antecip-pct-lp" style="width:68px;border:1.5px solid #E4E9E5;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#fff;text-align:right;" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal">
+          <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+              <div>
+                <span style="font-size:13px;font-weight:600;color:#1A1F1B;display:block;">Antecipação Mercado Pago</span>
+                <span style="font-size:11px;color:#6B7A6D;font-weight:500;">· receber na hora</span>
+              </div>
+              <label style="position:relative;display:inline-flex;width:36px;height:20px;flex-shrink:0;cursor:pointer;">
+                <input type="checkbox" id="antecip-toggle-lp" style="opacity:0;width:0;height:0;position:absolute;" onchange="document.getElementById('antecip-pct-wrap-lp').style.display=this.checked?'flex':'none';if(document.getElementById('resultado').classList.contains('show'))calcular()">
+                <span class="antecip-sw-track"></span>
+              </label>
+            </div>
+            <div id="antecip-pct-wrap-lp" style="display:none;align-items:center;gap:6px;margin-top:10px;padding-top:8px;border-top:1px solid #E4E9E5;">
+              <span style="font-size:12px;color:#6B7A6D;flex:1;">Taxa de antecipação</span>
+              <input type="number" id="antecip-pct-lp" style="width:68px;border:1.5px solid #E4E9E5;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#fff;text-align:right;" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal" oninput="if(document.getElementById('resultado').classList.contains('show'))calcular()">
               <span style="font-size:12px;color:#6B7A6D;font-weight:600;">%</span>
             </div>
           </div>
