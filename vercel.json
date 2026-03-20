@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/margem-certa", "destination": "/", "permanent": true },
+    { "source": "/margem-certa/:path*", "destination": "/:path*", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/obrigado", "destination": "/obrigado.html" },
     { "source": "/app", "destination": "/app/index.html" },
