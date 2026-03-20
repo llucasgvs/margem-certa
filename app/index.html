@@ -442,16 +442,27 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               <input type="number" id="prod-custo" placeholder="R$ 35,00" min="0" step="0.01" inputmode="decimal">
             </div>
           </div>
-          <div class="field">
-            <label>Categoria ML</label>
-            <div class="select-wrap">
-              <select id="prod-categoria">
-                <option value="0.11">Eletrônicos — 11%</option>
-                <option value="0.13" selected>Moda e vestuário — 13%</option>
-                <option value="0.14">Casa e decoração — 14%</option>
-                <option value="0.16">Beleza e cuidado — 16%</option>
-                <option value="0.18">Outros — 18%</option>
-              </select>
+          <div class="field-row">
+            <div class="field">
+              <label>Categoria ML</label>
+              <div class="select-wrap">
+                <select id="prod-categoria">
+                  <option value="0.11">Eletrônicos — 11%</option>
+                  <option value="0.13" selected>Moda e vestuário — 13%</option>
+                  <option value="0.14">Casa e decoração — 14%</option>
+                  <option value="0.16">Beleza e cuidado — 16%</option>
+                  <option value="0.18">Outros — 18%</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Tipo de anúncio</label>
+              <div class="select-wrap">
+                <select id="prod-tipo">
+                  <option value="0" selected>Clássico</option>
+                  <option value="0.05">Premium (+5%)</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="field-row">
@@ -494,7 +505,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             <div class="breakdown">
               <div class="bk-row"><span class="k">Preço de venda</span><span class="v pos" id="r-preco">—</span></div>
               <div class="bk-row"><span class="k">Comissão ML</span><span class="v neg" id="r-comissao">—</span></div>
-              <div class="bk-row"><span class="k">Frete Full</span><span class="v neg" id="r-envio">—</span></div>
+              <div class="bk-row" id="row-taxa-fixa" style="display:none"><span class="k">Taxa operacional ML</span><span class="v neg" id="r-taxa-fixa">—</span></div>
+              <div class="bk-row"><span class="k">Frete</span><span class="v neg" id="r-envio">—</span></div>
               <div class="bk-row"><span class="k">Imposto</span><span class="v neg" id="r-imposto">—</span></div>
               <div class="bk-row"><span class="k">Custo do produto</span><span class="v neg" id="r-custo">—</span></div>
             </div>
@@ -1212,6 +1224,7 @@ function cancelarEdicao() {
   document.getElementById('prod-nome').value = ''
   document.getElementById('prod-preco').value = ''
   document.getElementById('prod-custo').value = ''
+  document.getElementById('prod-tipo').value = '0'
   document.getElementById('resultado').classList.remove('show')
   document.getElementById('simulador').classList.remove('show')
   document.getElementById('sim-resultado').classList.remove('show')
@@ -1234,10 +1247,21 @@ function hideCalcError() {
   document.getElementById('calc-error').classList.remove('show')
 }
 
+// Taxa operacional fixa do ML para produtos abaixo de R$79
+function calcTaxaFixa(preco) {
+  if (preco <= 0)    return 0
+  if (preco < 12.50) return preco * 0.50
+  if (preco < 29)    return 6.25
+  if (preco < 50)    return 6.50
+  if (preco < 79)    return 6.75
+  return 0
+}
+
 function calcular() {
   const preco    = parseFloat(document.getElementById('prod-preco').value) || 0
   const custo    = parseFloat(document.getElementById('prod-custo').value) || 0
   const comRate  = parseFloat(document.getElementById('prod-categoria').value)
+                 + parseFloat(document.getElementById('prod-tipo').value)
   const envio    = parseFloat(document.getElementById('prod-envio').value)
   const impRate  = parseFloat(document.getElementById('prod-imposto').value)
 
@@ -1251,14 +1275,22 @@ function calcular() {
   btn.disabled = true
   btn.textContent = 'Calculando...'
 
-  const comissao = preco * comRate
-  const imposto  = preco * impRate
-  const lucro    = preco - comissao - envio - imposto - custo
-  const margem   = (lucro / preco * 100).toFixed(1)
-  const ok       = lucro >= 0
+  const comissao  = preco * comRate
+  const taxaFixa  = calcTaxaFixa(preco)
+  const imposto   = preco * impRate
+  const lucro     = preco - comissao - taxaFixa - envio - imposto - custo
+  const margem    = (lucro / preco * 100).toFixed(1)
+  const ok        = lucro >= 0
 
   document.getElementById('r-preco').textContent    = fmt(preco)
   document.getElementById('r-comissao').textContent = '- ' + fmt(comissao)
+  const rowTaxaFixa = document.getElementById('row-taxa-fixa')
+  if (taxaFixa > 0) {
+    document.getElementById('r-taxa-fixa').textContent = '- ' + fmt(taxaFixa)
+    rowTaxaFixa.style.display = ''
+  } else {
+    rowTaxaFixa.style.display = 'none'
+  }
   document.getElementById('r-envio').textContent    = envio > 0 ? '- ' + fmt(envio) : 'R$ 0,00'
   document.getElementById('r-imposto').textContent  = '- ' + fmt(imposto)
   document.getElementById('r-custo').textContent    = '- ' + fmt(custo)
@@ -1267,7 +1299,7 @@ function calcular() {
   document.getElementById('result-total-box').className = 'result-total ' + (ok ? 'profit' : 'loss')
   document.getElementById('resultado').classList.add('show')
 
-  ultimoCalculo = { preco, custo, comRate, envio, impRate, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
+  ultimoCalculo = { preco, custo, comRate, envio, impRate, taxaFixa, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
 
   // Histórico da sessão — só para usuários gratuitos
   if (currentPerfil?.plano !== 'pro') {
@@ -1293,7 +1325,7 @@ function calcular() {
   const precoMinEl = document.getElementById('r-preco-min')
   const precoMinRow = document.getElementById('bk-preco-min')
   if (denom > 0) {
-    const precoMin = (custo + envio) / denom
+    const precoMin = (custo + envio + taxaFixa) / denom
     precoMinEl.textContent = 'R$\u00A0' + precoMin.toFixed(2).replace('.', ',')
     precoMinEl.style.color = preco >= precoMin ? 'var(--green-mid)' : 'var(--red)'
     precoMinRow.classList.add('show')
@@ -1353,6 +1385,7 @@ async function salvarProduto() {
   const preco    = parseFloat(document.getElementById('prod-preco').value)
   const custo    = parseFloat(document.getElementById('prod-custo').value)
   const categoria = parseFloat(document.getElementById('prod-categoria').value)
+                  + parseFloat(document.getElementById('prod-tipo').value)
   const envio    = parseFloat(document.getElementById('prod-envio').value)
   const imposto  = parseFloat(document.getElementById('prod-imposto').value)
 
@@ -1575,7 +1608,8 @@ function simularPromocao() {
 
   const { preco, custo, comRate, envio, impRate } = ultimoCalculo
   const novoPreco  = preco * (1 - desc / 100)
-  const novoLucro  = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate
+  const novoTaxaFixa = calcTaxaFixa(novoPreco)
+  const novoLucro  = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate - novoTaxaFixa
   const novaMargem = (novoLucro / novoPreco) * 100
   const danger = novaMargem < 0
   const fmtVal = n => 'R$\u00A0' + Math.abs(n).toFixed(2).replace('.', ',')
@@ -1672,8 +1706,9 @@ function toggleLoteManual() {
 
 function calcularLinhaDados(nome, preco, custo, categoria, envio, imposto) {
   const comissao = preco * categoria
+  const taxaFixa = calcTaxaFixa(preco)
   const imp = preco * imposto
-  const lucro = parseFloat((preco - comissao - envio - imp - custo).toFixed(2))
+  const lucro = parseFloat((preco - comissao - taxaFixa - envio - imp - custo).toFixed(2))
   const margem = parseFloat((lucro / preco * 100).toFixed(1))
   return { nome, preco_venda: preco, custo_produto: custo, categoria, envio, imposto, lucro, margem }
 }
@@ -1859,7 +1894,7 @@ if (savedSort) {
     if (e.key === 'Enter') { e.preventDefault(); calcular() }
   })
 })
-;['prod-categoria', 'prod-envio', 'prod-imposto'].forEach(id => {
+;['prod-categoria', 'prod-tipo', 'prod-envio', 'prod-imposto'].forEach(id => {
   document.getElementById(id).addEventListener('change', () => {
     if (ultimoCalculo) calcular()
   })
