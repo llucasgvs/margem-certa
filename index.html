@@ -309,9 +309,9 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
 <section class="hero-section" id="home">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge"><div class="live-dot"></div> Para vendedores do Mercado Livre</div>
+      <div class="hero-badge"><div class="live-dot"></div> Integrado com o Mercado Livre</div>
       <h1>Você está vendendo no <span class="strike">lucro</span>?<br><span class="green">Descubra agora.</span></h1>
-      <p class="hero-sub">Importe anúncios do ML automaticamente ou calcule na hora — comissão, frete Full e imposto em <strong>30 segundos</strong>. Sem planilha. Sem erro. Gratuito.</p>
+      <p class="hero-sub">Importe anúncios do Mercado Livre automaticamente ou calcule na hora — comissão, frete Full e imposto em <strong>30 segundos</strong>. Sem planilha. Sem erro. Gratuito.</p>
       <div class="hero-stats">
         <div><div class="hero-stat-num">R$0</div><div class="hero-stat-label">para começar</div></div>
         <div><div class="hero-stat-num">30s</div><div class="hero-stat-label">para calcular</div></div>
@@ -331,7 +331,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             <div class="field"><label>Custo do produto</label><input type="number" id="custo" placeholder="R$ 35,00" min="0" step="0.01" inputmode="decimal"></div>
           </div>
           <div class="field-row">
-            <div class="field"><label>Categoria ML</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos</option><option value="0.13" selected>Moda e vestuário</option><option value="0.14">Casa e decoração</option><option value="0.16">Beleza e cuidado</option><option value="0.18">Outros</option></select></div></div>
+            <div class="field"><label>Categoria</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos</option><option value="0.13" selected>Moda e vestuário</option><option value="0.14">Casa e decoração</option><option value="0.16">Beleza e cuidado</option><option value="0.18">Outros</option></select></div></div>
             <div class="field"><label>Tipo de anúncio</label><div class="select-wrap"><select id="tipo"><option value="0" selected>Clássico</option><option value="0.05">Premium</option></select></div></div>
           </div>
           <div class="field-row">
@@ -343,7 +343,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
               <input type="checkbox" id="antecip-toggle-lp" style="opacity:0;width:0;height:0;position:absolute;" onchange="document.getElementById('antecip-pct-wrap-lp').style.display=this.checked?'flex':'none'">
               <span class="antecip-sw-track"></span>
             </label>
-            <span style="font-size:13px;font-weight:600;flex:1;color:#1A1F1B;">Antecipação MP <span style="font-size:11px;color:#6B7A6D;font-weight:500;">· receber na hora</span></span>
+            <span style="font-size:13px;font-weight:600;flex:1;color:#1A1F1B;">Antecipação Mercado Pago <span style="font-size:11px;color:#6B7A6D;font-weight:500;">· receber na hora</span></span>
             <div id="antecip-pct-wrap-lp" style="display:none;align-items:center;gap:4px;">
               <input type="number" id="antecip-pct-lp" style="width:68px;border:1.5px solid #E4E9E5;border-radius:6px;padding:4px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#fff;text-align:right;" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal">
               <span style="font-size:12px;color:#6B7A6D;font-weight:600;">%</span>
@@ -359,9 +359,9 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             </div>
             <div class="breakdown">
               <div class="breakdown-row"><span class="bk-label">Preço de venda</span><span class="bk-val pos" id="r-preco">—</span></div>
-              <div class="breakdown-row"><span class="bk-label">Comissão ML</span><span class="bk-val neg" id="r-comissao">—</span></div>
-              <div class="breakdown-row" id="row-taxa-fixa" style="display:none"><span class="bk-label">Taxa operacional ML</span><span class="bk-val neg" id="r-taxa-fixa">—</span></div>
-              <div class="breakdown-row" id="row-antecip" style="display:none"><span class="bk-label">Antecipação MP</span><span class="bk-val neg" id="r-antecip">—</span></div>
+              <div class="breakdown-row"><span class="bk-label">Comissão Mercado Livre</span><span class="bk-val neg" id="r-comissao">—</span></div>
+              <div class="breakdown-row" id="row-taxa-fixa" style="display:none"><span class="bk-label">Taxa operacional Mercado Livre</span><span class="bk-val neg" id="r-taxa-fixa">—</span></div>
+              <div class="breakdown-row" id="row-antecip" style="display:none"><span class="bk-label">Antecipação Mercado Pago</span><span class="bk-val neg" id="r-antecip">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Frete</span><span class="bk-val neg" id="r-envio">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Imposto</span><span class="bk-val neg" id="r-imposto">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Custo do produto</span><span class="bk-val neg" id="r-custo">—</span></div>
@@ -391,7 +391,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
 <section class="section fade-up" id="how">
   <div class="section-inner">
     <div class="section-chip">O problema</div>
-    <h2 class="section-title">O ML desconta em silêncio.</h2>
+    <h2 class="section-title">O Mercado Livre desconta em silêncio.</h2>
     <p class="section-sub">A maioria dos vendedores precifica no chute. Quando somam tudo, a margem que parecia 20% vira 3% — ou pior.</p>
     <div class="problem-list">
       <div class="problem-item"><div class="problem-icon">📊</div><div class="problem-text"><h4>Comissão por categoria</h4><p>Entre 11% e 18% dependendo da categoria. Você sabe exatamente qual a sua?</p></div></div>
@@ -412,7 +412,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
     <div class="t-cards">
       <div class="t-card featured fade-up"><div class="t-result-pill">↑ +18% de margem recuperada</div><div class="t-stars">★★★★★</div><p class="t-text">"Eu achava que tinha <strong>15% de margem</strong> nos produtos de beleza. Quando calculei tudo, descobri que sobrava 3%. Reajustei o preço e recuperei <strong>R$800 por mês</strong>."</p><div class="t-author"><div class="t-avatar">💄</div><div><div class="t-name">Camila R.</div><div class="t-role">Beleza · MG · Nível Ouro</div></div></div></div>
       <div class="t-card fade-up"><div class="t-result-pill">💡 4 produtos no prejuízo descobertos</div><div class="t-stars">★★★★★</div><p class="t-text">"Faturava R$12k por mês achando que estava bem. Vi que <strong>4 dos meus 10 produtos estavam no vermelho</strong>. Hoje só vendo o que sei que lucra."</p><div class="t-author"><div class="t-avatar">📦</div><div><div class="t-name">Ricardo M.</div><div class="t-role">Eletrônicos · SP · Mercado Líder</div></div></div></div>
-      <div class="t-card fade-up"><div class="t-result-pill">⏱️ Substituiu planilha em 10 min</div><div class="t-stars">★★★★★</div><p class="t-text">"Tinha planilha que ficava desatualizada toda vez que o ML mudava algo. <strong>Com o Margem Certa, joguei fora.</strong> Cadastrei 30 produtos em 10 minutos."</p><div class="t-author"><div class="t-avatar">🏠</div><div><div class="t-name">Fernanda L.</div><div class="t-role">Casa e decoração · RJ</div></div></div></div>
+      <div class="t-card fade-up"><div class="t-result-pill">⏱️ Substituiu planilha em 10 min</div><div class="t-stars">★★★★★</div><p class="t-text">"Tinha planilha que ficava desatualizada toda vez que o Mercado Livre mudava algo. <strong>Com o Margem Certa, joguei fora.</strong> Cadastrei 30 produtos em 10 minutos."</p><div class="t-author"><div class="t-avatar">🏠</div><div><div class="t-name">Fernanda L.</div><div class="t-role">Casa e decoração · RJ</div></div></div></div>
     </div>
   </div>
 </div>
@@ -427,7 +427,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
       <div class="feature-card"><span class="feature-icon-wrap">🎯</span><h4>Preço mínimo</h4><p>Veja o mínimo para não vender no prejuízo.</p></div>
       <div class="feature-card"><span class="feature-icon-wrap">📈</span><h4>Simulador de promoção</h4><p>Quanto você perde de margem com desconto?</p></div>
       <div class="feature-card"><span class="feature-icon-wrap">⚡</span><h4>Cálculo em lote</h4><p>Importe CSV e analise dezenas de produtos.</p></div>
-      <div class="feature-card"><span class="feature-icon-wrap">🛒</span><h4>Importar do Mercado Livre</h4><p>Conecte sua conta ML e importe anúncios ativos direto para sua cartela.</p></div>
+      <div class="feature-card"><span class="feature-icon-wrap">🛒</span><h4>Importar do Mercado Livre</h4><p>Conecte sua conta do Mercado Livre e importe anúncios ativos direto para sua cartela.</p></div>
       <div class="feature-card"><span class="feature-icon-wrap">🔔</span><h4>Alertas de margem</h4><p>Avisa quando algum produto entra no vermelho.</p></div>
     </div>
   </div>
@@ -440,14 +440,14 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
   <div class="ml-section-inner">
     <div class="ml-steps">
       <div class="ml-badge"><span class="ml-badge-dot"></span> INTEGRAÇÃO OFICIAL · MERCADO LIVRE</div>
-      <h2>Importe seus anúncios<br>do ML <em>automaticamente.</em></h2>
+      <h2>Importe seus anúncios<br>do Mercado Livre <em>automaticamente.</em></h2>
       <p class="ml-section-sub">Chega de digitar produto por produto. Conecte sua conta Mercado Livre e puxe todos os seus anúncios ativos com preço, categoria e tipo de envio já preenchidos.</p>
 
       <div class="ml-step">
         <div class="ml-step-num">1</div>
         <div class="ml-step-body">
           <h4>Conecte sua conta Mercado Livre</h4>
-          <p>Login seguro via OAuth2 oficial do ML. Nenhuma senha é armazenada — só você tem acesso.</p>
+          <p>Login seguro via OAuth2 oficial do Mercado Livre. Nenhuma senha é armazenada — só você tem acesso.</p>
         </div>
       </div>
       <div class="ml-step">
@@ -469,14 +469,14 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
     <div>
       <div class="ml-keywords" aria-hidden="true">
         <span class="ml-keyword">importar anúncios mercado livre</span>
-        <span class="ml-keyword">integração ML automática</span>
-        <span class="ml-keyword">sincronizar produtos ML</span>
+        <span class="ml-keyword">integração Mercado Livre automática</span>
+        <span class="ml-keyword">sincronizar produtos Mercado Livre</span>
         <span class="ml-keyword">calcular lucro anúncio</span>
-        <span class="ml-keyword">comissão por categoria ML</span>
+        <span class="ml-keyword">comissão por categoria Mercado Livre</span>
         <span class="ml-keyword">frete Full automático</span>
       </div>
       <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:24px;">Vendedores com dezenas de anúncios perdiam horas calculando produto por produto em planilha. Agora, a integração direta com a API do Mercado Livre importa tudo de uma vez — <strong style="color:rgba(255,255,255,.8);">nome, preço, categoria e frete</strong> já vêm preenchidos. Você só informa o custo e salva.</p>
-      <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:32px;">A comissão da sua categoria é detectada automaticamente: Eletrônicos (11%), Moda (13%), Casa e Decoração (14%), Beleza (16%) e demais categorias (18%). O tipo de envio Full ou próprio também é identificado pelo ML.</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:32px;">A comissão da sua categoria é detectada automaticamente: Eletrônicos (11%), Moda (13%), Casa e Decoração (14%), Beleza (16%) e demais categorias (18%). O tipo de envio Full ou próprio também é identificado pelo Mercado Livre.</p>
       <div class="ml-cta-row">
         <a href="/app/auth?tab=cadastro&plano=pro" class="ml-cta-btn" onclick="gtag('event','cta_click',{event_category:'engajamento',event_label:'ml_section'})">Conectar meu Mercado Livre <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <span class="ml-cta-note">Disponível no plano Pro · a partir de R$24,75/mês</span>
@@ -499,7 +499,7 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
         <div class="plan-period">para sempre</div>
         <ul class="plan-features">
           <li class="on"><span class="ck">✓</span> Calculadora ilimitada</li>
-          <li class="on"><span class="ck">✓</span> Todas as categorias ML</li>
+          <li class="on"><span class="ck">✓</span> Todas as categorias Mercado Livre</li>
           <li class="on"><span class="ck">✓</span> Todos os regimes tributários</li>
           <li><span class="off">—</span> Salvar produtos</li>
           <li><span class="off">—</span> Cálculo em lote</li>
@@ -541,12 +541,12 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
     <div class="section-chip">Dúvidas</div>
     <h2 class="section-title">Perguntas frequentes.</h2>
     <div class="faq-list">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">As taxas do ML estão atualizadas?<span class="faq-icon">+</span></button><div class="faq-a">Sim. Toda vez que o Mercado Livre muda tarifas por categoria ou envio Full, atualizamos. Você não precisa ficar caçando tabela em PDF.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">As taxas do Mercado Livre estão atualizadas?<span class="faq-icon">+</span></button><div class="faq-a">Sim. Toda vez que o Mercado Livre muda tarifas por categoria ou envio Full, atualizamos. Você não precisa ficar caçando tabela em PDF.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Funciona para qualquer regime tributário?<span class="faq-icon">+</span></button><div class="faq-a">Sim. MEI, Simples Nacional e Lucro Presumido. Selecione seu regime e o imposto é aplicado automaticamente.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Preciso instalar alguma coisa?<span class="faq-icon">+</span></button><div class="faq-a">Nada. Roda 100% no navegador. Funciona no celular, tablet e computador — sem app, sem extensão.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Posso cancelar quando quiser?<span class="faq-icon">+</span></button><div class="faq-a">Sim, sem burocracia. Cancele em um clique, a qualquer momento. Sem multa, sem fidelidade.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Qual a diferença entre grátis e Pro?<span class="faq-icon">+</span></button><div class="faq-a">No grátis você usa a calculadora à vontade, mas os resultados não são salvos. No Pro você salva sua cartela, calcula em lote, simula promoções e recebe alertas de margem negativa.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Como funciona a integração com o Mercado Livre?<span class="faq-icon">+</span></button><div class="faq-a">Você conecta sua conta ML pelo login seguro (OAuth2 oficial). O Margem Certa busca seus anúncios ativos e preenche automaticamente preço, categoria e tipo de envio (Full ou próprio). Você só informa o custo de cada produto e salva. Nenhuma senha é armazenada.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Como funciona a integração com o Mercado Livre?<span class="faq-icon">+</span></button><div class="faq-a">Você conecta sua conta do Mercado Livre pelo login seguro (OAuth2 oficial). O Margem Certa busca seus anúncios ativos e preenche automaticamente preço, categoria e tipo de envio (Full ou próprio). Você só informa o custo de cada produto e salva. Nenhuma senha é armazenada.</div></div>
     </div>
   </div>
 </section>

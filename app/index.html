@@ -428,7 +428,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   <!-- BANNER PRO (só aparece no gratuito) -->
   <div class="pro-banner" id="pro-banner" style="display:none;">
     <div class="pro-banner-text">
-      <h3>Salve produtos, importe do ML e monitore sua cartela</h3>
+      <h3>Salve produtos, importe do Mercado Livre e monitore sua cartela</h3>
       <p>Com o Pro você conecta sua conta Mercado Livre e importa todos os anúncios automaticamente — sem digitar produto por produto.</p>
     </div>
     <button class="pro-banner-btn" onclick="assinarPro()">Assinar Pro →</button>
@@ -461,7 +461,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
           </div>
           <div class="field-row">
             <div class="field">
-              <label>Categoria ML</label>
+              <label>Categoria</label>
               <div class="select-wrap">
                 <select id="prod-categoria">
                   <option value="0.11">Eletrônicos</option>
@@ -511,7 +511,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               <input type="checkbox" id="antecip-toggle" onchange="onAntecipToggle()">
               <span class="toggle-slider"></span>
             </label>
-            <span class="antecip-row-label">Antecipação MP <span class="antecip-row-hint">· receber na hora</span></span>
+            <span class="antecip-row-label">Antecipação Mercado Pago <span class="antecip-row-hint">· receber na hora</span></span>
             <div class="antecip-rate" id="antecip-pct-wrap" style="display:none">
               <input type="number" id="antecip-pct" class="antecip-rate-input" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal" oninput="if(ultimoCalculo) calcular()">
               <span class="antecip-rate-pct">%</span>
@@ -533,9 +533,9 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
             <div class="breakdown">
               <div class="bk-row"><span class="k">Preço de venda</span><span class="v pos" id="r-preco">—</span></div>
-              <div class="bk-row"><span class="k">Comissão ML</span><span class="v neg" id="r-comissao">—</span></div>
-              <div class="bk-row" id="row-taxa-fixa" style="display:none"><span class="k">Taxa operacional ML</span><span class="v neg" id="r-taxa-fixa">—</span></div>
-              <div class="bk-row" id="row-antecip" style="display:none"><span class="k">Antecipação MP</span><span class="v neg" id="r-antecip">—</span></div>
+              <div class="bk-row"><span class="k">Comissão Mercado Livre</span><span class="v neg" id="r-comissao">—</span></div>
+              <div class="bk-row" id="row-taxa-fixa" style="display:none"><span class="k">Taxa operacional Mercado Livre</span><span class="v neg" id="r-taxa-fixa">—</span></div>
+              <div class="bk-row" id="row-antecip" style="display:none"><span class="k">Antecipação Mercado Pago</span><span class="v neg" id="r-antecip">—</span></div>
               <div class="bk-row"><span class="k">Frete</span><span class="v neg" id="r-envio">—</span></div>
               <div class="bk-row"><span class="k">Imposto</span><span class="v neg" id="r-imposto">—</span></div>
               <div class="bk-row"><span class="k">Custo do produto</span><span class="v neg" id="r-custo">—</span></div>
@@ -595,7 +595,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div class="section-title" style="margin:0">Produtos salvos</div>
         <div class="produtos-header-right">
           <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
-          <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do ML</button>
+          <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do Mercado Livre</button>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
             <option value="margem-desc">Margem ↓</option>
@@ -615,7 +615,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
         <div class="lote-config">
           <div class="field">
-            <label>Categoria ML</label>
+            <label>Categoria</label>
             <div class="select-wrap">
               <select id="lote-categoria">
                 <option value="0.11">Eletrônicos</option>
@@ -648,7 +648,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
           </div>
           <div class="field">
-            <label>Antecipação MP</label>
+            <label>Antecipação Mercado Pago</label>
             <div class="antecip-panel-wrap">
               <input type="number" id="lote-antecip" class="antecip-rate-input" value="0" min="0" max="10" step="0.01" inputmode="decimal">
               <span class="antecip-rate-pct">%</span>
@@ -708,7 +708,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div id="ml-form" style="display:none">
           <div class="lote-config" style="margin-bottom:12px">
             <div class="field">
-              <label>Categoria ML</label>
+              <label>Categoria</label>
               <div class="select-wrap"><select id="ml-categoria">
                 <option value="0.11">Eletrônicos</option>
                 <option value="0.13" selected>Moda e vestuário</option>
@@ -735,7 +735,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               </select></div>
             </div>
             <div class="field">
-              <label>Antecipação MP</label>
+              <label>Antecipação Mercado Pago</label>
               <div class="antecip-panel-wrap">
                 <input type="number" id="ml-antecip" class="antecip-rate-input" value="0" min="0" max="10" step="0.01" inputmode="decimal">
                 <span class="antecip-rate-pct">%</span>
@@ -754,7 +754,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
             <div style="overflow-x:auto">
               <table class="lote-table">
-                <thead><tr><th style="width:32px"></th><th style="width:44px"></th><th>Nome</th><th>Preço ML</th><th>Custo (R$)</th><th>Margem</th></tr></thead>
+                <thead><tr><th style="width:32px"></th><th style="width:44px"></th><th>Nome</th><th>Preço venda</th><th>Custo (R$)</th><th>Margem</th></tr></thead>
                 <tbody id="ml-tbody"></tbody>
               </table>
             </div>
