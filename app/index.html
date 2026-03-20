@@ -923,8 +923,7 @@ function renderAnunciosML(anuncios) {
 
   // Nomes já salvos na cartela (lowercase para comparação)
   const nomesCartela = new Set(produtosCache.map(p => p.nome.trim().toLowerCase()))
-  console.log('[ML] produtosCache nomes:', [...nomesCartela])
-  console.log('[ML] anúncios títulos:', anuncios.map(a => a.titulo.trim().toLowerCase()))
+
 
   tbody.innerHTML = anuncios.map((a, i) => {
     const jaCartela = nomesCartela.has(a.titulo.trim().toLowerCase())
