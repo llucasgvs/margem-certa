@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://margem-certa.vercel.app/sitemap.xml
+Sitemap: https://www.sellerkit.com.br/sitemap.xml
