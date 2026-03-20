@@ -218,7 +218,14 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .lote-painel.show{display:block;}
 .lote-painel-title{font-size:14px;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
 .lote-painel-sub{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
-.lote-config{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+.lote-config{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.antecip-field{display:flex;align-items:center;gap:8px;padding:10px 0 2px;}
+.antecip-field label{font-size:13px;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;}
+.antecip-field input[type=checkbox]{width:15px;height:15px;accent-color:var(--green-mid);cursor:pointer;flex-shrink:0;}
+.antecip-pct-wrap{display:flex;align-items:center;gap:4px;}
+.antecip-pct-input{width:60px;border:1.5px solid var(--border);border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;font-family:var(--font);background:var(--bg);text-align:right;}
+.antecip-pct-input:focus{outline:none;border-color:var(--green);}
+.antecip-pct-label{font-size:13px;color:var(--muted);font-weight:600;}
 .lote-config .field{margin-bottom:0;}
 .lote-textarea{width:100%;min-height:110px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:13px;font-family:var(--font);resize:vertical;transition:border-color .2s;line-height:1.6;}
 .lote-textarea:focus{outline:none;border-color:var(--green);background:#fff;}
@@ -489,6 +496,17 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
           </div>
 
+          <div class="antecip-field">
+            <label for="antecip-toggle">
+              <input type="checkbox" id="antecip-toggle" onchange="onAntecipToggle()">
+              Antecipação Mercado Pago
+            </label>
+            <div class="antecip-pct-wrap" id="antecip-pct-wrap" style="display:none">
+              <input type="number" id="antecip-pct" class="antecip-pct-input" value="3.49" min="0.01" max="10" step="0.01" inputmode="decimal" oninput="if(ultimoCalculo) calcular()">
+              <span class="antecip-pct-label">%</span>
+            </div>
+          </div>
+
           <div class="calc-actions">
             <button class="btn-calcular" id="btn-calcular" onclick="calcular()">Calcular →</button>
             <button class="btn-salvar" id="btn-salvar" onclick="salvarProduto()">Salvar produto</button>
@@ -506,6 +524,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               <div class="bk-row"><span class="k">Preço de venda</span><span class="v pos" id="r-preco">—</span></div>
               <div class="bk-row"><span class="k">Comissão ML</span><span class="v neg" id="r-comissao">—</span></div>
               <div class="bk-row" id="row-taxa-fixa" style="display:none"><span class="k">Taxa operacional ML</span><span class="v neg" id="r-taxa-fixa">—</span></div>
+              <div class="bk-row" id="row-antecip" style="display:none"><span class="k">Antecipação MP</span><span class="v neg" id="r-antecip">—</span></div>
               <div class="bk-row"><span class="k">Frete</span><span class="v neg" id="r-envio">—</span></div>
               <div class="bk-row"><span class="k">Imposto</span><span class="v neg" id="r-imposto">—</span></div>
               <div class="bk-row"><span class="k">Custo do produto</span><span class="v neg" id="r-custo">—</span></div>
@@ -617,6 +636,13 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               </select>
             </div>
           </div>
+          <div class="field">
+            <label>Antecipação MP</label>
+            <div class="antecip-pct-wrap">
+              <input type="number" id="lote-antecip" class="antecip-pct-input" value="0" min="0" max="10" step="0.01" inputmode="decimal" style="width:70px">
+              <span class="antecip-pct-label">%</span>
+            </div>
+          </div>
         </div>
 
         <div class="lote-file-row">
@@ -696,6 +722,13 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
                 <option value="0.085">Simples — 8,5%</option>
                 <option value="0.114">L. Presumido</option>
               </select></div>
+            </div>
+            <div class="field">
+              <label>Antecipação MP</label>
+              <div class="antecip-pct-wrap">
+                <input type="number" id="ml-antecip" class="antecip-pct-input" value="0" min="0" max="10" step="0.01" inputmode="decimal" style="width:70px">
+                <span class="antecip-pct-label">%</span>
+              </div>
             </div>
           </div>
           <button class="lote-parse-btn" id="ml-buscar-btn" onclick="carregarAnunciosML()" style="margin-bottom:12px">Buscar anúncios →</button>
@@ -973,7 +1006,8 @@ function recalcMLRow(i, preco) {
   const cat = parseFloat(row.dataset.cat) || parseFloat(document.getElementById('ml-categoria').value)
   const env = parseFloat(row.dataset.env) >= 0 ? parseFloat(row.dataset.env) : parseFloat(document.getElementById('ml-envio').value)
   const imp = parseFloat(document.getElementById('ml-imposto').value)
-  const lucro = preco - preco * cat - env - preco * imp - custo
+  const antecip = (parseFloat(document.getElementById('ml-antecip').value) || 0) / 100
+  const lucro = preco - preco * cat - calcTaxaFixa(preco) - env - preco * imp - preco * antecip - custo
   const margem = (lucro / preco * 100)
   const el = document.getElementById(`ml-m-${i}`)
   el.textContent = margem.toFixed(1).replace('.',',') + '%'
@@ -1225,6 +1259,8 @@ function cancelarEdicao() {
   document.getElementById('prod-preco').value = ''
   document.getElementById('prod-custo').value = ''
   document.getElementById('prod-tipo').value = '0'
+  document.getElementById('antecip-toggle').checked = false
+  document.getElementById('antecip-pct-wrap').style.display = 'none'
   document.getElementById('resultado').classList.remove('show')
   document.getElementById('simulador').classList.remove('show')
   document.getElementById('sim-resultado').classList.remove('show')
@@ -1245,6 +1281,12 @@ function showCalcError(msg) {
 
 function hideCalcError() {
   document.getElementById('calc-error').classList.remove('show')
+}
+
+function onAntecipToggle() {
+  const checked = document.getElementById('antecip-toggle').checked
+  document.getElementById('antecip-pct-wrap').style.display = checked ? 'flex' : 'none'
+  if (ultimoCalculo) calcular()
 }
 
 // Taxa operacional fixa do ML para produtos abaixo de R$79
@@ -1275,10 +1317,13 @@ function calcular() {
   btn.disabled = true
   btn.textContent = 'Calculando...'
 
+  const antecipToggle = document.getElementById('antecip-toggle').checked
+  const antecipPct    = antecipToggle ? (parseFloat(document.getElementById('antecip-pct').value) || 0) / 100 : 0
   const comissao  = preco * comRate
   const taxaFixa  = calcTaxaFixa(preco)
+  const antecip   = preco * antecipPct
   const imposto   = preco * impRate
-  const lucro     = preco - comissao - taxaFixa - envio - imposto - custo
+  const lucro     = preco - comissao - taxaFixa - antecip - envio - imposto - custo
   const margem    = (lucro / preco * 100).toFixed(1)
   const ok        = lucro >= 0
 
@@ -1291,6 +1336,13 @@ function calcular() {
   } else {
     rowTaxaFixa.style.display = 'none'
   }
+  const rowAntecip = document.getElementById('row-antecip')
+  if (antecip > 0) {
+    document.getElementById('r-antecip').textContent = '- ' + fmt(antecip)
+    rowAntecip.style.display = ''
+  } else {
+    rowAntecip.style.display = 'none'
+  }
   document.getElementById('r-envio').textContent    = envio > 0 ? '- ' + fmt(envio) : 'R$ 0,00'
   document.getElementById('r-imposto').textContent  = '- ' + fmt(imposto)
   document.getElementById('r-custo').textContent    = '- ' + fmt(custo)
@@ -1299,7 +1351,7 @@ function calcular() {
   document.getElementById('result-total-box').className = 'result-total ' + (ok ? 'profit' : 'loss')
   document.getElementById('resultado').classList.add('show')
 
-  ultimoCalculo = { preco, custo, comRate, envio, impRate, taxaFixa, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
+  ultimoCalculo = { preco, custo, comRate, envio, impRate, taxaFixa, antecipPct, lucro: parseFloat(lucro.toFixed(2)), margem: parseFloat(margem) }
 
   // Histórico da sessão — só para usuários gratuitos
   if (currentPerfil?.plano !== 'pro') {
@@ -1321,7 +1373,7 @@ function calcular() {
   }
 
   // Preço mínimo para 15% de margem
-  const denom = 1 - comRate - impRate - 0.15
+  const denom = 1 - comRate - antecipPct - impRate - 0.15
   const precoMinEl = document.getElementById('r-preco-min')
   const precoMinRow = document.getElementById('bk-preco-min')
   if (denom > 0) {
@@ -1606,10 +1658,10 @@ function simularPromocao() {
     return
   }
 
-  const { preco, custo, comRate, envio, impRate } = ultimoCalculo
-  const novoPreco  = preco * (1 - desc / 100)
+  const { preco, custo, comRate, envio, impRate, antecipPct } = ultimoCalculo
+  const novoPreco    = preco * (1 - desc / 100)
   const novoTaxaFixa = calcTaxaFixa(novoPreco)
-  const novoLucro  = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate - novoTaxaFixa
+  const novoLucro    = novoPreco - custo - envio - novoPreco * comRate - novoPreco * impRate - novoTaxaFixa - novoPreco * (antecipPct || 0)
   const novaMargem = (novoLucro / novoPreco) * 100
   const danger = novaMargem < 0
   const fmtVal = n => 'R$\u00A0' + Math.abs(n).toFixed(2).replace('.', ',')
@@ -1704,11 +1756,12 @@ function toggleLoteManual() {
   if (show) document.getElementById('lote-textarea').focus()
 }
 
-function calcularLinhaDados(nome, preco, custo, categoria, envio, imposto) {
+function calcularLinhaDados(nome, preco, custo, categoria, envio, imposto, antecipPct = 0) {
   const comissao = preco * categoria
   const taxaFixa = calcTaxaFixa(preco)
   const imp = preco * imposto
-  const lucro = parseFloat((preco - comissao - taxaFixa - envio - imp - custo).toFixed(2))
+  const antecip = preco * antecipPct
+  const lucro = parseFloat((preco - comissao - taxaFixa - antecip - envio - imp - custo).toFixed(2))
   const margem = parseFloat((lucro / preco * 100).toFixed(1))
   return { nome, preco_venda: preco, custo_produto: custo, categoria, envio, imposto, lucro, margem }
 }
@@ -1723,6 +1776,7 @@ function parseLote() {
   const categoria = parseFloat(document.getElementById('lote-categoria').value)
   const envio     = parseFloat(document.getElementById('lote-envio').value)
   const imposto   = parseFloat(document.getElementById('lote-imposto').value)
+  const antecip   = (parseFloat(document.getElementById('lote-antecip').value) || 0) / 100
 
   // Remove linhas de comentário (#), linhas vazias e linhas só com separadores
   const linhas = raw.split('\n')
@@ -1789,7 +1843,7 @@ function parseLote() {
     // Custo não pode ser muito maior que o preço (provável troca de colunas)
     if (custo > preco * 3)               { erros.push(`Linha ${i+1}: custo (R$${custo}) muito maior que preço (R$${preco}) — colunas invertidas?`); return }
 
-    dados.push(calcularLinhaDados(nome, preco, custo, categoria, envio, imposto))
+    dados.push(calcularLinhaDados(nome, preco, custo, categoria, envio, imposto, antecip))
   })
 
   if (erros.length) {
