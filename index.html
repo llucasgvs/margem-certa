@@ -326,7 +326,10 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             <div class="field"><label>Preço de venda</label><input type="number" id="preco" placeholder="R$ 89,90" min="0" step="0.01" inputmode="decimal"></div>
             <div class="field"><label>Custo do produto</label><input type="number" id="custo" placeholder="R$ 35,00" min="0" step="0.01" inputmode="decimal"></div>
           </div>
-          <div class="field"><label>Categoria ML</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos — 11%</option><option value="0.13" selected>Moda e vestuário — 13%</option><option value="0.14">Casa e decoração — 14%</option><option value="0.16">Beleza e cuidado — 16%</option><option value="0.18">Outros — 18%</option></select></div></div>
+          <div class="field-row">
+            <div class="field"><label>Categoria ML</label><div class="select-wrap"><select id="categoria"><option value="0.11">Eletrônicos — 11%</option><option value="0.13" selected>Moda e vestuário — 13%</option><option value="0.14">Casa e decoração — 14%</option><option value="0.16">Beleza e cuidado — 16%</option><option value="0.18">Outros — 18%</option></select></div></div>
+            <div class="field"><label>Tipo de anúncio</label><div class="select-wrap"><select id="tipo"><option value="0" selected>Clássico</option><option value="0.05">Premium (+5%)</option></select></div></div>
+          </div>
           <div class="field-row">
             <div class="field"><label>Envio</label><div class="select-wrap"><select id="envio"><option value="0">Próprio (R$0)</option><option value="12" selected>Full pequeno</option><option value="18">Full médio</option><option value="28">Full grande</option></select></div></div>
             <div class="field"><label>Tributação</label><div class="select-wrap"><select id="imposto"><option value="0.06" selected>MEI — 6%</option><option value="0.085">Simples — 8,5%</option><option value="0.114">L. Presumido</option></select></div></div>
@@ -341,7 +344,8 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
             <div class="breakdown">
               <div class="breakdown-row"><span class="bk-label">Preço de venda</span><span class="bk-val pos" id="r-preco">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Comissão ML</span><span class="bk-val neg" id="r-comissao">—</span></div>
-              <div class="breakdown-row"><span class="bk-label">Frete Full</span><span class="bk-val neg" id="r-envio">—</span></div>
+              <div class="breakdown-row" id="row-taxa-fixa" style="display:none"><span class="bk-label">Taxa operacional ML</span><span class="bk-val neg" id="r-taxa-fixa">—</span></div>
+              <div class="breakdown-row"><span class="bk-label">Frete</span><span class="bk-val neg" id="r-envio">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Imposto</span><span class="bk-val neg" id="r-imposto">—</span></div>
               <div class="breakdown-row"><span class="bk-label">Custo do produto</span><span class="bk-val neg" id="r-custo">—</span></div>
             </div>
@@ -591,18 +595,31 @@ function irParaApp(origem) {
 }
 
 function fmt(v){return 'R$ '+Math.abs(v).toFixed(2).replace('.',',');}
+function calcTaxaFixa(preco){
+  if(preco<=0) return 0;
+  if(preco<12.50) return preco*0.50;
+  if(preco<29) return 6.25;
+  if(preco<50) return 6.50;
+  if(preco<79) return 6.75;
+  return 0;
+}
 function calcular(){
   const preco=parseFloat(document.getElementById('preco').value)||0;
   const custo=parseFloat(document.getElementById('custo').value)||0;
-  const comRate=parseFloat(document.getElementById('categoria').value);
+  const comRate=parseFloat(document.getElementById('categoria').value)
+               +parseFloat(document.getElementById('tipo').value);
   const envio=parseFloat(document.getElementById('envio').value);
   const impRate=parseFloat(document.getElementById('imposto').value);
   if(!preco||!custo){alert('Preencha o preço de venda e o custo do produto.');return;}
   const comissao=preco*comRate,imposto=preco*impRate;
-  const lucro=preco-comissao-envio-imposto-custo;
+  const taxaFixa=calcTaxaFixa(preco);
+  const lucro=preco-comissao-taxaFixa-envio-imposto-custo;
   const margem=(lucro/preco*100).toFixed(1),ok=lucro>=0;
   document.getElementById('r-preco').textContent=fmt(preco);
   document.getElementById('r-comissao').textContent='- '+fmt(comissao);
+  const rowTF=document.getElementById('row-taxa-fixa');
+  if(taxaFixa>0){document.getElementById('r-taxa-fixa').textContent='- '+fmt(taxaFixa);rowTF.style.display='';}
+  else{rowTF.style.display='none';}
   document.getElementById('r-envio').textContent=envio>0?'- '+fmt(envio):'R$ 0,00';
   document.getElementById('r-imposto').textContent='- '+fmt(imposto);
   document.getElementById('r-custo').textContent='- '+fmt(custo);
