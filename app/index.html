@@ -339,6 +339,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .ml-td-img{width:44px;padding:4px 0!important;}
 .ml-td-nome{font-size:12px;font-weight:600;max-width:180px;}
 .ml-badge-pausado{display:inline-block;background:#FFF3CD;color:#856404;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;vertical-align:middle;margin-left:4px;white-space:nowrap;}
+.ml-badge-cartela{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;vertical-align:middle;margin-left:4px;white-space:nowrap;}
 .ml-td-preco{font-size:12px;font-weight:700;white-space:nowrap;}
 .ml-custo-input{width:80px;border:1.5px solid var(--border);border-radius:6px;padding:5px 7px;font-size:13px;font-weight:600;font-family:var(--font);background:var(--bg);}
 .ml-margem-cell{font-size:12px;font-weight:700;}
@@ -649,7 +650,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <!-- PAINEL IMPORTAÇÃO DO ML -->
       <div class="ml-painel" id="ml-painel">
         <div class="ml-painel-title">🛒 Importar do Mercado Livre</div>
-        <div class="ml-painel-sub">Busque seus anúncios ativos, informe o custo de cada produto e importe direto para sua cartela.</div>
+        <div class="ml-painel-sub">Busque seus anúncios (ativos e pausados), informe o custo de cada produto e importe direto para sua cartela.</div>
         <div class="ml-status-bar" id="ml-status-bar"></div>
         <div class="ml-connect-area" id="ml-connect-area" style="display:none">
           <button class="ml-connect-btn" id="ml-connect-btn" onclick="conectarML()">🔗 Conectar Mercado Livre</button>
@@ -910,7 +911,7 @@ function renderAnunciosML(anuncios) {
   document.getElementById('ml-preview-titulo').textContent = `${anuncios.length} anúncio${anuncios.length !== 1 ? 's' : ''} encontrado${anuncios.length !== 1 ? 's' : ''}`
   preview.style.display = 'block'
   if (!anuncios.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Nenhum anúncio ativo encontrado</td></tr>'
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">Nenhum anúncio encontrado</td></tr>'
     return
   }
 
@@ -920,15 +921,23 @@ function renderAnunciosML(anuncios) {
   if (cats.length === 1) _setSelectNearest('ml-categoria', cats[0])
   if (envs.length === 1) _setSelectNearest('ml-envio', envs[0])
 
-  tbody.innerHTML = anuncios.map((a, i) => `
+  // Nomes já salvos na cartela (lowercase para comparação)
+  const nomesCartela = new Set(produtosCache.map(p => p.nome.trim().toLowerCase()))
+
+  tbody.innerHTML = anuncios.map((a, i) => {
+    const jaCartela = nomesCartela.has(a.titulo.trim().toLowerCase())
+    const badgePausado = a.status === 'paused' ? ' <span class="ml-badge-pausado">Pausado</span>' : ''
+    const badgeCartela = jaCartela ? ' <span class="ml-badge-cartela">✓ Na cartela</span>' : ''
+    return `
     <tr id="ml-row-${i}" data-preco="${a.preco}" data-titulo="${a.titulo.replace(/"/g,'&quot;')}" data-cat="${a.categoria_sugerida}" data-env="${a.envio_sugerido}">
       <td><input type="checkbox" class="ml-check" onchange="atualizarContadorML()"></td>
       <td class="ml-td-img">${a.thumbnail ? `<img src="${a.thumbnail}" class="ml-thumb">` : ''}</td>
-      <td class="ml-td-nome">${a.titulo}${a.status === 'paused' ? ' <span class="ml-badge-pausado">Pausado</span>' : ''}</td>
+      <td class="ml-td-nome">${a.titulo}${badgePausado}${badgeCartela}</td>
       <td class="ml-td-preco" style="white-space:nowrap">R$&nbsp;${a.preco.toFixed(2).replace('.',',')}</td>
       <td><input type="number" class="ml-custo-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal" oninput="recalcMLRow(${i},${a.preco})"></td>
       <td class="ml-margem-cell" id="ml-m-${i}">—</td>
-    </tr>`).join('')
+    </tr>`
+  }).join('')
   atualizarContadorML()
 }
 
