@@ -380,6 +380,34 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .hist-margem{font-size:12px;font-weight:700;min-width:48px;text-align:right;}
 .hist-lucro{font-size:12px;color:var(--muted);min-width:88px;text-align:right;}
 .historico-cta{margin-top:12px;text-align:center;font-size:12px;font-weight:700;color:var(--green-mid);cursor:pointer;padding:8px;background:var(--green-light);border-radius:8px;}
+
+/* Mobile nav hamburger */
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text);align-items:center;justify-content:center;}
+.nav-mob-menu{position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;pointer-events:none;}
+.nav-mob-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .25s;}
+.nav-mob-panel{position:absolute;top:0;left:0;right:0;background:#fff;border-radius:0 0 20px 20px;padding:20px 20px 28px;transform:translateY(-110%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,.15);}
+.nav-mob-menu.open{pointer-events:auto;}
+.nav-mob-menu.open .nav-mob-overlay{opacity:1;}
+.nav-mob-menu.open .nav-mob-panel{transform:translateY(0);}
+.nav-mob-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+.nav-mob-head-info{}
+.nav-mob-head-info .mob-email{font-size:12px;color:var(--muted);margin-top:2px;}
+.nav-mob-close{background:none;border:none;cursor:pointer;font-size:22px;color:var(--muted);line-height:1;padding:0;}
+.mob-items{display:flex;flex-direction:column;gap:2px;}
+.mob-item{display:flex;align-items:center;gap:12px;padding:13px 12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--font);width:100%;text-align:left;transition:background .15s;}
+.mob-item:hover,.mob-item:active{background:var(--bg);}
+.mob-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.mob-item-text{}
+.mob-item-sub{font-size:11px;color:var(--muted);font-weight:500;display:block;margin-top:1px;}
+.mob-divider{height:1px;background:var(--border);margin:6px 0;}
+.mob-item.danger{color:var(--red);}
+@media(max-width:899px){
+  .nav-hamburger{display:flex;}
+  .nav-right{display:none!important;}
+}
+@media(min-width:900px){
+  .nav-mob-menu{display:none!important;}
+}
 </style>
 <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","vyyczrfk4u");</script>
 </head>
@@ -394,8 +422,48 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <button class="nav-portal" id="nav-portal" onclick="abrirPortal()">Gerenciar plano</button>
       <button class="nav-logout" onclick="logout()">Sair</button>
     </div>
+    <button class="nav-hamburger" onclick="toggleNavMenu()" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+<!-- Mobile Nav Menu -->
+<div class="nav-mob-menu" id="nav-mob-menu">
+  <div class="nav-mob-overlay" onclick="toggleNavMenu()"></div>
+  <div class="nav-mob-panel">
+    <div class="nav-mob-head">
+      <div class="nav-mob-head-info">
+        <span class="nav-plano" id="nav-mob-plano" style="visibility:hidden"></span>
+        <div class="mob-email" id="nav-mob-email">—</div>
+      </div>
+      <button class="nav-mob-close" onclick="toggleNavMenu()">✕</button>
+    </div>
+    <div class="mob-items">
+      <button class="mob-item" id="nav-mob-portal" onclick="abrirPortal();toggleNavMenu()" style="display:none">
+        <div class="mob-icon" style="background:#E8FAF0;">💳</div>
+        <div class="mob-item-text"><span>Gerenciar plano</span><span class="mob-item-sub">Fatura e cancelamento</span></div>
+      </button>
+      <button class="mob-item" id="nav-mob-assinar" onclick="assinarPro();toggleNavMenu()" style="display:none">
+        <div class="mob-icon" style="background:#E8FAF0;">⭐</div>
+        <div class="mob-item-text"><span>Assinar Pro</span><span class="mob-item-sub">R$37/mês — salve produtos e mais</span></div>
+      </button>
+      <button class="mob-item" id="nav-mob-ml" onclick="conectarML();toggleNavMenu()" style="display:none">
+        <div class="mob-icon" style="background:#FFF8E6;">🛒</div>
+        <div class="mob-item-text"><span>Conectar Mercado Livre</span><span class="mob-item-sub">Importe seus anúncios</span></div>
+      </button>
+      <div class="mob-divider"></div>
+      <a class="mob-item" href="https://wa.me/5541984335487?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Margem%20Certa" target="_blank" rel="noopener">
+        <div class="mob-icon" style="background:#E8FAF0;">💬</div>
+        <div class="mob-item-text"><span>Falar no WhatsApp</span><span class="mob-item-sub">Suporte rápido</span></div>
+      </a>
+      <div class="mob-divider"></div>
+      <button class="mob-item danger" onclick="logout()">
+        <div class="mob-icon" style="background:#FFF5F5;">🚪</div>
+        <div class="mob-item-text"><span>Sair</span></div>
+      </button>
+    </div>
+  </div>
+</div>
 
 <main>
   <!-- HEADER -->
@@ -883,6 +951,22 @@ async function carregarPerfil(token) {
       document.getElementById('lote-btn').style.display = 'block'
       document.getElementById('ml-btn').style.display = 'inline-flex'
       carregarStatusML(token)
+    }
+
+    // Mobile menu sync
+    const email = currentUser ? currentUser.email : (currentPerfil.email || '')
+    const mobEmail = document.getElementById('nav-mob-email')
+    const mobPlano = document.getElementById('nav-mob-plano')
+    const mobPortal = document.getElementById('nav-mob-portal')
+    const mobAssinar = document.getElementById('nav-mob-assinar')
+    const mobML = document.getElementById('nav-mob-ml')
+    if (mobEmail) mobEmail.textContent = email || ''
+    if (mobPlano) { mobPlano.className = 'nav-plano ' + (plano === 'pro' ? 'pro' : 'gratuito'); mobPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'; mobPlano.style.visibility = 'visible' }
+    if (plano === 'pro') {
+      if (mobPortal) mobPortal.style.display = 'flex'
+      if (mobML && !mlConectado) mobML.style.display = 'flex'
+    } else {
+      if (mobAssinar) mobAssinar.style.display = 'flex'
     }
   } catch(e) {
     console.error('Erro ao carregar perfil', e)
@@ -1696,6 +1780,13 @@ function simularPromocao() {
   resEl.classList.add('show')
 }
 
+// ── MOBILE NAV ───────────────────────────────────────────
+function toggleNavMenu() {
+  const menu = document.getElementById('nav-mob-menu')
+  menu.classList.toggle('open')
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : ''
+}
+
 // ── LOGOUT ───────────────────────────────────────────────
 async function logout() {
   await sb.auth.signOut()
@@ -1980,20 +2071,5 @@ document.getElementById('sim-desconto').addEventListener('keydown', e => {
 </script>
 
 <script defer src="/_vercel/insights/script.js"></script>
-<!-- WhatsApp Button -->
-<a id="whatsapp-float" href="https://wa.me/5541984335487?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Margem%20Certa" target="_blank" rel="noopener" aria-label="Fale conosco no WhatsApp" style="position:fixed;bottom:24px;right:24px;z-index:9999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);text-decoration:none;opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;pointer-events:none;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='translateY(0)'">
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-<!-- End WhatsApp Button -->
-<script>
-(function(){
-  var btn=document.getElementById('whatsapp-float');
-  if(!btn)return;
-  window.addEventListener('scroll',function(){
-    if(window.scrollY>400){btn.style.opacity='1';btn.style.transform='translateY(0)';btn.style.pointerEvents='auto';}
-    else{btn.style.opacity='0';btn.style.transform='translateY(20px)';btn.style.pointerEvents='none';}
-  },{passive:true});
-})();
-</script>
 </body>
 </html>
