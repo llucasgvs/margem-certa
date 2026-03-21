@@ -142,12 +142,19 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .produto-margem-valor.profit{color:var(--green-mid);}
 .produto-margem-valor.loss{color:var(--red);}
 .produto-margem-label{font-size:11px;color:var(--muted);}
-.produto-delete{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;transition:color .2s;padding:6px;flex-shrink:0;}
-.produto-delete:hover{color:var(--red);}
-.produto-edit{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;transition:color .2s;padding:6px;flex-shrink:0;}
-.produto-edit:hover{color:var(--green-mid);}
+/* Card kebab menu */
+.card-menu-wrap{position:relative;flex-shrink:0;}
+.card-menu-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:6px 10px;border-radius:8px;font-size:20px;line-height:1;letter-spacing:2px;transition:background .15s,color .15s;font-family:sans-serif;}
+.card-menu-btn:hover{background:var(--bg);color:var(--text);}
+.card-menu-dropdown{position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1.5px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.10);min-width:130px;z-index:200;overflow:hidden;display:none;}
+.card-menu-dropdown.open{display:block;}
+.card-menu-item{display:flex;align-items:center;gap:8px;padding:11px 14px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--text);background:none;border:none;width:100%;cursor:pointer;transition:background .15s;text-align:left;}
+.card-menu-item:hover{background:var(--bg);}
+.card-menu-item.red{color:var(--red);}
+.card-menu-item.red:hover{background:var(--red-light);}
 @media(max-width:600px){
-  .produto-edit,.produto-delete{font-size:18px;padding:8px;}
+  .card-menu-btn{font-size:22px;padding:8px 12px;}
+  .card-menu-item{padding:13px 14px;font-size:14px;}
 }
 .produto-card.editing{border-color:var(--green);background:var(--green-light);}
 .produto-card.danger{border-color:var(--red);background:var(--red-light);}
@@ -1312,8 +1319,13 @@ function renderProdutos(produtos) {
         <div class="produto-margem-valor ${p.lucro >= 0 ? 'profit' : 'loss'}">${p.margem.toFixed(1)}%</div>
         <div class="produto-margem-label">${p.lucro >= 0 ? 'lucro' : 'prejuízo'}</div>
       </div>
-      <button class="produto-edit" onclick="editarProduto('${p.id}')" title="Editar">✎</button>
-      <button class="produto-delete" onclick="deletarProduto('${p.id}')" title="Remover">✕</button>
+      <div class="card-menu-wrap">
+        <button class="card-menu-btn" onclick="toggleCardMenu(event,'${p.id}')" aria-label="Opções">⋯</button>
+        <div class="card-menu-dropdown" id="menu-${p.id}">
+          <button class="card-menu-item" onclick="closeCardMenus();editarProduto('${p.id}')">✎ Editar</button>
+          <button class="card-menu-item red" onclick="closeCardMenus();deletarProduto('${p.id}')">✕ Remover</button>
+        </div>
+      </div>
     </div>
   `).join('')
 }
@@ -1353,7 +1365,12 @@ function editarProduto(id) {
   document.getElementById('btn-cancelar').style.display = 'block'
 
   calcular()
-  document.querySelector('.calc-card').scrollIntoView({ behavior: 'smooth', block: 'start' })
+  setTimeout(() => {
+    const el = document.querySelector('.calc-card')
+    const navH = document.querySelector('.nav')?.offsetHeight || 60
+    const y = el.getBoundingClientRect().top + window.scrollY - navH - 12
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' })
+  }, 80)
 }
 
 function cancelarEdicao() {
@@ -1495,8 +1512,10 @@ function calcular() {
     precoMinRow.classList.remove('show')
   }
 
-  // Auto-scroll ao resultado
-  setTimeout(() => document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50)
+  // Auto-scroll ao resultado (não faz scroll se estiver em modo edição)
+  if (!editandoId) {
+    setTimeout(() => document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50)
+  }
 
 
   btn.textContent = 'Calculado ✓'
@@ -1606,6 +1625,18 @@ async function salvarProduto() {
 }
 
 // ── DELETAR PRODUTO ──────────────────────────────────────
+function toggleCardMenu(e, id) {
+  e.stopPropagation()
+  const menu = document.getElementById(`menu-${id}`)
+  const isOpen = menu.classList.contains('open')
+  closeCardMenus()
+  if (!isOpen) menu.classList.add('open')
+}
+function closeCardMenus() {
+  document.querySelectorAll('.card-menu-dropdown.open').forEach(m => m.classList.remove('open'))
+}
+document.addEventListener('click', closeCardMenus)
+
 function deletarProduto(id) {
   const card = document.getElementById(`card-${id}`)
   if (!card) return
