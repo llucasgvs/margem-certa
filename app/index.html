@@ -120,15 +120,12 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .bk-min strong{font-weight:700;}
 
 /* LISTA DE PRODUTOS */
-.produtos-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;}
-.produtos-header-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.produtos-header{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.produtos-header-row1{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.produtos-header-row2{display:flex;align-items:center;gap:8px;}
 .produtos-count{font-size:13px;color:var(--muted);}
-.sort-select{font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 24px 5px 10px;font-family:var(--font);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A6D'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s;}
+.sort-select{font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 24px 5px 10px;font-family:var(--font);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A6D'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s;flex-shrink:0;}
 .sort-select:focus{outline:none;border-color:var(--green);}
-@media(max-width:600px){
-  .produtos-header{flex-wrap:wrap;}
-  .produtos-header-right{width:100%;justify-content:space-between;}
-}
 .lote-manual-toggle{font-size:13px;color:var(--green-mid);background:none;border:none;cursor:pointer;padding:0;font-family:var(--font);font-weight:600;text-decoration:underline;margin-bottom:10px;display:block;}
 .lote-manual-section{display:none;}
 .lote-manual-section.show{display:block;}
@@ -341,7 +338,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .sim-lock button{margin-left:6px;font-size:12px;font-weight:700;color:var(--green-mid);background:none;border:none;cursor:pointer;font-family:var(--font);}
 
 /* MERCADO LIVRE */
-.ml-btn{display:none;align-items:center;gap:6px;background:#fff200;color:#333;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.ml-btn{display:none;align-items:center;gap:6px;background:#fff200;color:#333;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;transition:opacity .2s;white-space:normal;line-height:1.3;text-align:left;}
 .ml-btn:hover{opacity:.85;}
 .ml-painel{display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
 .ml-painel.show{display:block;}
@@ -666,10 +663,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
     <!-- LISTA DE PRODUTOS -->
     <div id="produtos-section">
       <div class="produtos-header">
-        <div class="section-title" style="margin:0">Produtos salvos</div>
-        <div class="produtos-header-right">
-          <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
-          <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do Mercado Livre</button>
+        <div class="produtos-header-row1">
+          <div class="section-title" style="margin:0">Produtos salvos</div>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
             <option value="margem-desc">Margem ↓</option>
@@ -678,6 +673,10 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             <option value="preco-asc">Preço ↑</option>
             <option value="recente">Mais recente</option>
           </select>
+        </div>
+        <div class="produtos-header-row2">
+          <button class="lote-btn" id="lote-btn" onclick="toggleLotePanel()">+ Importar em lote</button>
+          <button class="ml-btn" id="ml-btn" onclick="toggleMLPanel()">🛒 Importar do<br>Mercado Livre</button>
         </div>
       </div>
       <div id="produtos-count-row" style="display:none;margin:-8px 0 14px;"><span class="produtos-count" id="produtos-count"></span></div>
