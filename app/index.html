@@ -1006,12 +1006,14 @@ async function carregarPerfil(token) {
       ? 'Calcule e salve os produtos da sua cartela.'
       : 'Calcule a margem dos seus produtos. Assine o Pro para salvar.'
 
+    // Botões de importação visíveis para todos (gratuito vê aviso ao clicar)
+    document.getElementById('lote-btn').style.display = 'block'
+    document.getElementById('ml-btn').style.display = 'inline-flex'
+
     if (plano !== 'pro') {
       document.getElementById('pro-banner').style.display = 'flex'
     } else {
       document.getElementById('nav-portal').style.display = 'block'
-      document.getElementById('lote-btn').style.display = 'block'
-      document.getElementById('ml-btn').style.display = 'inline-flex'
       carregarStatusML(token)
     }
 
@@ -1082,6 +1084,7 @@ function atualizarStatusML() {
 }
 
 function toggleMLPanel() {
+  if (currentPerfil?.plano !== 'pro') { abrirUpgrade('ml'); return }
   const painel = document.getElementById('ml-painel')
   const lote = document.getElementById('lote-painel')
   const aberto = painel.classList.contains('show')
@@ -1620,13 +1623,21 @@ function fecharUpgrade(e) {
   document.getElementById('upgrade-overlay').classList.remove('show')
 }
 
-function abrirUpgrade() {
+function abrirUpgrade(ctx) {
+  const msgs = {
+    lote:  { titulo: 'Importação em lote é Pro', sub: 'Importe até 25 produtos de uma vez via CSV ou Excel. Disponível no plano Pro.' },
+    ml:    { titulo: 'Importar do Mercado Livre é Pro', sub: 'Conecte sua conta e importe todos os seus anúncios automaticamente. Disponível no plano Pro.' },
+    salvar:{ titulo: 'Salve esse produto no Pro', sub: 'Você calculou a margem — agora salve e monitore. Com o Pro você nunca mais perde o controle da sua cartela.' },
+  }
+  const m = msgs[ctx] || msgs.salvar
+  document.querySelector('.upgrade-modal h3').textContent = m.titulo
+  document.querySelector('.upgrade-modal-sub').textContent = m.sub
   document.getElementById('upgrade-overlay').classList.add('show')
 }
 
 // ── SALVAR / ATUALIZAR PRODUTO ───────────────────────────
 async function salvarProduto() {
-  if (currentPerfil?.plano !== 'pro') { abrirUpgrade(); return }
+  if (currentPerfil?.plano !== 'pro') { abrirUpgrade('salvar'); return }
 
   const nome = document.getElementById('prod-nome').value.trim()
   if (!nome) { showCalcError('Digite o nome do produto.'); document.getElementById('prod-nome').focus(); return }
@@ -1962,6 +1973,7 @@ async function loteArquivo(input) {
 }
 
 function toggleLotePanel() {
+  if (currentPerfil?.plano !== 'pro') { abrirUpgrade('lote'); return }
   document.getElementById('lote-painel').classList.toggle('show')
 }
 
