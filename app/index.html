@@ -452,6 +452,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
     <a href="/" class="logo">Margem<em>Certa</em></a>
     <div class="nav-right">
       <span class="nav-plano" id="nav-plano" style="visibility:hidden"></span>
+      <span id="nav-email" style="display:none"></span>
+      <button id="nav-portal" style="display:none" onclick="abrirPortal()"></button>
     </div>
     <button class="nav-hamburger" onclick="toggleNavMenu()" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -1783,10 +1785,12 @@ function showToast(msg, tipo = '') {
 
 // ── PORTAL ───────────────────────────────────────────────
 async function abrirPortal() {
-  const btn = document.getElementById('nav-portal')
-  const original = btn.textContent
-  btn.disabled = true
-  btn.textContent = 'Aguarde...'
+  // Usa o botão visível do menu mobile para loading state
+  const btn = document.getElementById('nav-mob-portal')
+  const txtEl = btn ? btn.querySelector('span:first-child') : null
+  const original = txtEl ? txtEl.textContent : ''
+  if (btn) btn.disabled = true
+  if (txtEl) txtEl.textContent = 'Aguarde...'
   try {
     const { data: { session } } = await sb.auth.getSession()
     const res = await fetch(`${API_URL}/stripe/portal`, {
@@ -1795,11 +1799,10 @@ async function abrirPortal() {
     })
     const data = await res.json()
     if (data.url) window.location.href = data.url
-    else { showToast('Erro ao abrir portal. Tente novamente.', 'error'); btn.disabled = false; btn.textContent = original }
+    else { showToast('Erro ao abrir portal. Tente novamente.', 'error'); if (btn) { btn.disabled = false; if (txtEl) txtEl.textContent = original } }
   } catch(e) {
     showToast('Erro ao abrir portal. Tente novamente.', 'error')
-    btn.disabled = false
-    btn.textContent = original
+    if (btn) { btn.disabled = false; if (txtEl) txtEl.textContent = original }
   }
 }
 
