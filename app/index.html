@@ -399,21 +399,26 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text);align-items:center;justify-content:center;}
 .nav-mob-menu{position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;pointer-events:none;}
 .nav-mob-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .25s;}
-.nav-mob-panel{position:absolute;top:0;left:0;right:0;background:#fff;border-radius:0 0 20px 20px;padding:20px 20px 28px;transform:translateY(-110%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 32px rgba(0,0,0,.15);}
+.nav-mob-panel{position:absolute;top:0;left:0;right:0;background:#fff;border-radius:0 0 24px 24px;overflow:hidden;transform:translateY(-110%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 8px 40px rgba(0,0,0,.18);}
 .nav-mob-menu.open{pointer-events:auto;}
 .nav-mob-menu.open .nav-mob-overlay{opacity:1;}
 .nav-mob-menu.open .nav-mob-panel{transform:translateY(0);}
-.nav-mob-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
-.nav-mob-head-info{}
-.nav-mob-head-info .mob-email{font-size:12px;color:var(--muted);margin-top:2px;}
-.nav-mob-close{background:none;border:none;cursor:pointer;font-size:22px;color:var(--muted);line-height:1;padding:0;}
-.mob-items{display:flex;flex-direction:column;gap:2px;}
-.mob-item{display:flex;align-items:center;gap:12px;padding:13px 12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--font);width:100%;text-align:left;transition:background .15s;}
+/* Header escuro do menu */
+.nav-mob-head{display:flex;align-items:center;gap:12px;padding:20px 16px 18px;background:var(--dark);}
+.mob-avatar{width:44px;height:44px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;font-family:var(--font);letter-spacing:0;}
+.nav-mob-head-info{flex:1;min-width:0;}
+.nav-mob-head-info .mob-email{font-size:13px;color:rgba(255,255,255,.75);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:0;}
+.nav-mob-head .nav-plano{background:rgba(255,255,255,.15)!important;color:rgba(255,255,255,.95)!important;border:none!important;font-size:11px;display:inline-flex;align-items:center;margin-top:5px;}
+.nav-mob-close{background:rgba(255,255,255,.12);border:none;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);flex-shrink:0;transition:background .15s;}
+.nav-mob-close:hover{background:rgba(255,255,255,.22);}
+/* Itens do menu */
+.mob-items{display:flex;flex-direction:column;padding:8px 10px 14px;}
+.mob-item{display:flex;align-items:center;gap:14px;padding:14px 10px;border-radius:12px;font-size:15px;font-weight:600;color:var(--text);text-decoration:none;background:none;border:none;cursor:pointer;font-family:var(--font);width:100%;text-align:left;transition:background .15s;}
 .mob-item:hover,.mob-item:active{background:var(--bg);}
-.mob-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.mob-item-text{}
-.mob-item-sub{font-size:11px;color:var(--muted);font-weight:500;display:block;margin-top:1px;}
-.mob-divider{height:1px;background:var(--border);margin:6px 0;}
+.mob-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.mob-item-text{flex:1;min-width:0;}
+.mob-item-sub{font-size:12px;color:var(--muted);font-weight:500;display:block;margin-top:2px;}
+.mob-divider{height:1px;background:var(--border);margin:4px 0;}
 .mob-item.danger{color:var(--red);}
 @media(max-width:899px){
   .nav-hamburger{display:flex;}
@@ -446,34 +451,47 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   <div class="nav-mob-overlay" onclick="toggleNavMenu()"></div>
   <div class="nav-mob-panel">
     <div class="nav-mob-head">
+      <div class="mob-avatar" id="nav-mob-avatar">?</div>
       <div class="nav-mob-head-info">
-        <span class="nav-plano" id="nav-mob-plano" style="visibility:hidden"></span>
         <div class="mob-email" id="nav-mob-email">—</div>
+        <span class="nav-plano" id="nav-mob-plano" style="visibility:hidden"></span>
       </div>
-      <button class="nav-mob-close" onclick="toggleNavMenu()">✕</button>
+      <button class="nav-mob-close" onclick="toggleNavMenu()" aria-label="Fechar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div class="mob-items">
       <button class="mob-item" id="nav-mob-portal" onclick="abrirPortal();toggleNavMenu()" style="display:none">
-        <div class="mob-icon" style="background:#E8FAF0;">💳</div>
+        <div class="mob-icon" style="background:var(--green-light);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+        </div>
         <div class="mob-item-text"><span>Gerenciar plano</span><span class="mob-item-sub">Fatura e cancelamento</span></div>
       </button>
       <button class="mob-item" id="nav-mob-assinar" onclick="assinarPro();toggleNavMenu()" style="display:none">
-        <div class="mob-icon" style="background:#E8FAF0;">⭐</div>
+        <div class="mob-icon" style="background:#FFF3E0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E67700" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
         <div class="mob-item-text"><span>Assinar Pro</span><span class="mob-item-sub">R$37/mês — salve produtos e mais</span></div>
       </button>
       <button class="mob-item" id="nav-mob-ml" onclick="conectarML();toggleNavMenu()" style="display:none">
-        <div class="mob-icon" style="background:#FFF8E6;">🛒</div>
+        <div class="mob-icon" style="background:#FFF3E0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E67700" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
         <div class="mob-item-text"><span>Conectar Mercado Livre</span><span class="mob-item-sub">Importe seus anúncios</span></div>
       </button>
       <div class="mob-divider"></div>
       <a class="mob-item" href="https://wa.me/5541984335487?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Margem%20Certa" target="_blank" rel="noopener">
-        <div class="mob-icon" style="background:#E8FAF0;">💬</div>
+        <div class="mob-icon" style="background:var(--green-light);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
         <div class="mob-item-text"><span>Falar no WhatsApp</span><span class="mob-item-sub">Suporte rápido</span></div>
       </a>
       <div class="mob-divider"></div>
       <button class="mob-item danger" onclick="logout()">
-        <div class="mob-icon" style="background:#FFF5F5;">🚪</div>
-        <div class="mob-item-text"><span>Sair</span></div>
+        <div class="mob-icon" style="background:var(--red-light);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </div>
+        <div class="mob-item-text"><span>Sair da conta</span></div>
       </button>
     </div>
   </div>
@@ -977,6 +995,8 @@ async function carregarPerfil(token) {
     const mobAssinar = document.getElementById('nav-mob-assinar')
     const mobML = document.getElementById('nav-mob-ml')
     if (mobEmail) mobEmail.textContent = email || ''
+    const mobAvatar = document.getElementById('nav-mob-avatar')
+    if (mobAvatar && email) mobAvatar.textContent = email.charAt(0).toUpperCase()
     if (mobPlano) { mobPlano.className = 'nav-plano ' + (plano === 'pro' ? 'pro' : 'gratuito'); mobPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'; mobPlano.style.visibility = 'visible' }
     if (plano === 'pro') {
       if (mobPortal) mobPortal.style.display = 'flex'
