@@ -58,18 +58,34 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
 .stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;}
-.stat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex-shrink:0;}
+.stat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;flex-shrink:0;}
 .stat-label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.2px;margin-bottom:4px;}
 .stat-value{font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1;}
 .stat-value.green{color:var(--green-mid);}
 .stat-value.red{color:var(--red);}
 .stat-sub{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500;}
 .stat-wide{grid-column:span 2;}
-.stat-highlight{background:var(--dark)!important;border-color:var(--dark)!important;}
-.stat-highlight .stat-label{color:rgba(255,255,255,.45);}
-.stat-highlight .stat-value{color:#fff!important;}
-.stat-highlight .stat-sub{color:rgba(255,255,255,.3);}
-.stat-highlight .stat-icon{background:rgba(255,255,255,.08)!important;}
+.stat-wide-mob{grid-column:span 2;}
+/* Cartela card */
+.stat-cartela-card{padding:20px 22px;gap:0;}
+.stat-cartela-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.stat-cartela-left{display:flex;align-items:center;gap:14px;}
+.stat-cartela-icon{width:42px;height:42px;border-radius:13px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stat-cartela-num{font-size:36px;font-weight:800;letter-spacing:-2px;line-height:1;color:var(--text);}
+.stat-cartela-num-label{font-size:12px;color:var(--muted);font-weight:500;margin-top:3px;}
+.stat-cartela-pills{display:flex;flex-direction:column;gap:7px;align-items:flex-end;}
+.stat-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;}
+.stat-pill.green{background:var(--green-light);color:var(--green-mid);}
+.stat-pill.red{background:var(--red-light);color:var(--red);}
+.pill-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.pill-dot.green{background:var(--green-mid);}
+.pill-dot.red{background:var(--red);}
+.stat-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;}
+.stat-bar-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--green));border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+/* Produto cards (melhor/pior) */
+.stat-produto-nome{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;margin-top:6px;line-height:1.3;}
+.stat-card-green{border-left:3px solid var(--green)!important;}
+.stat-card-red{border-left:3px solid var(--red)!important;}
 
 /* BANNER PRO */
 .pro-banner{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
@@ -331,8 +347,9 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   nav .inner{padding:0 40px;}
   .nav-user{display:block;}
   main{padding:40px 40px;}
-  .stats-grid{grid-template-columns:repeat(5,1fr);}
-  .stat-wide{grid-column:auto;}
+  .stats-grid{grid-template-columns:repeat(3,1fr);}
+  .stat-wide{grid-column:span 3;}
+  .stat-wide-mob{grid-column:auto;}
   .app-grid{display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:start;}
   .calc-card{margin-bottom:0;}
   footer{padding:24px 0;}
@@ -526,14 +543,36 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
   <!-- STATS -->
   <div class="stats-grid" id="stats-grid" style="display:none;">
-    <div class="stat-card">
-      <div class="stat-icon" style="background:#F0FDF4;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+
+    <!-- Card 1: Cartela (combinado) — ocupa linha inteira -->
+    <div class="stat-card stat-cartela-card stat-wide">
+      <div class="stat-cartela-row">
+        <div class="stat-cartela-left">
+          <div class="stat-cartela-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <div>
+            <div class="stat-cartela-num" id="stat-total">0</div>
+            <div class="stat-cartela-num-label">produtos na cartela</div>
+          </div>
+        </div>
+        <div class="stat-cartela-pills">
+          <div class="stat-pill green">
+            <span class="pill-dot green"></span>
+            <span id="stat-lucro">0</span>&nbsp;no lucro
+          </div>
+          <div class="stat-pill red">
+            <span class="pill-dot red"></span>
+            <span id="stat-prejuizo">0</span>&nbsp;no prejuízo
+          </div>
+        </div>
       </div>
-      <div class="stat-label">Produtos salvos</div>
-      <div class="stat-value" id="stat-total">0</div>
-      <div class="stat-sub">na sua cartela</div>
+      <div class="stat-bar">
+        <div class="stat-bar-fill" id="stat-bar-fill" style="width:0%"></div>
+      </div>
     </div>
+
+    <!-- Card 2: Margem média -->
     <div class="stat-card">
       <div class="stat-icon" style="background:#EFF6FF;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
@@ -542,30 +581,29 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <div class="stat-value green" id="stat-margem">—</div>
       <div class="stat-sub">sobre o preço de venda</div>
     </div>
-    <div class="stat-card">
+
+    <!-- Card 3: Melhor produto -->
+    <div class="stat-card stat-card-green">
       <div class="stat-icon" style="background:#F0FDF4;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       </div>
-      <div class="stat-label">No lucro</div>
-      <div class="stat-value green" id="stat-lucro">0</div>
-      <div class="stat-sub">produtos saudáveis</div>
+      <div class="stat-label">Melhor produto</div>
+      <div class="stat-produto-nome" id="stat-melhor-nome">—</div>
+      <div class="stat-value green" id="stat-melhor-margem">—</div>
+      <div class="stat-sub">maior margem da cartela</div>
     </div>
-    <div class="stat-card">
+
+    <!-- Card 4: Pior produto — ocupa linha inteira no mobile -->
+    <div class="stat-card stat-card-red stat-wide-mob">
       <div class="stat-icon" style="background:var(--red-light);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
-      <div class="stat-label">No prejuízo</div>
-      <div class="stat-value red" id="stat-prejuizo">0</div>
-      <div class="stat-sub">precisam de atenção</div>
+      <div class="stat-label">Pior produto</div>
+      <div class="stat-produto-nome" id="stat-pior-nome">—</div>
+      <div class="stat-value red" id="stat-pior-margem">—</div>
+      <div class="stat-sub">menor margem da cartela</div>
     </div>
-    <div class="stat-card stat-wide stat-highlight">
-      <div class="stat-icon" style="background:rgba(255,255,255,.08);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      </div>
-      <div class="stat-label">Lucro total / unidade</div>
-      <div class="stat-value green" id="stat-lucro-total">—</div>
-      <div class="stat-sub">soma de todos os produtos</div>
-    </div>
+
   </div>
 
   <!-- BANNER PRO (só aparece no gratuito) -->
@@ -1383,18 +1421,30 @@ function renderProdutos(produtos) {
   const comLucro = produtos.filter(p => p.lucro >= 0).length
   const comPrejuizo = produtos.filter(p => p.lucro < 0).length
   const margemMedia = produtos.reduce((acc, p) => acc + p.margem, 0) / total
-  const lucroTotal = produtos.reduce((acc, p) => acc + p.lucro, 0)
+  const byMargem = [...produtos].sort((a, b) => b.margem - a.margem)
+  const melhor = byMargem[0]
+  const pior = byMargem[byMargem.length - 1]
 
   const margemEl = document.getElementById('stat-margem')
-  const lucroTotalEl = document.getElementById('stat-lucro-total')
   document.getElementById('stats-grid').style.display = 'grid'
+  // Cartela combinado
   document.getElementById('stat-total').textContent = total
-  margemEl.textContent = margemMedia.toFixed(1) + '%'
-  margemEl.className = 'stat-value ' + (margemMedia >= 0 ? 'green' : 'red')
   document.getElementById('stat-lucro').textContent = comLucro
   document.getElementById('stat-prejuizo').textContent = comPrejuizo
-  lucroTotalEl.textContent = (lucroTotal >= 0 ? '+ ' : '- ') + 'R$\u00A0' + Math.abs(lucroTotal).toFixed(2).replace('.', ',')
-  lucroTotalEl.className = 'stat-value ' + (lucroTotal >= 0 ? 'green' : 'red')
+  document.getElementById('stat-bar-fill').style.width = (total > 0 ? (comLucro / total * 100) : 0) + '%'
+  // Margem média
+  margemEl.textContent = margemMedia.toFixed(1) + '%'
+  margemEl.className = 'stat-value ' + (margemMedia >= 0 ? 'green' : 'red')
+  // Melhor produto
+  document.getElementById('stat-melhor-nome').textContent = melhor.nome
+  const melhorMargemEl = document.getElementById('stat-melhor-margem')
+  melhorMargemEl.textContent = melhor.margem.toFixed(1) + '%'
+  melhorMargemEl.className = 'stat-value ' + (melhor.margem >= 0 ? 'green' : 'red')
+  // Pior produto
+  document.getElementById('stat-pior-nome').textContent = pior.nome
+  const piorMargemEl = document.getElementById('stat-pior-margem')
+  piorMargemEl.textContent = pior.margem.toFixed(1) + '%'
+  piorMargemEl.className = 'stat-value ' + (pior.margem >= 0 ? 'green' : 'red')
   count.textContent = `${total} produto${total !== 1 ? 's' : ''}`
   document.getElementById('produtos-count-row').style.display = 'block'
 
