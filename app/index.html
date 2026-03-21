@@ -1000,7 +1000,7 @@ async function carregarPerfil(token) {
     if (mobPlano) { mobPlano.className = 'nav-plano ' + (plano === 'pro' ? 'pro' : 'gratuito'); mobPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'; mobPlano.style.visibility = 'visible' }
     if (plano === 'pro') {
       if (mobPortal) mobPortal.style.display = 'flex'
-      if (mobML && !mlConectado) mobML.style.display = 'flex'
+      if (mobML) mobML.style.display = 'flex'
     } else {
       if (mobAssinar) mobAssinar.style.display = 'flex'
     }
@@ -1034,6 +1034,22 @@ function atualizarStatusML() {
     bar.innerHTML = ''
     form.style.display = 'none'
     connectArea.style.display = 'block'
+  }
+  // Atualiza botão no menu mobile
+  const mobML = document.getElementById('nav-mob-ml')
+  if (mobML) {
+    const txt = mobML.querySelector('.mob-item-text')
+    if (mlConectado) {
+      mobML.onclick = () => { desconectarML(); toggleNavMenu() }
+      txt.innerHTML = '<span>Desconectar Mercado Livre</span><span class="mob-item-sub">Remover integração</span>'
+      mobML.querySelector('.mob-icon svg').style.stroke = 'var(--red)'
+      mobML.querySelector('.mob-icon').style.background = 'var(--red-light)'
+    } else {
+      mobML.onclick = () => { conectarML(); toggleNavMenu() }
+      txt.innerHTML = '<span>Conectar Mercado Livre</span><span class="mob-item-sub">Importe seus anúncios</span>'
+      mobML.querySelector('.mob-icon svg').style.stroke = '#E67700'
+      mobML.querySelector('.mob-icon').style.background = '#FFF3E0'
+    }
   }
 }
 
