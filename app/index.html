@@ -71,8 +71,15 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .pro-banner-btn{background:var(--green);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s;flex-shrink:0;}
 .pro-banner-btn:active{transform:scale(.98);}
 
+/* SECTION HEADERS */
+.section-title{font-size:17px;font-weight:800;letter-spacing:-.5px;margin-bottom:0;}
+.section-subtitle{font-size:12px;color:var(--muted);font-weight:500;margin-top:3px;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.section-header-icon{width:38px;height:38px;border-radius:11px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.section-divider{border:none;border-top:1.5px solid var(--border);margin:8px -20px 32px;}
+.page-header{margin-bottom:24px;padding-bottom:24px;border-bottom:1.5px solid var(--border);}
+@media(min-width:900px){.section-divider{display:none;}.page-header{border-bottom:none;padding-bottom:0;}}
 /* CALCULADORA */
-.section-title{font-size:16px;font-weight:800;letter-spacing:-.4px;margin-bottom:14px;}
 
 .calc-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;}
 .calc-header{background:var(--dark);padding:14px 20px;display:flex;align-items:center;gap:10px;}
@@ -541,7 +548,16 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
     <!-- CALCULADORA -->
     <div>
-      <div class="section-title">Calculadora</div>
+      <hr class="section-divider">
+      <div class="section-header">
+        <div class="section-header-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        </div>
+        <div>
+          <div class="section-title">Calculadora</div>
+          <div class="section-subtitle">Lucro real, margem e ponto de equilíbrio</div>
+        </div>
+      </div>
       <div class="calc-card">
         <div class="calc-header">
           <div class="calc-header-icon" id="calc-header-icon">🧮</div>
@@ -697,9 +713,15 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 
     <!-- LISTA DE PRODUTOS -->
     <div id="produtos-section">
+      <hr class="section-divider">
       <div class="produtos-header">
         <div class="produtos-header-row1">
-          <div class="section-title" style="margin:0">Produtos salvos</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="section-header-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="20" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/></svg>
+            </div>
+            <div class="section-title">Produtos salvos</div>
+          </div>
           <select class="sort-select" id="sort-produtos" onchange="onSortChange()">
             <option value="margem-asc">Margem ↑</option>
             <option value="margem-desc">Margem ↓</option>
