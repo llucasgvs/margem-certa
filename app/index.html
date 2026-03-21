@@ -81,11 +81,12 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .calc-body{padding:20px;}
 .field{margin-bottom:12px;}
 .field label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
-.field input,.field select{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:15px;font-family:var(--font);font-weight:500;transition:border-color .2s;appearance:none;-webkit-appearance:none;}
+.field input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 12px;color:var(--text);font-size:15px;font-family:var(--font);font-weight:500;transition:border-color .2s;appearance:none;-webkit-appearance:none;}
+.field select{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 24px 11px 8px;color:var(--text);font-size:13px;font-family:var(--font);font-weight:500;transition:border-color .2s;appearance:none;-webkit-appearance:none;}
 .field input:focus,.field select:focus{outline:none;border-color:var(--green);background:#fff;}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .select-wrap{position:relative;}
-.select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.select-wrap::after{content:'▾';position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:11px;pointer-events:none;}
 .field input[type="text"]{font-size:14px;}
 
 .calc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
@@ -126,7 +127,8 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .produtos-count{font-size:13px;color:var(--muted);}
 .sort-select{font-size:12px;font-weight:600;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 24px 5px 10px;font-family:var(--font);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7A6D'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;transition:border-color .2s;flex-shrink:0;}
 .sort-select:focus{outline:none;border-color:var(--green);}
-.lote-manual-toggle{font-size:13px;color:var(--green-mid);background:none;border:none;cursor:pointer;padding:0;font-family:var(--font);font-weight:600;text-decoration:underline;margin-bottom:10px;display:block;}
+.lote-manual-toggle{flex:1;font-size:12px;color:var(--muted);background:none;border:1.5px dashed var(--border);border-radius:6px;cursor:pointer;padding:8px 6px;font-family:var(--font);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:border-color .2s,color .2s;white-space:nowrap;}
+.lote-manual-toggle:hover{border-color:var(--green);color:var(--green-mid);}
 .lote-manual-section{display:none;}
 .lote-manual-section.show{display:block;}
 
@@ -235,14 +237,22 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .antecip-rate-input:focus{outline:none;border-color:var(--green);}
 .antecip-rate-pct{font-size:12px;color:var(--muted);font-weight:600;}
 /* Campo antecip nos painéis lote/ML */
-.antecip-panel-wrap{display:flex;align-items:center;gap:6px;padding:10px 0 2px;}
-.antecip-panel-wrap .antecip-rate-input{width:60px;}
+.antecip-panel-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;background:#fff;padding-right:12px;box-sizing:border-box;}
+.antecip-panel-wrap .antecip-rate-input{flex:1;width:auto;border:none;background:transparent;padding:10px 6px 10px 12px;font-size:15px;font-family:var(--font);min-height:44px;box-sizing:border-box;}
+.antecip-panel-wrap .antecip-rate-input:focus{outline:none;}
+.antecip-panel-wrap .antecip-rate-pct{font-size:13px;color:var(--muted);font-weight:600;}
 .lote-textarea{width:100%;min-height:110px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:13px;font-family:var(--font);resize:vertical;transition:border-color .2s;line-height:1.6;}
 .lote-textarea:focus{outline:none;border-color:var(--green);background:#fff;}
 .lote-textarea-hint{font-size:11px;color:var(--muted);margin-top:5px;margin-bottom:12px;}
 .lote-parse-btn{width:100%;background:var(--green);color:#fff;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer;transition:background .2s;}
 .lote-parse-btn:hover{background:var(--green-mid);}
-@media(max-width:600px){.lote-textarea,.field input,.field input[type="text"],.field select,.lote-input{font-size:16px;}}
+@media(max-width:600px){.lote-textarea,.field input,.field input[type="text"],.lote-input{font-size:16px;}}
+@media(max-width:360px){
+  .field select{font-size:13px;padding:9px 24px 9px 8px;}
+  .field input{font-size:14px;padding:9px 8px;}
+  .lote-file-btn,.lote-manual-toggle{font-size:11px;padding:7px 4px;}
+  .lote-btn,.ml-btn{font-size:11px;padding:5px 8px;}
+}
 .lote-preview{margin-top:18px;display:none;}
 .lote-preview.show{display:block;}
 .lote-preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;}
@@ -266,7 +276,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
 .lote-erro-parse{background:var(--red-light);color:var(--red);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;margin-top:8px;display:none;}
 .lote-erro-parse.show{display:block;}
 .lote-file-row{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
-.lote-file-btn{font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;font-family:var(--font);transition:all .2s;white-space:nowrap;}
+.lote-file-btn{flex:1;font-size:12px;font-weight:700;color:var(--muted);background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:8px 6px;cursor:pointer;font-family:var(--font);transition:all .2s;white-space:nowrap;text-align:center;}
 .lote-file-btn:hover{border-color:var(--green);color:var(--green-mid);}
 .lote-file-sep{font-size:12px;color:var(--muted);}
 .lote-config{grid-template-columns:1fr 1fr;}
@@ -721,7 +731,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
             </div>
           </div>
           <div class="field">
-            <label>Antecipação Mercado Pago</label>
+            <label>Antecipação MP</label>
             <div class="antecip-panel-wrap">
               <input type="number" id="lote-antecip" class="antecip-rate-input" value="0" min="0" max="10" step="0.01" inputmode="decimal">
               <span class="antecip-rate-pct">%</span>
@@ -732,8 +742,8 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
         <div class="lote-file-row">
           <label class="lote-file-btn" for="lote-file-input">📎 Subir CSV ou Excel</label>
           <input type="file" id="lote-file-input" accept=".csv,.xlsx,.xls" style="display:none" onchange="loteArquivo(this)">
+          <button class="lote-manual-toggle" id="lote-manual-toggle" onclick="toggleLoteManual()">✏️ Digitar manualmente</button>
         </div>
-        <button class="lote-manual-toggle" id="lote-manual-toggle" onclick="toggleLoteManual()">✏️ Digitar manualmente</button>
         <div class="lote-manual-section" id="lote-manual-section">
           <textarea class="lote-textarea" id="lote-textarea" placeholder="Creme hidratante 200ml	89,90	35,00&#10;Nécessaire viagem	49,90	18,00&#10;Kit skincare premium	199,90	75,00"></textarea>
           <div class="lote-textarea-hint">Dica: copie direto do Excel/Sheets — colunas separadas por Tab são reconhecidas automaticamente.</div>
@@ -808,7 +818,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
               </select></div>
             </div>
             <div class="field">
-              <label>Antecipação Mercado Pago</label>
+              <label>Antecipação MP</label>
               <div class="antecip-panel-wrap">
                 <input type="number" id="ml-antecip" class="antecip-rate-input" value="0" min="0" max="10" step="0.01" inputmode="decimal">
                 <span class="antecip-rate-pct">%</span>
