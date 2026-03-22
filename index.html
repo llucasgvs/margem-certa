@@ -673,7 +673,6 @@ function calcular(){
   document.getElementById('r-lucro').textContent=(ok?'+':'-')+' R$ '+Math.abs(lucro).toFixed(2).replace('.',',');
   document.getElementById('r-margem').textContent='Margem líquida: '+margem+'%'+(!ok?' — prejuízo ⚠️':'');
   document.getElementById('result-total-box').className='result-total '+(ok?'profit':'loss');
-  document.getElementById('result-cta-msg').innerHTML=ok?'<strong>Quer salvar este produto</strong> e monitorar a margem da sua cartela inteira?':'<strong>Quer saber o preço mínimo</strong> para não vender no prejuízo neste produto?';
   const box=document.getElementById('resultado');
   box.classList.add('show');
   setTimeout(()=>box.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
