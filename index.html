@@ -106,16 +106,13 @@ input[type=checkbox]#antecip-toggle-lp:checked~.antecip-sw-track::before{transfo
 .result-total.loss .result-label{color:var(--red);}
 .breakdown{margin-bottom:0;}
 /* GATE */
-.breakdown-gate-wrap{position:relative;margin-bottom:16px;}
-.breakdown-gate-wrap .breakdown{filter:blur(5px);user-select:none;pointer-events:none;margin-bottom:0;}
-.breakdown-gate{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.97) 35%);padding:60px 0 0;display:flex;justify-content:center;}
-.gate-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:18px 20px;text-align:center;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.09);}
-.gate-lock{font-size:22px;margin-bottom:8px;}
-.gate-title{font-size:15px;font-weight:800;letter-spacing:-.4px;color:var(--text);margin-bottom:5px;}
-.gate-sub{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.gate-btn{display:block;background:var(--green);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:800;font-family:var(--font);text-decoration:none;cursor:pointer;transition:background .2s;letter-spacing:-.2px;}
+.breakdown-gate-wrap{margin-bottom:16px;position:relative;}
+.breakdown-gate-wrap .breakdown{filter:blur(4px);user-select:none;pointer-events:none;}
+.gate-cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.gate-cta-text{font-size:13px;color:var(--text);font-weight:800;letter-spacing:-.3px;}
+.gate-cta-sub{font-size:11px;color:var(--muted);font-weight:500;text-align:center;}
+.gate-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:800;font-family:var(--font);text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s;letter-spacing:-.2px;box-shadow:0 2px 12px rgba(0,200,83,.3);}
 .gate-btn:hover{background:var(--green-mid);}
-.gate-note{font-size:11px;color:var(--muted);margin-top:8px;font-weight:500;}
 .breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .breakdown-row:last-child{border-bottom:none;}
 .breakdown-row .bk-label{color:var(--muted);}
@@ -386,14 +383,10 @@ footer .inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-
                 <div class="breakdown-row"><span class="bk-label">Imposto</span><span class="bk-val neg" id="r-imposto">—</span></div>
                 <div class="breakdown-row"><span class="bk-label">Custo do produto</span><span class="bk-val neg" id="r-custo">—</span></div>
               </div>
-              <div class="breakdown-gate">
-                <div class="gate-card">
-                  <div class="gate-lock">🔍</div>
-                  <div class="gate-title">Veja onde vai cada real</div>
-                  <div class="gate-sub">Comissão, frete, imposto e custo detalhados.<br>Crie sua conta grátis para ver o breakdown completo.</div>
-                  <a href="/app/auth" class="gate-btn">Criar conta grátis — é gratuito →</a>
-                  <div class="gate-note">Sem cartão de crédito · Cancele quando quiser</div>
-                </div>
+              <div class="gate-cta">
+                <span class="gate-cta-text">🔍 Veja onde vai cada real</span>
+                <span class="gate-cta-sub">Crie sua conta grátis para ver o detalhamento completo</span>
+                <a href="/app/auth" class="gate-btn">Criar conta grátis →</a>
               </div>
             </div>
           </div>
