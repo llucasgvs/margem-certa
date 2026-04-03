@@ -1014,10 +1014,11 @@ async function init() {
   const planoParam = params.get('plano')
   const successParam = params.get('success')
   const canceledParam = params.get('canceled')
+  const trialParam = params.get('trial')
 
   const mlParam = params.get('ml')
   // Limpa a URL antes de qualquer coisa
-  if (planoParam || successParam || canceledParam || mlParam) {
+  if (planoParam || successParam || canceledParam || mlParam || trialParam) {
     window.history.replaceState({}, '', '/app')
   }
 
@@ -1027,6 +1028,12 @@ async function init() {
     atualizarStatusML()
   } else if (mlParam === 'error') {
     showToast('Erro ao conectar o Mercado Livre. Tente novamente.')
+  }
+
+  if (trialParam === 'ativado') {
+    showToast('🎁 Seus 7 dias de Pro estão ativos. Aproveite!')
+  } else if (trialParam === 'ativo') {
+    showToast('Seu trial já está ativo!')
   }
 
   if (successParam === '1') {
