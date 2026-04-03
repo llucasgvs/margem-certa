@@ -78,6 +78,12 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .stat-card-red{border-left:3px solid var(--red)!important;}
 
 /* BANNER PRO */
+.trial-banner{display:none;align-items:center;justify-content:space-between;gap:12px;padding:11px 20px;font-size:13px;font-weight:500;flex-wrap:wrap;background:#14532D;color:rgba(255,255,255,.92);}
+.trial-banner.warning{background:#78350F;}
+.trial-banner.danger{background:#7F1D1D;}
+.trial-banner-text strong{font-weight:800;}
+.trial-banner-cta{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:background .15s;}
+.trial-banner-cta:hover{background:rgba(255,255,255,.25);}
 .pro-banner{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
 .pro-banner-text h3{color:#fff;font-size:15px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px;}
 .pro-banner-text p{color:rgba(255,255,255,.5);font-size:12px;line-height:1.5;}
@@ -520,6 +526,11 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       </button>
     </div>
   </div>
+</div>
+
+<div class="trial-banner" id="trial-banner">
+  <span class="trial-banner-text" id="trial-banner-text">🎁 Você está testando o Pro gratuitamente</span>
+  <button class="trial-banner-cta" onclick="assinarPro('mensal')">Assinar para continuar →</button>
 </div>
 
 <main>
@@ -1020,8 +1031,29 @@ async function carregarPerfil(token) {
     currentPerfil = await res.json()
 
     const plano = currentPerfil.plano
+    const emTrial = currentPerfil.em_trial || false
+    const trialExpiresAt = currentPerfil.trial_expires_at
+
+    // Banner de trial
+    if (emTrial && trialExpiresAt) {
+      const diasRestantes = Math.ceil((new Date(trialExpiresAt) - new Date()) / 864e5)
+      const banner = document.getElementById('trial-banner')
+      const txt = document.getElementById('trial-banner-text')
+      if (diasRestantes <= 1) {
+        banner.className = 'trial-banner danger'
+        txt.innerHTML = '⚠️ <strong>Último dia do seu teste Pro.</strong> Assine agora para não perder o acesso à sua cartela.'
+      } else if (diasRestantes <= 3) {
+        banner.className = 'trial-banner warning'
+        txt.innerHTML = `⚠️ Seu teste Pro termina em <strong>${diasRestantes} dias</strong>. Assine para continuar.`
+      } else {
+        banner.className = 'trial-banner'
+        txt.innerHTML = `🎁 Você está testando o Pro — <strong>${diasRestantes} dias restantes</strong>`
+      }
+      banner.style.display = 'flex'
+    }
+
     const navPlano = document.getElementById('nav-plano')
-    navPlano.textContent = plano === 'pro' ? 'Pro ✓' : 'Gratuito'
+    navPlano.textContent = emTrial ? 'Trial Pro ✓' : plano === 'pro' ? 'Pro ✓' : 'Gratuito'
     navPlano.className = `nav-plano ${plano}`
     navPlano.style.visibility = 'visible'
 
