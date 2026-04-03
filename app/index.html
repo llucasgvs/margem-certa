@@ -92,6 +92,9 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .trial-banner.danger .trial-banner-days strong{color:#F87171;}
 .trial-banner-cta{background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:background .2s;flex-shrink:0;}
 .trial-banner-cta:hover{background:var(--green-mid);}
+.trial-banner-close{position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:18px;line-height:1;padding:2px 4px;transition:color .15s;}
+.trial-banner-close:hover{color:rgba(255,255,255,.7);}
+.trial-banner{position:relative;}
 .pro-banner{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
 .pro-banner-text h3{color:#fff;font-size:15px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px;}
 .pro-banner-text p{color:rgba(255,255,255,.5);font-size:12px;line-height:1.5;}
@@ -550,6 +553,7 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
       <span class="trial-banner-days" id="trial-banner-days"></span>
       <button class="trial-banner-cta" onclick="assinarPro('mensal')">Assinar Pro →</button>
     </div>
+    <button class="trial-banner-close" onclick="document.getElementById('trial-banner').style.display='none'" aria-label="Fechar">✕</button>
   </div>
   <!-- HEADER -->
   <div class="page-header">
