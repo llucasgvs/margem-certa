@@ -1064,7 +1064,7 @@ async function carregarPerfil(token) {
 
     // Banner de trial
     if (emTrial && trialExpiresAt) {
-      const diasRestantes = Math.ceil((new Date(trialExpiresAt) - new Date()) / 864e5)
+      const diasRestantes = Math.floor((new Date(trialExpiresAt) - new Date()) / 864e5)
       const banner = document.getElementById('trial-banner')
       const titulo = document.getElementById('trial-banner-title')
       const icon = document.getElementById('trial-banner-icon')
