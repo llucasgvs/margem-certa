@@ -78,12 +78,20 @@ main{flex:1;max-width:1140px;margin:0 auto;width:100%;padding:32px 20px;}
 .stat-card-red{border-left:3px solid var(--red)!important;}
 
 /* BANNER PRO */
-.trial-banner{display:none;align-items:center;justify-content:space-between;gap:12px;padding:11px 20px;font-size:13px;font-weight:500;flex-wrap:wrap;background:#14532D;color:rgba(255,255,255,.92);}
-.trial-banner.warning{background:#78350F;}
-.trial-banner.danger{background:#7F1D1D;}
-.trial-banner-text strong{font-weight:800;}
-.trial-banner-cta{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:background .15s;}
-.trial-banner-cta:hover{background:rgba(255,255,255,.25);}
+.trial-banner{display:none;background:var(--dark);border-radius:16px;padding:20px 22px;margin-bottom:28px;flex-direction:column;gap:14px;}
+.trial-banner-top{display:flex;align-items:flex-start;gap:14px;}
+.trial-banner-icon{width:44px;height:44px;background:rgba(0,200,83,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.trial-banner-title{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:5px;}
+.trial-banner-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;}
+.trial-banner-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.trial-banner-days{font-size:12px;color:rgba(255,255,255,.4);font-weight:500;}
+.trial-banner-days strong{font-weight:700;color:var(--green);}
+.trial-banner.warning .trial-banner-icon{background:rgba(251,191,36,.12);}
+.trial-banner.warning .trial-banner-days strong{color:#FCD34D;}
+.trial-banner.danger .trial-banner-icon{background:rgba(239,68,68,.12);}
+.trial-banner.danger .trial-banner-days strong{color:#F87171;}
+.trial-banner-cta{background:var(--green);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:background .2s;flex-shrink:0;}
+.trial-banner-cta:hover{background:var(--green-mid);}
 .pro-banner{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
 .pro-banner-text h3{color:#fff;font-size:15px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px;}
 .pro-banner-text p{color:rgba(255,255,255,.5);font-size:12px;line-height:1.5;}
@@ -528,12 +536,21 @@ footer{padding:20px;border-top:1px solid var(--border);text-align:center;font-si
   </div>
 </div>
 
-<div class="trial-banner" id="trial-banner">
-  <span class="trial-banner-text" id="trial-banner-text">🎁 Você está testando o Pro gratuitamente</span>
-  <button class="trial-banner-cta" onclick="assinarPro('mensal')">Assinar para continuar →</button>
-</div>
-
 <main>
+  <!-- TRIAL BANNER -->
+  <div class="trial-banner" id="trial-banner">
+    <div class="trial-banner-top">
+      <div class="trial-banner-icon" id="trial-banner-icon">🎁</div>
+      <div>
+        <div class="trial-banner-title" id="trial-banner-title">Você ganhou 7 dias de Pro completo</div>
+        <div class="trial-banner-sub">Salve produtos, importe do Mercado Livre, monitore sua cartela e descubra quais produtos realmente lucram.</div>
+      </div>
+    </div>
+    <div class="trial-banner-bottom">
+      <span class="trial-banner-days" id="trial-banner-days"></span>
+      <button class="trial-banner-cta" onclick="assinarPro('mensal')">Assinar Pro →</button>
+    </div>
+  </div>
   <!-- HEADER -->
   <div class="page-header">
     <h1>Minha Cartela</h1>
@@ -1038,16 +1055,24 @@ async function carregarPerfil(token) {
     if (emTrial && trialExpiresAt) {
       const diasRestantes = Math.ceil((new Date(trialExpiresAt) - new Date()) / 864e5)
       const banner = document.getElementById('trial-banner')
-      const txt = document.getElementById('trial-banner-text')
+      const titulo = document.getElementById('trial-banner-title')
+      const icon = document.getElementById('trial-banner-icon')
+      const days = document.getElementById('trial-banner-days')
       if (diasRestantes <= 1) {
         banner.className = 'trial-banner danger'
-        txt.innerHTML = '⚠️ <strong>Último dia do seu teste Pro.</strong> Assine agora para não perder o acesso à sua cartela.'
+        icon.textContent = '⚠️'
+        titulo.textContent = 'Último dia do seu Pro grátis'
+        days.innerHTML = '<strong>Assine hoje</strong> para não perder o acesso à sua cartela.'
       } else if (diasRestantes <= 3) {
         banner.className = 'trial-banner warning'
-        txt.innerHTML = `⚠️ Seu teste Pro termina em <strong>${diasRestantes} dias</strong>. Assine para continuar.`
+        icon.textContent = '⏳'
+        titulo.textContent = `Seu Pro grátis termina em ${diasRestantes} dias`
+        days.innerHTML = 'Assine antes de perder o acesso aos seus produtos salvos.'
       } else {
         banner.className = 'trial-banner'
-        txt.innerHTML = `🎁 Você está testando o Pro — <strong>${diasRestantes} dias restantes</strong>`
+        icon.textContent = '🎁'
+        titulo.textContent = 'Você ganhou 7 dias de Pro completo'
+        days.innerHTML = `<strong>${diasRestantes} dias restantes</strong> — aproveite tudo sem limitações.`
       }
       banner.style.display = 'flex'
     }
